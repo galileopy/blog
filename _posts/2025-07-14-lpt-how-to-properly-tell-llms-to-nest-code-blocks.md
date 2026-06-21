@@ -17,7 +17,7 @@ One of the things that I like to tell Grok when producing output is to wrap its 
 
 This is incredibly convenient when producing markdown content that I'd like to copy independently from the whole response, because the chat interface provides a copy button in the top right corner as seen in the picture.
 
-![](/assets/images/2025/07/image-1.png)
+![]({{ '/assets/images/lpt-how-to-properly-tell-llms-to-nest-code-blocks/image-1.png' | relative_url }})
 
 However, there is a small problem when the expected result is markdown that will, in turn, have nested code. The nested code fences close the outer fence early, and it breaks the way the whole message renders.
 
@@ -49,7 +49,7 @@ One of my most recent attempts included this:
 
 That produced this:
 
-![](/assets/images/2025/07/image.png)
+![]({{ '/assets/images/lpt-how-to-properly-tell-llms-to-nest-code-blocks/image.png' | relative_url }})
 
 When copied, though, it will actually have the expected content:
     
@@ -102,4 +102,4 @@ I added a critical section to the project instructions, emphasizing the importan
 
 And that, kind of works, I can at least copy the outer block now
 
-![](/assets/images/2025/07/image-2.png)
+![]({{ '/assets/images/lpt-how-to-properly-tell-llms-to-nest-code-blocks/image-2.png' | relative_url }})

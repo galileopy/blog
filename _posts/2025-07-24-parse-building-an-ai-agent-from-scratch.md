@@ -10,7 +10,7 @@ tags:
   - grok
   - llm
 excerpt: "Building Coding Agents boils down to to a loop of prompting and execution cycles"
-feature_image: "/assets/images/2025/07/curious_ai_httpss.mj.runLJKyUZ_3C1g_Create_a_wide_digital_ban_5d10281d-fca5-4776-b580-f0f6a7662d37_1_manual.png"
+feature_image: "/assets/images/parse-building-an-ai-agent-from-scratch/curious_ai_httpss.mj.runLJKyUZ_3C1g_Create_a_wide_digital_ban_5d10281d-fca5-4776-b580-f0f6a7662d37_1_manual.png"
 original_status: published
 ---
 

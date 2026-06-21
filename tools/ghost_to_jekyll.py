@@ -101,7 +101,8 @@ class GhostImporter:
         self.image_refs = []
 
     # -- image handling ----------------------------------------------------- #
-    def resolve_image(self, url, title):
+    def resolve_image(self, url, slug, title):
+        # Images are grouped per article: /assets/images/<slug>/<filename>.
         prefix = "__GHOST_URL__"
         if not url.startswith(prefix):
             return url  # external image, leave as-is
@@ -109,16 +110,16 @@ class GhostImporter:
         if self.args.ghost_url:
             return self.args.ghost_url.rstrip("/") + path
         if path.startswith("/content/images/"):
-            rel = path[len("/content/images/"):]
-            local = f"{self.args.assets_prefix.rstrip('/')}/{rel}"
+            filename = os.path.basename(path)
+            local = f"{self.args.assets_prefix.rstrip('/')}/{slug}/{filename}"
             self.image_refs.append((title, url, local))
             return local
         return self.args.assets_prefix.rstrip("/") + path
 
-    def rewrite_images_in_html(self, html, title):
+    def rewrite_images_in_html(self, html, slug, title):
         return re.sub(
             r'src="([^"]+)"',
-            lambda m: f'src="{self.resolve_image(m.group(1), title)}"',
+            lambda m: f'src="{self.resolve_image(m.group(1), slug, title)}"',
             html,
         )
 
@@ -155,7 +156,7 @@ class GhostImporter:
         feature = post.get("feature_image")
         if feature:
             lines.append(
-                f"feature_image: {self.yaml_quote(self.resolve_image(feature, post['title']))}"
+                f"feature_image: {self.yaml_quote(self.resolve_image(feature, post['slug'], post['title']))}"
             )
         lines.append(f"original_status: {post['status']}")
         lines.append("---")
@@ -195,8 +196,16 @@ class GhostImporter:
             )
             counts[lang] = counts.get(lang, 0) + 1
 
-            html = self.rewrite_images_in_html(post.get("html") or "", post["title"])
+            html = self.rewrite_images_in_html(
+                post.get("html") or "", post["slug"], post["title"])
             body = self.converter.handle(html).strip()
+            # Wrap inline image URLs so Jekyll's baseurl is applied (Liquid runs
+            # before Markdown): ![alt](/assets/..) -> ![alt]({{ '/assets/..' | relative_url }})
+            body = re.sub(
+                r'(!\[[^\]]*\]\()(/assets/images/[^)]+)(\))',
+                r"\1{{ '\2' | relative_url }}\3",
+                body,
+            )
             document = self.build_front_matter(post, tags, lang) + "\n\n" + body + "\n"
 
             if post["status"] == "published":

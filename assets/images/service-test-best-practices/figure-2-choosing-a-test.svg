@@ -1,0 +1,100 @@
+<svg width="720" height="612" viewBox="0 0 720 612" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f2title f2desc" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="f2title">Choosing which test to write</title>
+  <desc id="f2desc">Two decisions. First, which tier: no real dependencies means a unit test; real dependencies plus a response-only assertion means a service test, blackbox; otherwise a service test, whitebox (the exception). Second, how to arrange the precondition: through an operation (primitive or flow helper); else a foundational fixture for baseline identity; else a named factory for real but inexpressible state; else the API is missing a surface and should be fixed.</desc>
+  <defs>
+    <marker id="f2arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#475467"/></marker>
+    <marker id="f2red" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#F04438"/></marker>
+  </defs>
+
+  <!-- ===== Section A: which tier ===== -->
+  <text x="40" y="28" fill="#101828" font-size="14" font-weight="700">Which test should you write?</text>
+
+  <!-- Q1 -->
+  <rect x="40" y="44" width="250" height="56" rx="10" fill="#002966"/>
+  <text x="165" y="72" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Real dependencies?</text>
+  <text x="165" y="90" text-anchor="middle" fill="#ffffff" font-size="10.5" opacity="0.78">state store · broker · auth</text>
+
+  <!-- Unit test (no) -->
+  <rect x="360" y="44" width="200" height="56" rx="10" fill="#F9FAFB" stroke="#D0D5DD" stroke-width="2"/>
+  <text x="460" y="68" text-anchor="middle" fill="#344054" font-size="13" font-weight="700">Unit test</text>
+  <text x="460" y="86" text-anchor="middle" fill="#667085" font-size="10.5">no real dependencies</text>
+
+  <line x1="290" y1="72" x2="356" y2="72" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="323" y="64" text-anchor="middle" fill="#667085" font-size="11">no</text>
+  <line x1="165" y1="100" x2="165" y2="134" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="180" y="122" text-anchor="start" fill="#667085" font-size="11">yes</text>
+
+  <!-- Q2 -->
+  <rect x="40" y="138" width="250" height="56" rx="10" fill="#002966"/>
+  <text x="165" y="171" text-anchor="middle" fill="#ffffff" font-size="12.5" font-weight="700">Provable from the response?</text>
+
+  <!-- blackbox (yes) -->
+  <rect x="360" y="120" width="330" height="56" rx="10" fill="#F6FEF9" stroke="#12B76A" stroke-width="2"/>
+  <text x="525" y="144" text-anchor="middle" fill="#067647" font-size="13" font-weight="700">Service test — blackbox</text>
+  <text x="525" y="162" text-anchor="middle" fill="#475467" font-size="10.5">arrange via API · assert on the response</text>
+
+  <!-- whitebox (no, exception) -->
+  <rect x="360" y="196" width="330" height="56" rx="10" fill="#FEF3F2" stroke="#F04438" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="525" y="220" text-anchor="middle" fill="#B42318" font-size="13" font-weight="700">Service test — whitebox</text>
+  <text x="525" y="238" text-anchor="middle" fill="#475467" font-size="10.5">arrange via API · assert on internal state · exception</text>
+
+  <line x1="290" y1="158" x2="356" y2="148" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="320" y="146" text-anchor="middle" fill="#667085" font-size="11">yes</text>
+  <line x1="290" y1="176" x2="356" y2="222" stroke="#F04438" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#f2red)"/>
+  <text x="314" y="206" text-anchor="middle" fill="#B42318" font-size="11">no</text>
+
+  <!-- divider -->
+  <line x1="40" y1="276" x2="690" y2="276" stroke="#EAECF0" stroke-width="1"/>
+
+  <!-- ===== Section B: how to arrange ===== -->
+  <text x="40" y="304" fill="#101828" font-size="14" font-weight="700">How do you arrange the precondition?</text>
+
+  <!-- Q3 -->
+  <rect x="40" y="322" width="250" height="56" rx="10" fill="#002966"/>
+  <text x="165" y="355" text-anchor="middle" fill="#ffffff" font-size="12.5" font-weight="700">Producible through an operation?</text>
+
+  <!-- arrange via API (yes) -->
+  <rect x="360" y="322" width="330" height="56" rx="10" fill="#EEF5FF" stroke="#006AFF" stroke-width="2"/>
+  <text x="525" y="346" text-anchor="middle" fill="#0054CC" font-size="13" font-weight="700">Arrange through the API</text>
+  <text x="525" y="364" text-anchor="middle" fill="#475467" font-size="10.5">one call → primitive · many → flow helper</text>
+
+  <line x1="290" y1="350" x2="356" y2="350" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="323" y="342" text-anchor="middle" fill="#667085" font-size="11">yes</text>
+  <line x1="165" y1="378" x2="165" y2="406" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="180" y="398" text-anchor="start" fill="#667085" font-size="11">no</text>
+
+  <!-- Q4 -->
+  <rect x="40" y="410" width="250" height="56" rx="10" fill="#002966"/>
+  <text x="165" y="434" text-anchor="middle" fill="#ffffff" font-size="12.5" font-weight="700">Foundational identity</text>
+  <text x="165" y="452" text-anchor="middle" fill="#ffffff" font-size="12.5" font-weight="700">or baseline state?</text>
+
+  <!-- foundational fixture (yes) -->
+  <rect x="360" y="410" width="330" height="56" rx="10" fill="#FFFAEB" stroke="#F79009" stroke-width="2"/>
+  <text x="525" y="434" text-anchor="middle" fill="#B54708" font-size="13" font-weight="700">Foundational fixture</text>
+  <text x="525" y="452" text-anchor="middle" fill="#475467" font-size="10.5">declared once, before the suite</text>
+
+  <line x1="290" y1="438" x2="356" y2="438" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="323" y="430" text-anchor="middle" fill="#667085" font-size="11">yes</text>
+  <line x1="165" y1="466" x2="165" y2="494" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="180" y="486" text-anchor="start" fill="#667085" font-size="11">no</text>
+
+  <!-- Q5 -->
+  <rect x="40" y="498" width="250" height="56" rx="10" fill="#002966"/>
+  <text x="165" y="522" text-anchor="middle" fill="#ffffff" font-size="12.5" font-weight="700">Real but inexpressible?</text>
+  <text x="165" y="540" text-anchor="middle" fill="#ffffff" font-size="10.5" opacity="0.78">controlled timestamps, ties</text>
+
+  <!-- named factory (yes) -->
+  <rect x="360" y="482" width="330" height="52" rx="10" fill="#FFFAEB" stroke="#F79009" stroke-width="2"/>
+  <text x="525" y="504" text-anchor="middle" fill="#B54708" font-size="13" font-weight="700">Named factory</text>
+  <text x="525" y="522" text-anchor="middle" fill="#475467" font-size="10.5">owned by a foundational identity</text>
+
+  <!-- fix the API (no, finding) -->
+  <rect x="360" y="544" width="330" height="52" rx="10" fill="#FEF3F2" stroke="#F04438" stroke-width="2"/>
+  <text x="525" y="566" text-anchor="middle" fill="#B42318" font-size="13" font-weight="700">Fix the API, not the test</text>
+  <text x="525" y="584" text-anchor="middle" fill="#475467" font-size="10.5">the API is missing a surface</text>
+
+  <line x1="290" y1="518" x2="356" y2="508" stroke="#475467" stroke-width="2" marker-end="url(#f2arr)"/>
+  <text x="320" y="504" text-anchor="middle" fill="#667085" font-size="11">yes</text>
+  <line x1="290" y1="534" x2="356" y2="568" stroke="#F04438" stroke-width="2" marker-end="url(#f2red)"/>
+  <text x="314" y="560" text-anchor="middle" fill="#B42318" font-size="11">no</text>
+</svg>

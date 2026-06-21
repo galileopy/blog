@@ -35,7 +35,7 @@ Here’s what this guide covers, and how it can help you ask better questions an
 
 If You're Feeling Stuck, Start Here
 
-![](/assets/images/2025/04/0_2_640_N.webp)
+![]({{ '/assets/images/ask-better-work-better-the-case-for-writing-your-question-first/0_2_640_N.webp' | relative_url }})
 
 * * *
 

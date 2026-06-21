@@ -1,0 +1,33 @@
+<svg width="720" height="332" viewBox="0 0 720 332" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ptt ptd" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="ptt">Test pyramid versus testing trophy</title>
+  <desc id="ptd">Two reference models for how coverage is distributed across tiers. The test pyramid puts the most coverage at the unit tier; the testing trophy puts the most coverage at the service tier, with thinner unit, end-to-end, and static layers. Block size represents coverage, not the number of tests.</desc>
+
+  <!-- ===== Test pyramid (left) ===== -->
+  <text x="175" y="28" text-anchor="middle" fill="#101828" font-size="16" font-weight="700">Test pyramid</text>
+  <polygon points="175,52 245,118 105,118" fill="#0E1628"/>
+  <text x="175" y="102" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">E2E</text>
+  <polygon points="105,120 245,120 285,186 65,186" fill="#006AFF"/>
+  <text x="175" y="160" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Service</text>
+  <polygon points="65,188 285,188 325,256 25,256" fill="#75AEFF"/>
+  <text x="175" y="228" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Unit</text>
+  <text x="175" y="282" text-anchor="middle" fill="#667085" font-size="12">most coverage at the unit tier</text>
+
+  <!-- divider -->
+  <line x1="360" y1="44" x2="360" y2="266" stroke="#EAECF0" stroke-width="1"/>
+
+  <!-- ===== Testing trophy (right) ===== -->
+  <text x="545" y="28" text-anchor="middle" fill="#101828" font-size="16" font-weight="700">Testing trophy</text>
+  <rect x="485" y="48" width="120" height="40" rx="4" fill="#0E1628"/>
+  <text x="545" y="73" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">E2E</text>
+  <rect x="435" y="96" width="220" height="72" rx="4" fill="#006AFF"/>
+  <text x="545" y="138" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">Service</text>
+  <rect x="485" y="176" width="120" height="40" rx="4" fill="#75AEFF"/>
+  <text x="545" y="201" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">Unit</text>
+  <rect x="510" y="224" width="70" height="30" rx="4" fill="#98A2B3"/>
+  <text x="545" y="244" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Static</text>
+  <text x="545" y="282" text-anchor="middle" fill="#667085" font-size="12">most coverage at the service tier</text>
+
+  <!-- legend -->
+  <rect x="246" y="304" width="13" height="13" rx="3" fill="#006AFF"/>
+  <text x="266" y="314" fill="#475467" font-size="12">block size = coverage, not the number of tests</text>
+</svg>

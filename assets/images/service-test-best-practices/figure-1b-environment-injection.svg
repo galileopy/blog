@@ -1,0 +1,51 @@
+<svg width="720" height="300" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f1btitle f1bdesc" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="f1btitle">Figure 1b — Environment injection</title>
+  <desc id="f1bdesc">The same service, unchanged, with the environment re-pointing each upstream by variable. In production every upstream is real; in a test the same keys point at a Docker instance or a stubbed fake. The service code and image never change.</desc>
+  <defs>
+    <marker id="f1barr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#344054"/></marker>
+  </defs>
+
+  <!-- the service (unchanged) -->
+  <rect x="20" y="116" width="150" height="72" rx="12" fill="#002966"/>
+  <text x="95" y="148" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">service under test</text>
+  <text x="95" y="168" text-anchor="middle" fill="#ffffff" font-size="11" opacity="0.92">same code &amp; image</text>
+  <line x1="170" y1="152" x2="216" y2="152" stroke="#344054" stroke-width="2" marker-end="url(#f1barr)"/>
+  <text x="193" y="143" text-anchor="middle" fill="#667085" font-size="11">by key</text>
+
+  <!-- the environment: a signpost at the branching point -->
+  <rect x="220" y="114" width="170" height="76" rx="12" fill="#FFFAEB" stroke="#F79009" stroke-width="2"/>
+  <text x="296" y="146" text-anchor="middle" fill="#B54708" font-size="12" font-weight="700">the environment</text>
+  <text x="296" y="166" text-anchor="middle" fill="#475467" font-size="11">routes by env var</text>
+  <line x1="364" y1="128" x2="364" y2="178" stroke="#1F242F" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="357" y1="178" x2="371" y2="178" stroke="#1F242F" stroke-width="2.5" stroke-linecap="round"/>
+  <polygon points="364,131 380,131 386,138 380,145 364,145" fill="#12B76A"/>
+  <polygon points="364,160 380,160 386,167 380,174 364,174" fill="#F79009"/>
+
+  <!-- key labels -->
+  <text x="520" y="154" text-anchor="middle" fill="#344054" font-size="11" font-weight="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">DATABASE_URL</text>
+  <text x="652" y="154" text-anchor="middle" fill="#344054" font-size="11" font-weight="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">GATEWAY_URL</text>
+
+  <!-- production targets (dashed, the other config) -->
+  <path d="M390 142 L520 80" stroke="#98A2B3" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
+  <path d="M390 142 L652 80" stroke="#98A2B3" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
+  <g opacity="0.45">
+    <rect x="452" y="24" width="132" height="56" rx="12" fill="#F6FEF9" stroke="#12B76A" stroke-width="2"/>
+    <text x="518" y="48" text-anchor="middle" fill="#067647" font-size="12" font-weight="700">PostgreSQL</text>
+    <text x="518" y="66" text-anchor="middle" fill="#475467" font-size="11">production · real</text>
+    <rect x="600" y="24" width="110" height="56" rx="12" fill="#F6FEF9" stroke="#12B76A" stroke-width="2"/>
+    <text x="655" y="48" text-anchor="middle" fill="#067647" font-size="12" font-weight="700">Payment Gateway</text>
+    <text x="655" y="66" text-anchor="middle" fill="#475467" font-size="11">production · real</text>
+  </g>
+
+  <!-- test targets (solid, the active config) -->
+  <path d="M390 162 L520 216" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#f1barr)"/>
+  <path d="M390 162 L652 216" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#f1barr)"/>
+  <rect x="452" y="216" width="132" height="56" rx="12" fill="#F6FEF9" stroke="#12B76A" stroke-width="2"/>
+  <text x="518" y="240" text-anchor="middle" fill="#067647" font-size="12" font-weight="700">Postgres</text>
+  <text x="518" y="258" text-anchor="middle" fill="#475467" font-size="11">test · in Docker</text>
+  <rect x="600" y="216" width="110" height="56" rx="12" fill="#FFFAEB" stroke="#F79009" stroke-width="2"/>
+  <text x="655" y="240" text-anchor="middle" fill="#B54708" font-size="12" font-weight="700">WireMock</text>
+  <text x="655" y="258" text-anchor="middle" fill="#475467" font-size="11">test · stubbed fake</text>
+
+  <text x="360" y="294" text-anchor="middle" fill="#667085" font-size="11">same image both times · the environment re-points each key · dashed = production, solid = test</text>
+</svg>
