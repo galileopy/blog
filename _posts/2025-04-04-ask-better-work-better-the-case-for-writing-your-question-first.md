@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ask Better, Work Better: The Case for Writing Your Question First"
+title: "Ask Better, Work Better"
 date: 2025-04-04 23:26:43 +0000
 slug: ask-better-work-better-the-case-for-writing-your-question-first
 lang: en
