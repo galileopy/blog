@@ -61,6 +61,18 @@ Ghost site instead of local paths), `--default-lang`, `--posts-dir`,
 - To link a translation pair, add the same `ref: some-key` to both posts; the
   post layout then shows a link to the other language.
 
+### Translation sync TODO
+
+`tools/translation_todo.py` writes `TRANSLATIONS.md` (a local, untracked working
+doc) listing posts that still need an EN or ES counterpart. Run it after adding
+or pairing posts:
+
+```bash
+python tools/translation_todo.py
+```
+
+A post counts as translated once it and its counterpart share the same `ref`.
+
 ## Missing images
 
 See `MISSING-IMAGES.md`. Drop each file at the listed `/assets/images/...` path

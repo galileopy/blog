@@ -40,4 +40,5 @@ exclude:
   - Gemfile.lock
   - README.md
   - MISSING-IMAGES.md
+  - TRANSLATIONS.md
   - "*.ghost.*.json"
