@@ -1,19 +1,91 @@
+/* ===========================================================================
+   Dual theme
+   - Light: the current Ghost look (white, #009eff accent).
+   - Dark:  Tokyo Night, ported from playground/learn-haskell/build-docs.mjs.
+   The active theme is selected by the data-theme attribute on <html>, set
+   before paint by the inline script in the layout (defaults to system pref).
+   =========================================================================== */
+
 :root {
-  --accent: #009eff;
-  --fg: #1a1a1a;
-  --muted: #666;
-  --bg: #ffffff;
-  --border: #e6e6e6;
   --max: 720px;
+
+  /* Light (Ghost) */
+  --bg: #ffffff;
+  --bg-grad: none;
+  --bg-soft: #f6f8fa;
+  --panel: #f6f8fa;
+  --border: #e6e6e6;
+  --fg: #1a1a1a;
+  --muted: #666666;
+  --comment: #8a8f98;
+  --accent: #009eff;
+
+  --h1-from: #009eff;
+  --h1-to: #00c2ff;
+  --h2: #0b7fc4;
+  --h2-bar: #009eff;
+  --h3: #1a1a1a;
+
+  --code-inline-bg: #f0f1f3;
+  --code-inline-fg: #1a1a1a;
+  --callout-bar: #009eff;
+  --callout-bg: rgba(0, 158, 255, 0.06);
+
+  /* syntax tokens (rouge) */
+  --tok-comment: #8a8f98;
+  --tok-keyword: #9d4edd;
+  --tok-string: #2e7d32;
+  --tok-type: #0b7fc4;
+  --tok-func: #6f42c1;
+  --tok-number: #c2410c;
+  --tok-name: #0969da;
+}
+
+html[data-theme="dark"] {
+  /* Tokyo Night */
+  --bg: #1a1b26;
+  --bg-grad: radial-gradient(1200px 600px at 80% -10%, #233056 0%, #1a1b26 55%);
+  --bg-soft: #1f2335;
+  --panel: #24283b;
+  --border: #3b4261;
+  --fg: #c0caf5;
+  --muted: #8b95c9;
+  --comment: #565f89;
+  --accent: #7aa2f7;
+
+  --h1-from: #7aa2f7;
+  --h1-to: #7dcfff;
+  --h2: #7dcfff;
+  --h2-bar: #7aa2f7;
+  --h3: #bb9af7;
+
+  --code-inline-bg: #24283b;
+  --code-inline-fg: #cdd6f4;
+  --callout-bar: #ff9e64;
+  --callout-bg: rgba(255, 158, 100, 0.07);
+
+  --tok-comment: #565f89;
+  --tok-keyword: #bb9af7;
+  --tok-string: #9ece6a;
+  --tok-type: #7dcfff;
+  --tok-func: #9d4edd;
+  --tok-number: #ff9e64;
+  --tok-name: #7aa2f7;
 }
 
 * { box-sizing: border-box; }
 
+html { color-scheme: light dark; }
+
 body {
   margin: 0;
+  min-height: 100vh;
   color: var(--fg);
   background: var(--bg);
+  background-image: var(--bg-grad);
+  background-attachment: fixed;
   font: 18px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .content, .site-header, .site-footer {
@@ -26,6 +98,7 @@ body {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  gap: 12px;
   padding-top: 28px;
   padding-bottom: 28px;
   border-bottom: 1px solid var(--border);
@@ -38,13 +111,39 @@ body {
   text-decoration: none;
 }
 
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 .site-nav a {
-  margin-left: 16px;
   color: var(--muted);
   text-decoration: none;
   font-size: 0.9rem;
 }
 .site-nav a:hover { color: var(--accent); }
+
+/* Theme toggle button */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--fg);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: inline; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 a { color: var(--accent); }
 
@@ -58,34 +157,98 @@ a { color: var(--accent); }
 .post-list-link:hover { text-decoration: underline; }
 .post-list-excerpt { margin: 6px 0 0; color: var(--muted); font-size: 0.95rem; }
 
-.post-title { margin-bottom: 0.1em; line-height: 1.2; }
+/* Headings (themed gradient / accents from both source designs) */
+h1 {
+  line-height: 1.15;
+}
+.post-title, .home-intro h1 {
+  background: linear-gradient(90deg, var(--h1-from), var(--h1-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 .post-meta { color: var(--muted); font-size: 0.9rem; margin-top: 0; }
 .post-meta .tag { color: var(--accent); }
 .post-translation a { font-size: 0.9rem; }
 .post-feature { width: 100%; height: auto; border-radius: 8px; margin: 18px 0; }
 
-.post-body img { max-width: 100%; height: auto; }
-.post-body pre {
-  background: #f6f8fa;
-  padding: 14px 16px;
-  overflow-x: auto;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  line-height: 1.5;
+.post-body h2 {
+  color: var(--h2);
+  border-left: 3px solid var(--h2-bar);
+  padding-left: 12px;
+  margin: 48px 0 14px;
 }
+.post-body h3 { color: var(--h3); margin: 30px 0 10px; }
+.post-body strong, .post-body b { color: var(--fg); }
+.post-body em { color: var(--muted); }
+.post-body img { max-width: 100%; height: auto; border-radius: 8px; }
+
+/* Code */
 .post-body code {
-  background: #f0f1f3;
-  padding: 0.1em 0.35em;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--code-inline-bg);
+  color: var(--code-inline-fg);
+  padding: 0.1em 0.4em;
   border-radius: 4px;
   font-size: 0.85em;
 }
-.post-body pre code { background: none; padding: 0; }
+.post-body pre,
+.post-body .highlight {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+.post-body .highlight pre { margin: 0; padding: 0; border: 0; background: none; }
+.post-body pre code,
+.post-body .highlight code {
+  background: none;
+  color: var(--fg);
+  padding: 0;
+  font-size: inherit;
+}
+
 .post-body blockquote {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--callout-bar);
+  background: var(--callout-bg);
   margin: 0;
-  padding-left: 16px;
+  padding: 8px 16px;
+  border-radius: 0 8px 8px 0;
   color: var(--muted);
 }
+
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 0.9rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.post-body th, .post-body td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.post-body th { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.post-body hr { border: 0; border-top: 1px dashed var(--border); margin: 40px 0; }
+
+/* Rouge syntax tokens mapped to the active palette */
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cd { color: var(--tok-comment); font-style: italic; }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kc, .highlight .kr { color: var(--tok-keyword); }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .se, .highlight .sb { color: var(--tok-string); }
+.highlight .kt, .highlight .nc, .highlight .nn { color: var(--tok-type); }
+.highlight .nf, .highlight .fm { color: var(--tok-func); font-weight: 600; }
+.highlight .mi, .highlight .mf, .highlight .m, .highlight .il { color: var(--tok-number); }
+.highlight .na, .highlight .nv, .highlight .nb, .highlight .no { color: var(--tok-name); }
+.highlight .o, .highlight .ow { color: var(--tok-number); }
 
 .site-footer {
   margin-top: 60px;
