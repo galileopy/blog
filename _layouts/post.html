@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%B %-d, %Y" }}
+      </time>
+      {% if page.tags %}
+        · {% for tag in page.tags %}<span class="tag">#{{ tag }}</span> {% endfor %}
+      {% endif %}
+    </p>
+    {% comment %} Link to a translation if `ref` matches another post. {% endcomment %}
+    {% if page.ref %}
+      {% assign translations = site.posts | where: "ref", page.ref %}
+      {% for t in translations %}
+        {% unless t.lang == page.lang %}
+          <p class="post-translation">
+            <a href="{{ t.url | relative_url }}">{{ t.lang | upcase }}: {{ t.title }}</a>
+          </p>
+        {% endunless %}
+      {% endfor %}
+    {% endif %}
+  </header>
+
+  {% if page.feature_image %}
+    <img class="post-feature" src="{{ page.feature_image | relative_url }}" alt="">
+  {% endif %}
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+</article>

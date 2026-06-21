@@ -1,0 +1,97 @@
+:root {
+  --accent: #009eff;
+  --fg: #1a1a1a;
+  --muted: #666;
+  --bg: #ffffff;
+  --border: #e6e6e6;
+  --max: 720px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--fg);
+  background: var(--bg);
+  font: 18px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.content, .site-header, .site-footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.site-nav a {
+  margin-left: 16px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.site-nav a:hover { color: var(--accent); }
+
+a { color: var(--accent); }
+
+.home-intro h1 { margin-bottom: 0.2em; }
+.home-intro p { color: var(--muted); margin-top: 0; }
+
+.post-list { list-style: none; padding: 0; }
+.post-list-item { padding: 14px 0; border-bottom: 1px solid var(--border); }
+.post-list-date { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.85rem; margin-right: 12px; }
+.post-list-link { font-weight: 600; text-decoration: none; }
+.post-list-link:hover { text-decoration: underline; }
+.post-list-excerpt { margin: 6px 0 0; color: var(--muted); font-size: 0.95rem; }
+
+.post-title { margin-bottom: 0.1em; line-height: 1.2; }
+.post-meta { color: var(--muted); font-size: 0.9rem; margin-top: 0; }
+.post-meta .tag { color: var(--accent); }
+.post-translation a { font-size: 0.9rem; }
+.post-feature { width: 100%; height: auto; border-radius: 8px; margin: 18px 0; }
+
+.post-body img { max-width: 100%; height: auto; }
+.post-body pre {
+  background: #f6f8fa;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.post-body code {
+  background: #f0f1f3;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.post-body pre code { background: none; padding: 0; }
+.post-body blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 0;
+  padding-left: 16px;
+  color: var(--muted);
+}
+
+.site-footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  padding-bottom: 40px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+}

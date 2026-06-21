@@ -1,0 +1,17 @@
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+Gemfile.lock
+.bundle/
+vendor/
+
+# Raw Ghost exports (personal backup; keep out of the public repo)
+*.ghost.*.json
+preview/
+
+# Drafts: kept locally but not tracked or published
+_drafts/
+
+# Working doc, not site content; kept locally but not tracked
+MISSING-IMAGES.md

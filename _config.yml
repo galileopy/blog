@@ -1,0 +1,43 @@
+title: Thoughts Lattice
+description: Thoughts, stories and ideas.
+# Served as a project page. To move to a custom domain later: set url to the
+# domain, set baseurl to "", and add a CNAME file with the domain.
+url: "https://galileopy.github.io"
+baseurl: "/blog"
+
+author:
+  name: Galileo Sanchez
+  email: galileopy@gmail.com
+
+# Languages. The default language lives at the site root ("/slug/"); other
+# languages are served under a prefix ("/es/slug/"). See tools/ghost_to_jekyll.py.
+default_lang: en
+languages: [en, es]
+
+accent_color: "#009eff"
+
+# Native GitHub Pages build supports only these plugins.
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# _drafts are not built by default; run `bundle exec jekyll serve --drafts`.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+# Posts already carry an explicit `permalink:` in their front matter; this is the
+# fallback for any post that doesn't.
+permalink: /:slug/
+
+exclude:
+  - tools/
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - MISSING-IMAGES.md
+  - "*.ghost.*.json"
