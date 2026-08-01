@@ -11,10 +11,23 @@
     - Set of prompts that describe the whole SDLC
 - Managing context
 
+## Part 1 - The Evolution of the Feedback Loop
+
 ### Intro
 
 It is still coding.
 You have a different feedback loop.
+
+### Feedback Loops
+
+Six loops, each one a step further from doing it all yourself.
+
+- Level 0 - Traditional
+- Level 1 - AI Assisted Coding
+- Level 2 - Autonomous
+- Level 3 - Test Driven, TDD
+- Level 4 - Spec Driven
+- Level 5 - Spec Driven, Predefined Workflows
 
 ### Feedback Loops: Traditional (Level 0)
 Start: Specify requirements :human:
@@ -71,7 +84,7 @@ You'd need specific skills
 
 ### Feedback Loops: Spec Driven (Level 4)
 Start: Specify requirements :human: :bot:
-- Technical design of a solution * :human:
+- Technical design of a solution :human: :bot:
 - Generate failing tests :bot:
 - Code :bot:
 - Run :laptop:
@@ -87,7 +100,7 @@ You can use plan mode or start using more complex frameworks.
 ### Feedback Loops: Spec Driven, Predefined Workflows (Level 5)
 Once: Author project workflows :human: :bot:
 Start: Specify requirements :human: :bot:
-- Technical design of a solution * :bot:
+- Technical design of a solution :human: :bot:
 - Generate failing tests :bot:
 - Code :bot:
 - Run :laptop:
@@ -100,19 +113,57 @@ Use case: brownfield projects
 
 Brownfield projects have more context baked in.
 
-## Conventions
+### Questions
+
+Questions so far?
+
+Next:
+- Part 2 - Managing Context
+- Part 3 - Cool Tips, Tricks and Links
+
+## Part 2 - Managing Context
+
+### Conventions
+Applies to anything that is managed by code
+
 - How to add X
     - External interface
         - REST endpoint
         - GraphQL Field
         - RPC/WS handler
     - Infrastructure component
+        - Terraform
+        - CDK
     - Tests and tiers
         - e2e tests
         - Integration tests
         - Unit tests
 
-## Cool Tricks
+### Workflows
+It's about encoding what you do in prompts and then iterating automatically.
+
+- Tracking requirements
+- Refining tickets
+- Review cycle
+    - Adversarial review, use a different model
+- Implementation process guidelines
+    - TDD
+    - Testing tier preferences
+- Clean code practices
+    - General authoring practices
+    - Object oriented preferences
+    - Local preferences not enforceable by [tooling? — sentence looks cut off]
+- Drift check: are requirements, code, and acceptance tests all aligned
+
+#### Dynamic Workflows vs Static Workflows
+- Not everything needs to be fixed the same way.
+- Preferences on particular steps
+    - Dev preferences
+    - Project differences
+
+## Part 3 - Cool Tips, Tricks and Links
+
+### Cool Tricks
 - During refinement
     - Connect to Linear and get help refining tickets
     - Use structured English frameworks
@@ -130,31 +181,8 @@ Brownfield projects have more context baked in.
     - Needs a way to spin up an isolated stack
     - Requires familiarity with workflows.
 
-## Workflows
-It's about encoding what you do in prompts and then iterating automatically.
+### References
 
-- Tracking requirements
-- Refining tickets
-- Review cycle
-    - Adversarial review, use a different model
-- Implementation process guidelines
-    - TDD
-    - Testing tier preferences
-- Clean code practices
-    - General authoring practices
-    - Object oriented preferences
-    - Local preferences not enforceable by [tooling? — sentence looks cut off]
-- Drift check: are requirements, code, and acceptance tests all aligned
-
-### Dynamic Workflows vs Static Workflows
-- Not everything needs to be fixed the same way.
-- Preferences on particular steps
-    - Dev preferences
-    - Project differences
-
-## Existing Infrastructure
-Applies to anything that is managed by code
-### Conventions
-- How to add an infrastructure component
-    - Terraform
-    - CDK
+- groundcrew
+- spec-kit
+- conductor

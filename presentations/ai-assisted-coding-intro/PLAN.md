@@ -31,7 +31,7 @@ sub-bullets folded into their parent lines (L-02 caps at 6).
 
 ---
 
-## 2 · Intro + Feedback Loops — status: built
+## Part 1 · The Evolution of the Feedback Loop — status: built
 
 The spine of the talk. One statement slide, then a **vertical stack** of six
 two-column slides — diagram left, steps right — so the loop reads as one topic
@@ -73,60 +73,59 @@ Open items:
 
 ---
 
-## 3 · Conventions — status: planned
+## Part 2 · Managing Context — status: planned
 
-"How to add X" branches three ways.
+Conventions, Workflows, and Existing Infrastructure all answer the same
+question: how the agent gets the context it needs. Grouped under one part.
 
-| # | Layout | Content |
-|---|---|---|
-| — | L-07 three-up | External interface (REST / GraphQL field / RPC-WS handler) · Infrastructure component · Tests and tiers (e2e / integration / unit) |
+| # | Layout | Band | Content |
+|---|---|---|---|
+| — | L-03 divider | **ink** | "Part 2 — Managing Context" |
+| — | L-07 three-up | canvas | Conventions, "how to add X": External interface (REST / GraphQL field / RPC-WS handler) · Infrastructure component (Terraform / CDK) · Tests and tiers (e2e / integration / unit). Framing line: "Applies to anything that is managed by code" |
+| — | L-04 statement | canvas | "It's about encoding what you do in prompts and then iterating automatically." |
+| — | L-08 four-up | canvas | Tracking requirements · Refining tickets · Review cycle (adversarial, different model) · Drift check |
+| — | L-10 or L-08 | canvas | Implementation process guidelines (TDD, testing tiers) · Clean code practices (general authoring, OO preferences, local preferences) — **layout depends on the blocked line below** |
+| — | L-06 two-column | canvas | Dynamic vs static workflows — dev preferences, project differences |
+
+**BLOCKED — needs the user's wording.** `outline.md` reads "Local preferences not
+enforceable by [tooling? — sentence looks cut off]". It is the third sub-item of
+Clean code practices and load-bearing for that slide. Do not guess it.
+
+Resolved: "Existing Infrastructure" is no longer its own section. Terraform/CDK
+folded in as the Infrastructure component sub-items, which also makes the
+three-up symmetrical (each branch now has sub-items) and removes a duplicate
+"how to add X" framing.
+
+Note: the guidelines slide is **two** groups, not three — "local preferences" is
+a sub-bullet of clean code practices, not a peer. Pick the layout once the
+blocked line lands.
 
 ---
 
-## 4 · Cool Tricks — status: planned
+## Part 3 · Cool Tips, Tricks and Links — status: planned
 
-Four parallel scenarios, each with detail — too much for one slide.
-
-| # | Layout | Content |
-|---|---|---|
-| — | L-03 divider | "Cool Tricks" |
-| — | L-07 three-up | Refinement (Linear; structured English: user stories / EARS / Gherkin; INVEST splits) · Incidents (live logs + repo to triage) · Post mortems (generate monitoring dashboards) |
-| — | L-06 two-column | Load testing and improving/revalidating + isolated worktrees for concurrent features |
+| # | Layout | Band | Content |
+|---|---|---|---|
+| — | L-03 divider | **ink** | "Part 3 — Cool Tips, Tricks and Links" |
+| — | L-07 three-up | canvas | Refinement (Linear; structured English: user stories / EARS / Gherkin; INVEST splits) · Incidents (live logs + repo to triage) · Post mortems (generate monitoring dashboards) |
+| — | L-06 two-column | canvas | Load testing and improving/revalidating + isolated worktrees for concurrent features |
+| — | L-07 three-up | canvas | References: groundcrew · spec-kit · conductor |
 
 Note: "agents love red herrings" is delivery commentary — candidate for
 `<aside class="notes">` rather than slide text.
 
----
-
-## 5 · Workflows — status: planned
-
-| # | Layout | Content |
-|---|---|---|
-| — | L-03 divider | "Workflows" |
-| — | L-04 statement | "It's about encoding what you do in prompts and then iterating automatically." |
-| — | L-08 four-up | Tracking requirements · Refining tickets · Review cycle (adversarial, different model) · Drift check |
-| — | L-07 three-up | Implementation process guidelines (TDD, testing tiers) · Clean code practices · Local preferences not enforceable by tooling |
-| — | L-06 two-column | Dynamic vs static workflows — dev preferences, project differences |
-
-**Outline gap:** "Local preferences not enforceable by [tooling? — sentence looks
-cut off]". Needs the actual wording before it goes on a slide. Do not guess.
+**Open:** the References slide is names only. spec-kit and conductor already
+appear in Temperature Check ("canned, spec-kit/conductor"), so this slide should
+add something new — a URL each at minimum. Groundcrew appears nowhere else and
+arrives cold.
 
 ---
 
-## 6 · Existing Infrastructure — status: planned
+## Close — status: planned
 
-| # | Layout | Content |
-|---|---|---|
-| — | L-03 divider | "Existing Infrastructure" |
-| — | L-06 two-column | "Applies to anything that is managed by code" — adding an infrastructure component: Terraform, CDK |
-
----
-
-## 7 · Close — status: planned
-
-| # | Layout | Content |
-|---|---|---|
-| — | L-13 closing | Closing line still to be chosen — the drift-check question ("are requirements, code, and acceptance tests all aligned?") is the strongest candidate already in the outline. |
+| # | Layout | Band | Content |
+|---|---|---|---|
+| — | L-13 closing | ink | Closing line still to be chosen — the drift-check question ("are requirements, code, and acceptance tests all aligned?") is the strongest candidate already in the outline. |
 
 ---
 
@@ -140,11 +139,11 @@ cut off]". Needs the actual wording before it goes on a slide. Do not guess.
   resamples a rasterized slide mid-motion and softens display type. Do not add
   `backface-visibility: hidden` or `will-change: transform` either — both promote
   layers and cause *static* blur on the stacked sections.
-- **One surface for the whole deck** (`s-canvas`, #ffffff). This deliberately
-  drops the theme's canvas → cloud → fog → ink band rhythm to keep the six loop
-  slides reading as one continuous topic. Revisit when the divider sections
-  above get built — they were planned as ink slabs and will have nothing to
-  separate them.
+- **White (`s-canvas`) for every content slide; ink slabs for Part dividers
+  only.** The flat surface keeps the six loop slides reading as one continuous
+  topic; the three Part dividers going dark is then the deck's only band change,
+  which is what makes it read as a structural boundary rather than decoration.
+  Do not reintroduce cloud/fog tints for ordinary slides.
 - Blue is well past the design system's "at most twice per slide": Level 4 alone
   carries three `changed` tags and seven bot glyphs. Consequence of the glyph
   system, not a regression — but if the slides start reading as uniformly blue,
