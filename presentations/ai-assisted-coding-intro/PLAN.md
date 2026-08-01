@@ -1,152 +1,132 @@
 # Deck plan — On AI Assisted Coding
 
-Tracking doc, one entry per major outline section. Source of truth for content is
-`outline.md`; this file only records how it maps to slides and what state each
-section is in.
+Tracking doc for the **whole deck**, one entry per major outline section. Source
+of truth for content is `outline.md`; this file records how it maps to slides and
+what state each section is in. Rationale lives in `decisions.log`; the SVG
+regeneration task has its own spec in `svg-prompts.md`.
 
 Status legend: `built` · `in progress` · `planned`
+
+**Built so far: 4 top-level slides (9 including the vertical stack).** Everything
+from Conventions onward is still unbuilt.
 
 ---
 
 ## 0 · Opening — status: built
 
-| # | Layout | Band | Content |
+| # | Hash | Layout | Content |
 |---|---|---|---|
-| 01 | L-01 title | canvas | "On AI Assisted Coding" + subtitle |
+| 01 | `#/0` | L-01 title | "On AI Assisted Coding" + subtitle, blue chevrons |
 
 ---
 
-## 1 · Temperature Check — status: needs rework
+## 1 · Temperature Check — status: built
 
-Outline changed: the items were regrouped (vibe coding split out, "managing
-context" promoted to its own bullet). Now 7 top-level items — L-02 caps at 6.
+Resolved: the section now carries 6 items, with the spec-driven and workflows
+sub-bullets folded into their parent lines (L-02 caps at 6).
 
-Plan: keep L-02, fold the two sub-bullets of "Spec driven framework" and the
-sub-bullet of "Workflows" into their parent lines, giving 6 items:
-
-1. Prompt tests or new functions
-2. Vibe coding simple apps
-3. Plan mode in tools
-4. Spec driven framework — canned (spec-kit/conductor) or in house
-5. Workflows and dynamic workflows — prompts describing the whole SDLC
-6. Managing context
-
-| # | Layout | Band | Content |
+| # | Hash | Layout | Content |
 |---|---|---|---|
-| 02 | L-02 agenda | cloud | "Where are you at today?" — 6 items above |
-
-**TODO:** slide 02 in `index.html` still carries the old 5-item wording.
+| 02 | `#/1` | L-02 agenda | "Where are you at today?" — 6 items |
 
 ---
 
-## 2 · Intro + Feedback Loops — status: in progress
+## 2 · Intro + Feedback Loops — status: built
 
 The spine of the talk. One statement slide, then a **vertical stack** of six
-L-06 two-column slides — diagram left, steps right — so the loop reads as one
-topic that evolves rather than six separate slides.
-
-Uniform template by explicit request (overrides the skill's "vary the layout"
-heuristic): `.card-feature` + `.ph.ph-4x3` diagram placeholder on the left;
-eyebrow "Feedback Loops · N of 6", `d-md` heading, `ol.agenda.diff` steps,
-`badge badge-soft` use case on the right.
-
-**Stable spine treatment**: every stage carries the full normalized skeleton;
-nothing is ever removed. Unmarked steps recede to graphite, `li.diff-move` gets
-a blue left-bar and a mono tag (`added` / `changed`), `span.opt` marks the
-optional steps. CSS at the end of `theme/galileo.css` (deck-local copy), tokens
-only. See `decisions.log` for why this replaced the earlier +/- diff.
+two-column slides — diagram left, steps right — so the loop reads as one topic
+that evolves rather than six separate slides.
 
 | # | Hash | Layout | Content |
 |---|---|---|---|
 | 03 | `#/2` | L-04 statement | "It is still coding. / You have a different feedback loop." |
-| 04 | `#/3/0` | L-06 | Traditional — the baseline, every step human · all of it |
-| 04 | `#/3/1` | L-06 | AI — *changed*: prompt, generate code · center a div |
-| 04 | `#/3/2` | L-06 | Autonomous — *changed*: iterate, feed results back · debugging |
-| 04 | `#/3/3` | L-06 | TDD — *added*: failing tests, *added*: refactor · complex feature |
-| 04 | `#/3/4` | L-06 | Spec driven — *added*: prompt, generate specs · greenfield |
-| 04 | `#/3/5` | L-06 | Spec driven + workflows — *added*: author workflows · brownfield |
+| 04 | `#/3/0` | L-06 | Level 0 · Traditional · traditionally, all of it |
+| 04 | `#/3/1` | L-06 | Level 1 · AI Assisted Coding · center a div |
+| 04 | `#/3/2` | L-06 | Level 2 · Autonomous · debugging |
+| 04 | `#/3/3` | L-06 | Level 3 · Test Driven — TDD · add complex feature |
+| 04 | `#/3/4` | L-06 | Level 4 · Spec Driven · generate new greenfield apps |
+| 04 | `#/3/5` | L-06 | Level 5 · Spec Driven, Predefined Workflows · brownfield projects |
 
-**Actor glyphs**: every row carries a human or bot mark in a trailing column,
-showing who performs the step. Traditional is all human; the bot progressively
-takes over the `Prompt —` steps, ending with the human authoring only workflows
-and requirements. In progress — Traditional done, stages 2–6 pending.
+**Canonical steps.** Seven execution steps in fixed order — technical design
+(optional), failing tests, code, run, test, iterate, refactor — bracketed by
+three edges: `once` (author workflows, L5 only), `start` (specify requirements),
+`stop` (until requirements are satisfied). A level carries every step introduced
+at or before it; nothing is ever removed.
+
+**Actor glyphs.** Every row carries `:human:`, `:bot:`, `:laptop:`, or a
+human+bot pair. Run is machine at every level — it never changes hands. A step is
+tagged `changed` at the level where its actor changes, `added` where the step
+itself is new; earlier changes are carried unmarked.
+
+**Both pins use hidden spacers, not pixel offsets.** Levels without a pre-loop
+step reserve its slot with an invisible `.loop-edge.pre.spacer`; short lists pad
+to seven steps with `li.spacer` rows. Result: start at y=227 and stop at y=522 on
+all six. Spacers must mirror the real row's *structure* (tags and glyphs), not
+just its text, or the row heights drift ~2px. Hidden rows still increment the
+step counter, so they only ever go at the end of a list.
 
 Open items:
-- [x] Author the loop SVG diagrams (seven: skeleton + 1–6) in `assets/loops/` — wiring into placeholders still open for the slides agent.
-- [ ] Decide whether stage 6 belongs here or after the Brownfield divider —
-      it is outline-wise a Brownfield subsection, but it is the natural end of
-      the progression. Currently in the stack, with a brownfield badge.
+- [ ] Regenerate the six SVGs — see `svg-prompts.md`. They predate almost all of
+      the above and are the last thing out of sync.
+- [ ] `loop-00-skeleton.svg` is orphaned (skeleton slide folded into Traditional);
+      delete or keep deliberately.
 
 ---
 
-## 3 · Brownfield Projects — status: planned
+## 3 · Conventions — status: planned
 
-Outline is one line: "Brownfield projects have more context baked in."
-
-| # | Layout | Band | Content |
-|---|---|---|---|
-| — | L-03 divider | ink | "Brownfield Projects" |
-| — | L-04 statement | canvas | The one line, given air |
-
----
-
-## 4 · Conventions — status: planned
-
-Now a top-level section in the outline (it used to sit under Brownfield).
 "How to add X" branches three ways.
 
-| # | Layout | Band | Content |
-|---|---|---|---|
-| — | L-07 three-up | cloud | External interface (REST / GraphQL field / RPC-WS handler) · Infrastructure component · Tests and tiers (e2e / integration / unit) |
+| # | Layout | Content |
+|---|---|---|
+| — | L-07 three-up | External interface (REST / GraphQL field / RPC-WS handler) · Infrastructure component · Tests and tiers (e2e / integration / unit) |
 
 ---
 
-## 5 · Cool Tricks — status: planned · NEW SECTION
+## 4 · Cool Tricks — status: planned
 
-New in the revised outline. Four parallel scenarios, each with detail — too much
-for one L-08, so: divider, then two slides.
+Four parallel scenarios, each with detail — too much for one slide.
 
-| # | Layout | Band | Content |
-|---|---|---|---|
-| — | L-03 divider | ink | "Cool Tricks" |
-| — | L-07 three-up | cloud | Refinement (Linear, structured English: user stories / EARS / Gherkin, INVEST splits) · Incidents (live logs + repo to triage; agents love red herrings) · Post mortems (generate monitoring dashboards) |
-| — | L-06 two-column | canvas | Load testing and improving/revalidating + isolated worktrees for concurrent features (needs an isolated stack; requires workflow familiarity) |
+| # | Layout | Content |
+|---|---|---|
+| — | L-03 divider | "Cool Tricks" |
+| — | L-07 three-up | Refinement (Linear; structured English: user stories / EARS / Gherkin; INVEST splits) · Incidents (live logs + repo to triage) · Post mortems (generate monitoring dashboards) |
+| — | L-06 two-column | Load testing and improving/revalidating + isolated worktrees for concurrent features |
 
-Note: "Handle with care, agents love red herrings" is delivery commentary —
-candidate for `<aside class="notes">` rather than slide text.
-
----
-
-## 6 · Workflows — status: planned
-
-| # | Layout | Band | Content |
-|---|---|---|---|
-| — | L-03 divider | ink | "Workflows" |
-| — | L-04 statement | canvas | "It's about encoding what you do in prompts and then iterating automatically." |
-| — | L-08 four-up | canvas | Tracking requirements · Refining tickets · Review cycle (adversarial, different model) · Drift check |
-| — | L-07 three-up | cloud | Implementation process guidelines (TDD, testing tier preferences) · Clean code practices (general authoring, OO preferences) · Local preferences not enforceable by tooling |
-| — | L-06 two-column | canvas | Dynamic vs static workflows — not everything needs to be fixed the same way; dev preferences; project differences |
-
-**Outline gap:** line 125 reads "Local preferences not enforceable by [tooling?
-— sentence looks cut off]". Needs the user's actual wording before it goes on a
-slide. Do not guess.
+Note: "agents love red herrings" is delivery commentary — candidate for
+`<aside class="notes">` rather than slide text.
 
 ---
 
-## 7 · Existing Infrastructure — status: planned
+## 5 · Workflows — status: planned
 
-| # | Layout | Band | Content |
-|---|---|---|---|
-| — | L-03 divider | ink | "Existing Infrastructure" |
-| — | L-06 two-column | canvas | "Applies to anything that is managed by code" — how to add an infrastructure component: Terraform, CDK |
+| # | Layout | Content |
+|---|---|---|
+| — | L-03 divider | "Workflows" |
+| — | L-04 statement | "It's about encoding what you do in prompts and then iterating automatically." |
+| — | L-08 four-up | Tracking requirements · Refining tickets · Review cycle (adversarial, different model) · Drift check |
+| — | L-07 three-up | Implementation process guidelines (TDD, testing tiers) · Clean code practices · Local preferences not enforceable by tooling |
+| — | L-06 two-column | Dynamic vs static workflows — dev preferences, project differences |
+
+**Outline gap:** "Local preferences not enforceable by [tooling? — sentence looks
+cut off]". Needs the actual wording before it goes on a slide. Do not guess.
 
 ---
 
-## 8 · Close — status: planned
+## 6 · Existing Infrastructure — status: planned
 
-| # | Layout | Band | Content |
-|---|---|---|---|
-| — | L-13 closing | ink | Required by the design system. Closing line still to be chosen — the drift-check question ("are requirements, code, and acceptance tests all aligned?") is the strongest candidate already in the outline. |
+| # | Layout | Content |
+|---|---|---|
+| — | L-03 divider | "Existing Infrastructure" |
+| — | L-06 two-column | "Applies to anything that is managed by code" — adding an infrastructure component: Terraform, CDK |
+
+---
+
+## 7 · Close — status: planned
+
+| # | Layout | Content |
+|---|---|---|
+| — | L-13 closing | Closing line still to be chosen — the drift-check question ("are requirements, code, and acceptance tests all aligned?") is the strongest candidate already in the outline. |
 
 ---
 
@@ -155,6 +135,21 @@ slide. Do not guess.
 - Never invent content that is not in `outline.md`.
 - Do not change the `Reveal.initialize` config (1280×720, `margin: 0`,
   `center: false`) — the theme's absolute px assume that stage.
+- **All transitions are off** (`transition: 'none'`, `backgroundTransition:
+  'none'`, plus CSS `!important` overrides). Any transform-based transition
+  resamples a rasterized slide mid-motion and softens display type. Do not add
+  `backface-visibility: hidden` or `will-change: transform` either — both promote
+  layers and cause *static* blur on the stacked sections.
+- **One surface for the whole deck** (`s-canvas`, #ffffff). This deliberately
+  drops the theme's canvas → cloud → fog → ink band rhythm to keep the six loop
+  slides reading as one continuous topic. Revisit when the divider sections
+  above get built — they were planned as ink slabs and will have nothing to
+  separate them.
+- Blue is well past the design system's "at most twice per slide": Level 4 alone
+  carries three `changed` tags and seven bot glyphs. Consequence of the glyph
+  system, not a regression — but if the slides start reading as uniformly blue,
+  desaturate the *carried* glyphs and let only flagged rows stay blue.
 - Verify over HTTP with hash deep-links, screenshot at 1280×720, and *read* the
-  PNGs; a slide overflowing 720px is the failure no grep catches.
-- Nothing committed yet; work lives on branch `presentations/ai-assisted-coding-intro`.
+  PNGs. Chrome blocks port 5060 (`ERR_UNSAFE_PORT`) and silently screenshots an
+  error page — a measurement pass on that port looks clean and means nothing.
+- Committed through `8031fc0` on branch `presentations/ai-assisted-coding-intro`.
