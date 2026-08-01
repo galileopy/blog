@@ -595,3 +595,24 @@ ladder line from the Feedback Loops intro; the three section names of Part 2),
 except "where to go next" for Part 3, which is new connective text.
 
 Deck is now 17 slides. `outline.md` gained a matching `## Contents` section.
+
+## 2026-08-01 · Part 3 built
+
+Four slides: ink divider, "Beyond writing the code" three-up (refinement /
+incidents / post mortems), "Running wider" two-up (load testing / isolated
+worktrees), and the References three-up. Deck is now 21 slides.
+
+"Handle with care, agents love red herrings" went to `<aside class="notes">` on
+the tricks slide rather than onto the card — it is delivery commentary about how
+to use the incident trick, not a claim the slide is making.
+
+Load testing and worktrees were separate top-level bullets in the outline and
+are paired here on one slide. They share a shape — both are things you do around
+the loop rather than inside it, and both need infrastructure to be worth trying —
+so a two-up reads better than two thin slides.
+
+References carries the groundcrew URL the user supplied. spec-kit and conductor
+have descriptions only; their URLs are NOT known and must not be guessed. The
+descriptions reuse the outline's own framing from Temperature Check ("canned,
+spec-kit/conductor"), so nothing is invented, but the slide is incomplete until
+those two links land.

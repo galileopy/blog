@@ -188,6 +188,6 @@ It's about encoding what you do in prompts and then iterating automatically.
 
 ### References
 
-- groundcrew
+- groundcrew - https://github.com/ClipboardHealth/groundcrew
 - spec-kit
 - conductor
