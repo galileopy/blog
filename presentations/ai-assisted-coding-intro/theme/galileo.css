@@ -1,0 +1,732 @@
+/* ==========================================================================
+   galileo-presentation — a reveal.js theme
+   Fusion 1: HP color/shape system + IBM Plex Sans typography.
+   Source of truth: design/fusion-1-galileo-presentation/DESIGN.md
+
+   Load AFTER reveal.css. Requires reveal config width:1280 height:720 margin:0
+   so the design system's absolute px values map 1:1 to the stage.
+   ========================================================================== */
+
+/* ---------- vendored fonts (offline-safe; no network at present time) ---------- */
+@font-face {
+  font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 300;
+  src: url('fonts/ibm-plex-sans-latin-300-normal.woff2') format('woff2');
+  font-display: block;
+}
+@font-face {
+  font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400;
+  src: url('fonts/ibm-plex-sans-latin-400-normal.woff2') format('woff2');
+  font-display: block;
+}
+@font-face {
+  font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 500;
+  src: url('fonts/ibm-plex-sans-latin-500-normal.woff2') format('woff2');
+  font-display: block;
+}
+@font-face {
+  font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 600;
+  src: url('fonts/ibm-plex-sans-latin-600-normal.woff2') format('woff2');
+  font-display: block;
+}
+@font-face {
+  font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400;
+  src: url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  font-display: block;
+}
+@font-face {
+  font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500;
+  src: url('fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
+  font-display: block;
+}
+
+/* ==========================================================================
+   1 · TOKENS
+   ========================================================================== */
+:root {
+  /* --- colors: inherited whole from HP --- */
+  --gp-primary: #024ad8;
+  --gp-primary-bright: #296ef9;   /* use inside ink slabs */
+  --gp-primary-deep: #0e3191;     /* pressed / visited */
+  --gp-primary-soft: #c9e0fc;
+  --gp-on-primary: #ffffff;
+  --gp-ink: #1a1a1a;
+  --gp-ink-soft: #292929;
+  --gp-on-ink: #ffffff;
+  --gp-canvas: #ffffff;
+  --gp-cloud: #f7f7f7;
+  --gp-fog: #e8e8e8;
+  --gp-steel: #c2c2c2;
+  --gp-graphite: #636363;
+  --gp-charcoal: #3d3d3d;
+  --gp-hairline: #e8e8e8;
+  --gp-bloom-coral: #ff5050;
+  --gp-storm-deep: #356373;
+
+  /* --- type: inherited from IBM --- */
+  --gp-sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --gp-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  /* --- shape + rhythm: inherited from HP --- */
+  --gp-r-md: 4px;    /* buttons, inputs — stays sharp */
+  --gp-r-lg: 8px;
+  --gp-r-xl: 16px;   /* cards, photo frames — stays soft */
+  --gp-r-pill: 9999px;
+  --gp-lift: 0 2px 8px rgba(26, 26, 26, 0.08);
+  --gp-float: 0 8px 24px rgba(26, 26, 26, 0.12);
+
+  /* --- slide frame --- */
+  --gp-pad-x: 88px;
+  --gp-pad-y: 72px;
+
+  /* ======================================================================
+     reveal.js contract — these are the --r-* vars reveal itself consumes
+     ====================================================================== */
+  --r-background-color: #ffffff;
+
+  --r-main-font: var(--gp-sans);
+  --r-main-font-size: 16px;          /* our body-md; layouts set their own */
+  --r-main-color: var(--gp-ink);
+  --r-block-margin: 16px;
+
+  --r-heading-font: var(--gp-sans);
+  --r-heading-color: var(--gp-ink);
+  --r-heading-line-height: 1.0;
+  --r-heading-letter-spacing: normal;
+  --r-heading-text-transform: none;  /* reveal defaults to uppercase — wrong for us */
+  --r-heading-text-shadow: none;
+  --r-heading1-text-shadow: none;
+  --r-heading-font-weight: 300;      /* the IBM light-display signature */
+  --r-heading-margin: 0 0 24px 0;
+
+  --r-heading1-size: 72px;
+  --r-heading2-size: 56px;
+  --r-heading3-size: 44px;
+  --r-heading4-size: 32px;
+
+  --r-code-font: var(--gp-mono);
+
+  --r-link-color: var(--gp-primary);
+  --r-link-color-dark: var(--gp-primary-deep);
+  --r-link-color-hover: var(--gp-primary-bright);
+
+  --r-selection-background-color: var(--gp-primary-soft);
+  --r-selection-color: var(--gp-ink);
+
+  --r-overlay-element-bg-color: 26, 26, 26;
+  --r-overlay-element-fg-color: 255, 255, 255;
+}
+
+/* ==========================================================================
+   2 · STAGE
+   ========================================================================== */
+.reveal-viewport { background: #0d0d0d; }
+
+.reveal {
+  font-family: var(--gp-sans);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--gp-ink);
+  letter-spacing: 0.16px;
+}
+
+.reveal .slides { text-align: left; }
+
+.reveal .slides section {
+  width: 1280px;
+  height: 720px;
+  padding: var(--gp-pad-y) var(--gp-pad-x);
+  box-sizing: border-box;
+  background: var(--gp-canvas);
+  overflow: hidden;
+  /* NOTE: do NOT set `display` here. reveal.js writes display:block / display:none
+     as an INLINE style on every section to show and hide slides, so anything set
+     here loses the cascade — and forcing it with !important would unhide every
+     slide at once. Vertical centering therefore lives on .slide-inner below.
+
+     NOTE: do NOT set `position` here either. reveal lays slides out with
+     `.reveal .slides > section { position: absolute }` — same specificity as this
+     selector, so a `position: relative` here wins on source order and drops every
+     slide into normal flow. Slide 1 still looks right; slides 2..n stack below the
+     720px window and render as blank/black. Verified: this is what "all the slides
+     are black" looks like. The absolute positioning reveal applies is already the
+     containing block .chevron / .slide-foot / .layout-tag need. */
+}
+
+/* Vertical stacks: the OUTER section is only a container — reveal moves it and
+   gives it no surface. The inner sections are the real slides, so they keep the
+   full padding. (Zeroing padding here blanks the margins of every stacked slide.) */
+.reveal .slides section > section {
+  width: 1280px;
+  height: 720px;
+  padding: var(--gp-pad-y) var(--gp-pad-x);
+  box-sizing: border-box;
+}
+.reveal .slides section.stack { background: none; padding: 0; overflow: visible; }
+
+/* ---------- .slide-inner — the universal content wrapper ----------
+   Every layout wraps its content in this. It is the flex context that actually
+   centers the slide, since the <section> itself cannot be one (see above).
+   Excluded from it: .chevron, .slide-foot, .layout-tag — all absolute. */
+.reveal .slide-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- surface modes — HP's documented band vocabulary ---------- */
+.reveal section.s-canvas { background: var(--gp-canvas); color: var(--gp-ink); }
+.reveal section.s-cloud  { background: var(--gp-cloud);  color: var(--gp-ink); }
+.reveal section.s-fog    { background: var(--gp-fog);    color: var(--gp-ink); }
+.reveal section.s-ink    { background: var(--gp-ink);    color: var(--gp-on-ink); }
+
+.reveal section.s-ink h1,
+.reveal section.s-ink h2,
+.reveal section.s-ink h3,
+.reveal section.s-ink h4 { color: var(--gp-on-ink); }
+
+/* ==========================================================================
+   3 · TYPE SCALE
+   weight 300 at display sizes >=32px; steps to 400 at 24px and below.
+   The step-down is load-bearing — Plex Sans at 300 loses legibility fast.
+   ========================================================================== */
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--gp-sans);
+  font-weight: 300;
+  text-transform: none;
+  text-shadow: none;
+  line-height: 1.0;
+  margin: 0 0 24px 0;
+  color: var(--gp-ink);
+}
+
+.reveal h1 { font-size: 72px; letter-spacing: -0.5px; }
+.reveal h2 { font-size: 56px; letter-spacing: -0.4px; }
+.reveal h3 { font-size: 44px; letter-spacing: 0; }
+.reveal h4 { font-size: 32px; letter-spacing: 0; }
+
+.reveal .d-xxl { font-size: 72px; font-weight: 300; line-height: 1.0; letter-spacing: -0.5px; margin: 0; }
+.reveal .d-xl  { font-size: 56px; font-weight: 300; line-height: 1.0; letter-spacing: -0.4px; margin: 0; }
+.reveal .d-lg  { font-size: 44px; font-weight: 300; line-height: 1.0; margin: 0; }
+.reveal .d-md  { font-size: 32px; font-weight: 300; line-height: 1.0; margin: 0; }
+.reveal .d-sm  { font-size: 24px; font-weight: 400; line-height: 1.17; margin: 0; }
+.reveal .d-xs  { font-size: 20px; font-weight: 400; line-height: 1.0;  margin: 0; }
+
+.reveal .body-lg { font-size: 18px; font-weight: 400; line-height: 1.33; letter-spacing: 0; margin: 0; }
+.reveal .body    { font-size: 16px; font-weight: 400; line-height: 1.38; letter-spacing: 0.16px; margin: 0; }
+.reveal .body-em { font-size: 16px; font-weight: 600; line-height: 1.38; letter-spacing: 0.16px; margin: 0; }
+.reveal .cap     { font-size: 14px; font-weight: 400; line-height: 1.5;  letter-spacing: 0.16px; margin: 0; }
+.reveal .cap-sm  { font-size: 12px; font-weight: 400; line-height: 1.33; letter-spacing: 0.32px; margin: 0; }
+.reveal .mono    { font-family: var(--gp-mono); font-size: 12px; letter-spacing: 0.32px; }
+
+.reveal p { font-size: 16px; line-height: 1.38; letter-spacing: 0.16px; margin: 0 0 16px 0; }
+.reveal p:last-child { margin-bottom: 0; }
+
+.reveal .muted { color: var(--gp-charcoal); }
+.reveal .muted-dim { color: var(--gp-graphite); }
+.reveal section.s-ink .muted,
+.reveal section.s-ink .muted-dim { color: rgba(255, 255, 255, 0.72); }
+
+.reveal strong, .reveal b { font-weight: 600; }
+.reveal em, .reveal i { font-style: italic; }
+
+/* eyebrow — sentence case; IBM resists all-caps tracked eyebrows */
+.reveal .eyebrow {
+  font-size: 14px; font-weight: 400; letter-spacing: 0.16px;
+  color: var(--gp-primary); margin: 0 0 20px 0;
+}
+.reveal section.s-ink .eyebrow { color: var(--gp-primary-bright); }
+
+.reveal .rule-accent {
+  width: 56px; height: 3px; background: var(--gp-primary);
+  border: 0; margin: 0 0 24px 0;
+}
+.reveal section.s-ink .rule-accent { background: var(--gp-primary-bright); }
+
+.reveal a { color: var(--gp-primary); text-decoration: none; }
+.reveal a:hover { color: var(--gp-primary-bright); }
+.reveal section.s-ink a { color: var(--gp-primary-bright); }
+
+/* ==========================================================================
+   4 · SIGNATURE MOTIF — the HP chevron pair
+   Hero-only architectural element tied to the wordmark. Never inline noise.
+   ========================================================================== */
+.reveal .chevron {
+  position: absolute; top: 0; height: 100%; width: 150px;
+  background: var(--gp-primary); pointer-events: none; z-index: 0;
+}
+.reveal .chevron.left  { left: -40px;  clip-path: polygon(0 0, 55% 0, 100% 100%, 45% 100%); }
+.reveal .chevron.right { right: -40px; clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%); }
+.reveal .chevron.soft  { background: var(--gp-primary-soft); }
+/* Do NOT add a `.chevron + *` sibling rule here to lift content above the motif.
+   It matches the SECOND chevron, knocking it out of position:absolute and into
+   flow, where it eats the slide height. .slide-inner already carries
+   position:relative + z-index:1, which is what puts content over the chevrons. */
+
+/* ==========================================================================
+   5 · COMPONENTS
+   ========================================================================== */
+.reveal .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 44px; padding: 12px 24px;
+  font-family: var(--gp-sans); font-size: 14px; font-weight: 500;
+  line-height: 1.4; letter-spacing: 0.5px; text-transform: uppercase;
+  border-radius: var(--gp-r-md); border: 1px solid transparent;
+}
+.reveal .btn-primary { background: var(--gp-primary); color: var(--gp-on-primary); }
+.reveal .btn-primary-bright { background: var(--gp-primary-bright); color: var(--gp-on-primary); }
+.reveal .btn-outline { background: transparent; color: var(--gp-primary); border-color: var(--gp-primary); }
+.reveal .btn-outline-on-dark { background: transparent; color: var(--gp-on-ink); border-color: rgba(255,255,255,0.5); }
+
+.reveal .card {
+  background: var(--gp-canvas); border-radius: var(--gp-r-xl);
+  padding: 24px; box-shadow: var(--gp-lift);
+}
+.reveal .card-feature {
+  background: var(--gp-cloud); border-radius: var(--gp-r-xl); padding: 32px;
+}
+.reveal section.s-ink .card { background: var(--gp-ink-soft); box-shadow: none; border: 1px solid rgba(255,255,255,0.12); }
+.reveal .card-num {
+  font-family: var(--gp-mono); font-size: 12px; letter-spacing: 0.32px;
+  color: var(--gp-primary); margin-bottom: 14px; display: block;
+}
+.reveal section.s-ink .card-num { color: var(--gp-primary-bright); }
+
+.reveal .badge {
+  display: inline-flex; align-items: center;
+  background: var(--gp-ink); color: var(--gp-on-primary);
+  border-radius: var(--gp-r-lg); padding: 6px 12px;
+  font-size: 14px; line-height: 1.3;
+}
+.reveal .badge-soft { background: var(--gp-primary-soft); color: var(--gp-primary-deep); }
+
+/* placeholder frames — swap for real <img> in a 16px frame */
+.reveal .ph {
+  background: var(--gp-fog); border-radius: var(--gp-r-lg);
+  display: grid; place-items: center;
+  color: var(--gp-steel); font-family: var(--gp-mono);
+  font-size: 11px; letter-spacing: 0.32px;
+}
+.reveal .ph-16x9 { aspect-ratio: 16/9; }
+.reveal .ph-4x3  { aspect-ratio: 4/3; }
+.reveal .ph-1x1  { aspect-ratio: 1/1; }
+.reveal section.s-ink .ph { background: var(--gp-ink-soft); color: var(--gp-graphite); }
+
+/* photography sits in 16px frames; never circular masks */
+.reveal .frame { border-radius: var(--gp-r-xl); overflow: hidden; display: block; }
+.reveal .frame img { display: block; width: 100%; height: auto; }
+.reveal img { max-width: 100%; border: 0; box-shadow: none; background: none; }
+
+/* ==========================================================================
+   6 · LAYOUT PRIMITIVES
+   ========================================================================== */
+.reveal .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+.reveal .grid-2-wide-l { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: center; }
+.reveal .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.reveal .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.reveal .stack-md > * + * { margin-top: 16px; }
+.reveal .stack-lg > * + * { margin-top: 24px; }
+.reveal .row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.reveal .measure { max-width: 62ch; }
+.reveal .center { text-align: center; }
+
+/* numbered walkthrough list */
+.reveal ol.agenda { list-style: none; margin: 0; padding: 0; counter-reset: ag; }
+.reveal ol.agenda li {
+  counter-increment: ag; display: grid; grid-template-columns: 56px 1fr;
+  align-items: baseline; gap: 20px; padding: 16px 0;
+  border-bottom: 1px solid var(--gp-hairline);
+  font-size: 20px; line-height: 1.0;
+}
+.reveal ol.agenda li:last-child { border-bottom: 0; }
+.reveal ol.agenda li::before {
+  content: counter(ag, decimal-leading-zero);
+  font-family: var(--gp-mono); font-size: 14px; color: var(--gp-primary);
+}
+.reveal section.s-ink ol.agenda li { border-color: rgba(255,255,255,0.18); }
+.reveal section.s-ink ol.agenda li::before { color: var(--gp-primary-bright); }
+
+/* process steps */
+.reveal .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.reveal .steps.steps-3 { grid-template-columns: repeat(3, 1fr); }
+.reveal .step { padding: 0 28px; border-left: 1px solid var(--gp-hairline); }
+.reveal .step:first-child { padding-left: 0; border-left: 0; }
+.reveal .step-n {
+  font-family: var(--gp-mono); font-size: 12px; letter-spacing: 0.32px;
+  color: var(--gp-primary); display: block; margin-bottom: 12px;
+}
+.reveal section.s-ink .step { border-color: rgba(255,255,255,0.18); }
+.reveal section.s-ink .step-n { color: var(--gp-primary-bright); }
+
+/* standard bullet list */
+.reveal ul:not(.agenda) { display: block; margin: 0 0 16px 0; padding-left: 0; list-style: none; }
+.reveal ul:not(.agenda) li {
+  position: relative; padding-left: 26px; margin-bottom: 14px;
+  font-size: 18px; line-height: 1.33;
+}
+.reveal ul:not(.agenda) li::before {
+  content: ""; position: absolute; left: 0; top: 9px;
+  width: 10px; height: 2px; background: var(--gp-primary);
+}
+.reveal section.s-ink ul:not(.agenda) li::before { background: var(--gp-primary-bright); }
+
+/* comparison table */
+.reveal table.cmp { width: 100%; border-collapse: collapse; margin: 0; font-size: 16px; }
+.reveal table.cmp th, .reveal table.cmp td {
+  text-align: left; padding: 15px 20px;
+  border-bottom: 1px solid var(--gp-hairline);
+  font-size: 16px; letter-spacing: 0.16px;
+}
+.reveal table.cmp thead th {
+  font-weight: 600; font-size: 14px; color: var(--gp-charcoal);
+  border-bottom: 1px solid var(--gp-steel);
+}
+.reveal table.cmp tbody tr:last-child td { border-bottom: 0; }
+.reveal table.cmp td:first-child { color: var(--gp-charcoal); }
+.reveal table.cmp .yes { color: var(--gp-primary); font-weight: 600; }
+.reveal table.cmp .no  { color: var(--gp-steel); }
+.reveal section.s-ink table.cmp th,
+.reveal section.s-ink table.cmp td { border-color: rgba(255,255,255,0.18); color: var(--gp-on-ink); }
+.reveal section.s-ink table.cmp thead th { color: rgba(255,255,255,0.72); }
+
+/* quote */
+.reveal .quote-mark {
+  font-size: 96px; font-weight: 300; line-height: 0.6;
+  color: var(--gp-primary-bright); display: block; margin-bottom: 8px;
+}
+.reveal blockquote {
+  background: none; box-shadow: none; border: 0;
+  margin: 0; padding: 0; font-style: normal; width: auto;
+  font-size: 32px; font-weight: 300; line-height: 1.25;
+}
+.reveal .attrib { display: flex; align-items: center; gap: 14px; margin-top: 36px; }
+.reveal .avatar {
+  width: 48px; height: 48px;
+  border-radius: var(--gp-r-md);   /* 4px squares — never circular */
+  background: var(--gp-ink-soft); border: 1px solid rgba(255,255,255,0.2);
+  flex-shrink: 0; overflow: hidden;
+}
+.reveal .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* code
+   Code always sits on an ink surface, on every band — NOT on the slide's own
+   band. monokai's token palette is built for a dark ground; on cloud or canvas
+   its greens and pinks drop to roughly 1.5:1 against the background and the
+   unhighlighted text washes out entirely. A code block is a card, so it takes
+   the 16px card radius. */
+.reveal pre {
+  width: 100%; margin: 0 0 16px 0; box-shadow: none;
+  font-size: 15px; line-height: 1.5;
+  border-radius: var(--gp-r-xl); background: var(--gp-ink);
+  overflow: hidden;
+}
+.reveal pre code {
+  font-family: var(--gp-mono); padding: 22px 26px;
+  border-radius: var(--gp-r-xl); background: var(--gp-ink);
+  color: #e8e8e8; max-height: 440px;
+}
+/* on an ink slab, lift the block off the background so it still reads as a card */
+.reveal section.s-ink pre, .reveal section.s-ink pre code { background: #000; }
+/* line-number gutter from the bundled highlightjs-line-numbers */
+.reveal pre code .hljs-ln-numbers {
+  color: var(--gp-graphite); text-align: right;
+  padding-right: 16px; user-select: none;
+}
+.reveal pre code td.hljs-ln-code { padding-left: 0; }
+.reveal code { font-family: var(--gp-mono); }
+
+/* ==========================================================================
+   7 · SLIDE CHROME (footer / layout tag)
+   ========================================================================== */
+.reveal .slide-foot {
+  position: absolute; left: var(--gp-pad-x); right: var(--gp-pad-x); bottom: 34px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
+  color: var(--gp-steel); z-index: 2;
+}
+.reveal .slide-foot .brand { color: var(--gp-graphite); }
+.reveal section.s-ink .slide-foot { color: rgba(255,255,255,0.4); }
+.reveal section.s-ink .slide-foot .brand { color: rgba(255,255,255,0.55); }
+
+.reveal .layout-tag {
+  position: absolute; top: 30px; right: var(--gp-pad-x);
+  font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
+  color: var(--gp-graphite); background: rgba(0,0,0,0.04);
+  border: 1px solid var(--gp-hairline); border-radius: var(--gp-r-pill);
+  padding: 4px 12px; z-index: 2;
+}
+.reveal section.s-ink .layout-tag {
+  color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.18);
+}
+/* stencil-only affordance; hidden in a real talk unless .show-tags on .reveal */
+.reveal:not(.show-tags) .layout-tag { display: none; }
+
+/* ---------- contents / index grid ----------
+   For a slide that lists many short entries (the stencil's L-00, a long table
+   of contents). Without these rules the cells collapse into one tall flow list
+   that overruns 720px — an index slide MUST have a column count. */
+.reveal .index-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 32px;
+}
+.reveal .index-cell {
+  border-top: 1px solid var(--gp-hairline);
+  padding-top: 10px;
+}
+.reveal section.s-ink .index-cell { border-top-color: rgba(255,255,255,0.18); }
+.reveal .index-cell .ix {
+  display: block; font-family: var(--gp-mono); font-size: 11px;
+  letter-spacing: 0.32px; color: var(--gp-primary); margin-bottom: 4px;
+}
+.reveal .index-cell .nm { font-size: 16px; line-height: 1.3; }
+.reveal .index-cell .us {
+  font-size: 13px; line-height: 1.35; letter-spacing: 0.16px;
+  color: var(--gp-graphite); margin-top: 2px;
+}
+
+/* ==========================================================================
+   8 · LAYOUT ARCHETYPES  (see layouts.md for the markup of each)
+   ========================================================================== */
+
+/* L-01 title */
+.reveal .layout-title .slide-inner {
+  align-items: center; text-align: center; padding: 0 130px;
+}
+
+/* L-03 section divider */
+.reveal .layout-divider .slide-inner { padding-left: 120px; }
+
+/* L-04 statement
+   Measure is in px, NOT ch. `ch` on .slide-inner resolves against ITS font-size
+   (16px body), not the 56px display type inside it — so a `22ch` cap computes to
+   ~187px and breaks a statement to one word per line. Any max-width on a wrapper
+   holding display type must be px, or live on the heading itself. */
+.reveal .layout-statement .slide-inner { max-width: 880px; }
+
+/* L-12 full-bleed visual */
+.reveal section.layout-fullbleed { padding: 0; }
+.reveal .layout-fullbleed .slide-inner { justify-content: flex-end; }
+.reveal .layout-fullbleed .bleed {
+  position: absolute; inset: 0; border-radius: 0;
+  background: var(--gp-fog); display: grid; place-items: center;
+}
+.reveal .layout-fullbleed .bleed img { width: 100%; height: 100%; object-fit: cover; }
+.reveal .layout-fullbleed .caption-bar {
+  position: relative; background: var(--gp-ink); color: var(--gp-on-ink);
+  padding: 28px var(--gp-pad-x) 34px;
+}
+.reveal .layout-fullbleed .caption-bar .cap { color: rgba(255,255,255,0.72); }
+.reveal .layout-fullbleed .slide-foot { color: rgba(255,255,255,0.4); }
+.reveal .layout-fullbleed .slide-foot .brand { color: rgba(255,255,255,0.55); }
+
+/* ==========================================================================
+   9 · PROGRESS / SLIDE NUMBER
+   reveal's arrow controls are disabled in the template — they collide with
+   .slide-foot and a designed deck is driven by keyboard or clicker anyway.
+   The slide number IS reveal's (auto-counted); it is restyled to sit in the
+   footer's right slot so slides never hard-code their own page number.
+   ========================================================================== */
+.reveal .progress { color: var(--gp-primary); height: 3px; }
+
+.reveal .slide-number {
+  background: none;
+  color: var(--gp-steel);
+  font-family: var(--gp-mono);
+  font-size: 11px;
+  letter-spacing: 0.32px;
+  right: var(--gp-pad-x);
+  bottom: 34px;
+  padding: 0;
+}
+.reveal .slide-number a { color: inherit; }
+/* On an ink slab the footer inverts, so the number must too. .slide-number is a
+   sibling of .slides — not a descendant of the current section — so CSS alone
+   can't see the band. The template toggles .on-ink on .reveal per slidechanged. */
+.reveal.on-ink .slide-number { color: rgba(255, 255, 255, 0.4); }
+
+/* ==========================================================================
+   10 · PRINT / PDF EXPORT (?print-pdf)
+   ========================================================================== */
+/* Do NOT declare `@page { size: ... }` here. reveal injects its own @page sized
+   from the config when it enters print view; a competing declaration in this
+   file collapses the whole deck onto a single page (verified: 7 pages -> 1).
+   See SKILL.md for the export routes that actually work. */
+@media print {
+  .reveal .layout-tag { display: none !important; }
+  .reveal section { box-shadow: none !important; }
+  /* keep the design system's ink slabs and accents in the export */
+  .reveal, .reveal .slides section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* sub-line under an agenda item — carries the outline's second level without a
+   nested <ol>, which would restart the counter and break the 56px rail.
+   grid-column:2 keeps it under the text, not under the number. */
+.reveal ol.agenda li .sub {
+  grid-column: 2;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: 0.32px;
+  color: var(--gp-graphite);
+}
+
+/* feedback-loop stack — stable spine + moving part.
+   The skeleton is identical at every stage; nothing is ever removed. Unmarked
+   steps recede to graphite so the eye lands on the one or two rows that moved. */
+/* loop stack — the list is one diagram being amended, so the heading holds a
+   fixed spot and the steps only ever grow downward. Without this the whole
+   column re-centers on every stage and the shared rows appear to drift. */
+.reveal .slides section.layout-loop { padding-top: 48px; }
+.reveal .layout-loop .slide-inner { justify-content: flex-start; }
+/* the steps column is top-aligned so rows never drift between stages; the
+   diagram is not part of that rail, so it stays centered on the stage. The grid
+   takes the full inner height (flex:1) rather than the copy's height, so the
+   card's center is the same y on every stage regardless of step count. */
+.reveal .layout-loop .grid-2 { align-items: start; flex: 1; }
+/* The diagram replaces the .card-feature rather than sitting inside it: the SVG
+   is already a composed figure on its own ground, so a card around it just
+   wasted 32px of padding on every side. It takes the full column and centers
+   against the stage while the steps column stays top-aligned. */
+.reveal .layout-loop .loop-diagram {
+  align-self: center;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.reveal .layout-loop .stack-md > .eyebrow { margin-bottom: 0; }
+.reveal .layout-loop h4.d-md {
+  min-height: 68px;   /* two lines at d-md; one-line titles hold the same rail */
+  margin-bottom: 4px;
+}
+
+/* use-case bar — pinned across the full stage above .slide-foot rather than
+   flowing with the right column, so it holds the same line on every stage no
+   matter how many steps that stage carries. Lives OUTSIDE .slide-inner, like
+   .slide-foot, since it is positioned against the section. */
+.reveal .use-case {
+  position: absolute;
+  left: var(--gp-pad-x); right: var(--gp-pad-x); bottom: 60px;
+  display: flex; align-items: baseline; gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--gp-hairline);
+  z-index: 2;
+}
+.reveal .use-case::before {
+  content: "use case";
+  font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
+  color: var(--gp-steel);
+}
+.reveal .use-case.brownfield::before { content: "context"; }
+.reveal .use-case .uc-text { font-size: 18px; color: var(--gp-ink); }
+.reveal .use-case .uc-note {
+  margin-left: auto; font-size: 14px; letter-spacing: 0.32px;
+  color: var(--gp-graphite);
+}
+
+/* loop edges — the entry and exit conditions wrap the numbered list rather than
+   sitting inside it, so the numbering counts execution steps only. Same grid as
+   an agenda row, with a mono label where the number would be. */
+.reveal .loop-edge {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 20px;
+  align-items: baseline;
+  padding: 8px 0;
+  font-size: 18px;
+  line-height: 1.0;
+  letter-spacing: 0.16px;
+  color: var(--gp-graphite);
+}
+.reveal .loop-edge::before {
+  font-family: var(--gp-mono);
+  font-size: 11px;
+  letter-spacing: 0.32px;
+  color: var(--gp-steel);
+}
+.reveal .loop-edge.pre::before { content: "once"; }
+.reveal .loop-edge.in::before { content: "start"; }
+.reveal .loop-edge.out::before { content: "stop"; }
+.reveal .loop-edge.pre,
+.reveal .loop-edge.in { border-bottom: 1px solid var(--gp-hairline); }
+
+/* an edge can be the moving part too — the workflows stage adds a pre-loop step */
+.reveal .loop-edge.diff-move {
+  color: var(--gp-ink);
+  border-left: 3px solid var(--gp-primary);
+  margin-left: -15px; padding-left: 17px;
+}
+.reveal .loop-edge.diff-move::before { color: var(--gp-primary); }
+
+.reveal ol.agenda.diff { margin-top: 14px; }
+.reveal .loop-edge.in + ol.agenda.diff { margin-top: 0; }
+.reveal ol.agenda.diff + .loop-edge.out { margin-top: 0; }
+.reveal ol.agenda.diff li { color: var(--gp-graphite); }
+.reveal ol.agenda.diff li::before { color: var(--gp-steel); }
+
+/* the widest stage carries 11 rows including the three edges; the theme's
+   default 20px/16px agenda rhythm overflows 720px well before that, so the
+   whole stack runs tighter. Applied to all stages, not just the long ones, so
+   row height is identical as you arrow down. */
+/* the third column holds the trailing tag; without it the tag is auto-placed on
+   a new row and doubles the height of the step. */
+.reveal ol.agenda.diff li {
+  padding: 8px 0; font-size: 18px;
+  grid-template-columns: 56px 1fr auto;
+}
+
+.reveal ol.agenda.diff li.diff-move {
+  color: var(--gp-ink);
+  border-left: 3px solid var(--gp-primary);
+  margin-left: -15px; padding-left: 17px;
+}
+.reveal ol.agenda.diff li.diff-move::before { color: var(--gp-primary); }
+.reveal ol.agenda.diff li .diff-tag,
+.reveal .loop-edge .diff-tag {
+  font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
+  color: var(--gp-primary); margin-left: 10px;
+}
+/* optional steps: always on the board, never required */
+.reveal ol.agenda.diff li .opt {
+  font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
+  color: var(--gp-steel); margin-left: 8px;
+}
+
+/* ==========================================================================
+   TRANSFORM CRISPNESS
+   reveal builds the stage as a 3D context (`perspective` on .slides,
+   `transform-style: preserve-3d` on the sections) for its cube/page
+   transitions. None of the transitions this deck uses need 3D, and the cost is
+   that every slide is composited as a texture and resampled while it moves —
+   which reads as headings going soft/blurry mid-transition. Flattening the
+   context keeps text on the normal glyph-rasterisation path.
+   ========================================================================== */
+.reveal .slides {
+  perspective: none;
+  perspective-origin: 50% 50%;
+}
+.reveal .slides section,
+.reveal .slides section > section {
+  transform-style: flat;
+}
+
+/* Belt and braces for the same goal: reveal ships transition declarations on
+   .slides and on every section regardless of the configured transition, and any
+   one of them re-introduces an animated transform. Text must be crisp on every
+   frame, so nothing here animates at all. */
+.reveal .slides,
+.reveal .slides section,
+.reveal .slides section > section {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Do NOT add `backface-visibility: hidden` or `will-change: transform` here.
+   Either one promotes every section to its own composited layer; nested stack
+   sections then land on a fractional offset and are rasterised once and scaled,
+   which shows up as text that is blurry even while the slide is standing still.
+   Verified: that is what "the blur is static now" looked like. Flattening the
+   3D context is enough on its own. */

@@ -1,0 +1,189 @@
+# Decisions log — On AI Assisted Coding
+
+Rationale and reversible choices. `outline.md` stays a plain outline; `PLAN.md`
+holds the slide mapping; this file holds the why.
+
+---
+
+## 2026-08-01 · Outline stays an outline
+
+Explanatory prose and diff annotations (`<- changed`, `<- added`) do not belong
+in `outline.md`. Decisions live here or in chat.
+
+## 2026-08-01 · Requirements collection is a step, not a preamble
+
+"Once requirements are specified" / "As requirements are specified" were leads
+above the list. They are now the loop's first step, "Collect requirements", in
+every stage — it is part of the loop, not a precondition to it.
+
+Paired with this: "Until requirements are satisfied" is **not** optional. It is
+the loop's general stop condition and carries no `*`. Technical design is now
+the only optional step.
+
+Refined further: both are *edges*, not steps. They sit outside the ordered list
+(`p.loop-edge.in` / `p.loop-edge.out`, mono `start` / `stop` where the number
+would be), so the numbering counts execution steps only. Mirrored in the outline
+as `Start:` / `Stop:` lines bracketing each loop's bullets.
+
+Resolved: "Author project specific workflows" is a *third* edge, above `Start:`
+— a project-level prerequisite, not a loop step. Labelled `once` in the deck
+(`p.loop-edge.pre`), and it carries the `added` mark, since it is what that
+stage contributes. So a stage can have a moving part outside the loop.
+
+## 2026-08-01 · Technical design is optional, never dropped
+
+"Technical design of a solution *" is available in almost every loop stage — it
+was omitted from some stages in the original outline only to avoid repetition,
+not because it disappears.
+
+Consequence: the loops are now normalized. Every stage lists the full skeleton;
+`*` marks a step that is optional (always available, not always required).
+Nothing is ever removed between stages.
+
+## 2026-08-01 · Stack shows a stable spine, not a +/- diff
+
+Superseded the earlier add/remove treatment (blue `+` rows, coral struck-through
+`−` list). With nothing being removed, a diff was the wrong metaphor.
+
+Now: unmarked steps recede to graphite; the one or two steps that actually move
+carry a blue left-bar and a mono tag — `added` for a new step, `changed` for a
+step that was rewritten. The audience sees one skeleton evolving rather than six
+lists.
+
+The moving parts, stage by stage:
+
+| Stage | Moves |
+|---|---|
+| Traditional | — (establishes the skeleton) |
+| AI | *changed*: code, compile → prompt, generate code |
+| Autonomous | *changed*: iterate manually → iterate, feed results back into agent |
+| TDD | *added*: prompt — generate failing tests |
+| Spec driven | *added*: prompt — generate specs |
+| Spec driven + workflows | *added*: author project specific workflows |
+
+## 2026-08-01 · "The coding feedback loop" opens the stack
+
+The renamed skeleton section becomes stack slide 0, ahead of Traditional — the
+stable components presented once, then only the moving parts iterate. Its build
+step is tagged `varies` rather than `added`/`changed`, since it is the slot the
+other six stages fill. The three tag words are UI chrome, not outline content.
+
+## 2026-08-01 · No transitions anywhere — text must be crisp on every frame
+
+Superseded the loop-stack-only setting below. The blur was never a theme bug: it
+is what animating a transform costs. The browser renders a slide to a texture at
+its pre-transform size and resamples that texture while it moves, so display
+type softens mid-flight and snaps back at rest. No transition setting avoids it,
+because every reveal transition is a transform.
+
+So: `transition: 'none'` and `backgroundTransition: 'none'` deck-wide, the
+per-slide `data-transition` attributes removed (one source of truth), and
+`transition/animation: none !important` on `.slides` and the sections, since
+reveal ships transition declarations regardless of the configured mode.
+
+Slides cut. Nothing moves, nothing is ever resampled.
+
+## 2026-08-01 · (superseded) No transition inside the loop stack
+
+`data-transition="none"` on all seven nested sections. The stack is one diagram
+being amended; sliding it vertically implies seven separate things. With the
+transition off, the shared rows are pixel-identical between stages and only the
+marked row visibly changes — the animation *is* the diff.
+
+Side effect: entering and leaving the stack horizontally is also instant, since
+`data-transition` governs a slide's in and out together. Acceptable; the
+alternative (`slide-in none-out` on the first) makes reverse navigation slide
+sideways into the top of the stack, which is worse.
+
+## 2026-08-01 · Use case is a pinned full-width bar
+
+The use case was a `badge-soft` flowing at the end of the right column, so it
+sat at a different height on every stage. It is now `div.use-case`, absolutely
+positioned across the full stage above `.slide-foot` — outside `.slide-inner`,
+like `.slide-foot` itself, since it is positioned against the section. Mono
+`use case` label on the left, the case in 18px ink, and the stage's aside
+("You'd need specific skills") pushed to the right edge.
+
+Stage 6 has no use case; it carries the brownfield line under a `context` label
+in the same bar.
+
+## 2026-08-01 · Heading is pinned; the list only grows downward
+
+`.slide-inner` centers its content by default, so every stage re-centered the
+whole column and the shared rows appeared to drift between stages — which
+defeats the point of the no-transition cut. On `.layout-loop`: `justify-content:
+flex-start`, `grid-2 { align-items: start }`, and a `min-height: 68px` on the
+`d-md` heading so one-line and two-line titles hold the same rail. Steps now
+start at the same y on all seven and the list extends downward.
+
+Paid for by dropping the loop slides' top padding to 48px so the widest stage
+(10 rows incl. edges) still clears the use-case bar. That is a per-layout
+padding override, not a change to the type scale.
+
+## 2026-08-01 · Flattened reveal's 3D stage to stop headings blurring
+
+reveal puts `perspective` on `.slides` and `transform-style: preserve-3d` on the
+sections so its cube/page transitions work. Side effect: each slide is
+composited as a texture and resampled while it moves, so display type visibly
+softens mid-transition. This deck uses slide/fade/none only — none need 3D — so
+`.slides { perspective: none }` plus `transform-style: flat` on the sections
+puts text back on the normal glyph-rasterisation path.
+
+Cost: the 3D transitions (`cube`, `page`) would no longer work if ever selected.
+Acceptable; they are not in this deck's vocabulary.
+
+Correction: the first attempt also set `backface-visibility: hidden`, which made
+things worse — it promotes every section to its own composited layer, and the
+nested stack sections then sit on a fractional offset and get rasterised once
+and scaled. Result: text blurry *while standing still*, and only on the loop
+slides, since those are the nested ones. Removed; flattening the 3D context is
+enough on its own. There is a comment in the theme warning against re-adding it
+or `will-change: transform`.
+
+## 2026-08-01 · Loop diagrams replace the card, not fill it
+
+The seven SVGs in `assets/loops/` are wired into the stack. They stand in place
+of `.card-feature` rather than inside it — each SVG is already a composed figure
+on its own ground, so a card around it only spent 32px of padding a side and
+shrank the drawing. The diagram now takes the full left column and centers
+against the stage; the steps column stays top-aligned on its rail.
+
+Open: the SVGs predate the refactor step, so stages 4–6 show it in the list but
+not in the ring. They also carry their own small "n of 6" counter, which
+duplicates the eyebrow.
+
+## 2026-08-01 · Loop stack uses one uniform template
+
+Overrides the reveal skill's "never repeat a layout more than twice in a row"
+heuristic, by explicit request: the six stages are the same idea evolving, so
+they get the same L-06 two-column frame (diagram left, steps right) in a single
+vertical stack. Varying the layout would read as six unrelated topics.
+
+## 2026-08-01 · Loop step list runs one notch tighter
+
+The widest stage carries 9 steps; the theme's default agenda rhythm (20px /
+16px padding) overflows 720px there. `ol.agenda.diff` drops to 18px / 11px
+padding — applied to all six so row height is identical across the stack.
+This is a modifier on the theme's own list, not a new type size.
+
+## 2026-08-01 · Temperature check shows the outline's second level
+
+Sub-items render as a `<span class="sub">` inside the agenda `li`, not a nested
+`<ol>` — a nested list restarts the counter and breaks the 56px number rail.
+
+## 2026-08-01 · Deck lives outside the blog's link graph
+
+`presentations/` is not in `_config.yml`'s `exclude:`, so it builds and
+publishes at `/blog/presentations/…`, but `index.html` only renders the post
+list, so nothing links to it. Assets are relative throughout, which is what
+makes it survive `baseurl: "/blog"`.
+
+---
+
+## Open
+
+- Six SVG loop diagrams still to author; `.ph.ph-4x3` placeholders stand in.
+- Stage 6 (spec driven + predefined workflows) sits inside the stack with a
+  brownfield badge, though the outline files it under Brownfield. Undecided.
+- `outline.md` line ~125: "Local preferences not enforceable by [tooling? —
+  sentence looks cut off]" — needs the real wording before it goes on a slide.
