@@ -526,3 +526,26 @@ on rows that carry two tags (which is what wrapped L5's design row earlier).
 Both variants right-align, so the glyph rail still reads as one column.
 
 Re-measured: start y=227, stop y=522 on all six.
+
+## 2026-08-01 · SVGs: regenerate from a script, on fixed slots
+
+The six diagrams were authored against a much older step list and had drifted
+past the point where patching made sense: `Feed back` where the list says
+`Iterate`, `Fail tests` where it says `Failing tests`, a `Specs` node that no
+longer exists as a step, no `Refactor` node at all, and no actor badges in the
+deck's vocabulary. Levels 3-5 each needed a node added, a node removed, and the
+whole circle re-spaced.
+
+Decided to write `assets/loops/generate.py` holding the step/actor spec for all
+six levels and emit the SVGs from it, rather than hand-patch six files. One pass
+instead of six, geometry identical across diagrams by construction, and the next
+outline change is a one-line edit plus a re-run. (The README already claimed a
+generate.py existed; now it will be true.)
+
+Layout: seven fixed anchor positions around the circle — design, failing tests,
+code, run, test, iterate, refactor — used by every level, with absent steps
+leaving their slot empty. Nodes therefore never move between slides: paging
+through shows steps appearing in place rather than the loop rotating. Same
+principle as the hidden spacer rows in the step list, applied to the circle.
+
+Spec and the agent prompt live in `svg-prompts.md`.

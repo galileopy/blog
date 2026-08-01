@@ -1,10 +1,9 @@
 # Feedback loop diagrams
 
-Seven 4:3 SVGs for the Feedback Loops vertical stack (left card).
+Six 4:3 SVGs for the Feedback Loops vertical stack (left card).
 
 | File | Slide |
 |---|---|
-| `loop-00-skeleton.svg` | The coding feedback loop |
 | `loop-01-traditional.svg` | 1 of 6 Traditional |
 | `loop-02-ai.svg` | 2 of 6 AI |
 | `loop-03-autonomous.svg` | 3 of 6 Autonomous |
