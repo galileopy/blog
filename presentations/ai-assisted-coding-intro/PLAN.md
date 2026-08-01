@@ -7,8 +7,8 @@ regeneration task has its own spec in `svg-prompts.md`.
 
 Status legend: `built` · `in progress` · `planned`
 
-**Built so far: 4 top-level slides (9 including the vertical stack).** Everything
-from Conventions onward is still unbuilt.
+**Built so far: 4 top-level slides (9 including the vertical stack).** Parts 2
+and 3 are unbuilt but no longer blocked — all content is in `outline.md`.
 
 ---
 
@@ -84,12 +84,8 @@ question: how the agent gets the context it needs. Grouped under one part.
 | — | L-07 three-up | canvas | Conventions, "how to add X": External interface (REST / GraphQL field / RPC-WS handler) · Infrastructure component (Terraform / CDK) · Tests and tiers (e2e / integration / unit). Framing line: "Applies to anything that is managed by code" |
 | — | L-04 statement | canvas | "It's about encoding what you do in prompts and then iterating automatically." |
 | — | L-08 four-up | canvas | Tracking requirements · Refining tickets · Review cycle (adversarial, different model) · Drift check |
-| — | L-10 or L-08 | canvas | Implementation process guidelines (TDD, testing tiers) · Clean code practices (general authoring, OO preferences, local preferences) — **layout depends on the blocked line below** |
+| — | L-10 two-up | canvas | Implementation process guidelines (TDD, testing tier preferences) · Clean code practices (general authoring, OO preferences, local preferences not enforceable by traditional lint checks or deterministic tooling) |
 | — | L-06 two-column | canvas | Dynamic vs static workflows — dev preferences, project differences |
-
-**BLOCKED — needs the user's wording.** `outline.md` reads "Local preferences not
-enforceable by [tooling? — sentence looks cut off]". It is the third sub-item of
-Clean code practices and load-bearing for that slide. Do not guess it.
 
 Resolved: "Existing Infrastructure" is no longer its own section. Terraform/CDK
 folded in as the Infrastructure component sub-items, which also makes the
@@ -97,8 +93,14 @@ three-up symmetrical (each branch now has sub-items) and removes a duplicate
 "how to add X" framing.
 
 Note: the guidelines slide is **two** groups, not three — "local preferences" is
-a sub-bullet of clean code practices, not a peer. Pick the layout once the
-blocked line lands.
+a sub-bullet of clean code practices, not a peer — hence L-10 rather than the
+three-up the earlier plan assumed.
+
+The completed line ("not enforceable by traditional lint checks or deterministic
+tooling") is the sharpest sentence in Part 2 and arguably the thesis of the whole
+Workflows section: workflows encode the conventions that tooling cannot check.
+Candidate to promote to the L-04 statement slot, or to set as the slide's
+framing line rather than leaving it buried as a third sub-bullet.
 
 ---
 

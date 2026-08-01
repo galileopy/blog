@@ -152,7 +152,7 @@ It's about encoding what you do in prompts and then iterating automatically.
 - Clean code practices
     - General authoring practices
     - Object oriented preferences
-    - Local preferences not enforceable by [tooling? — sentence looks cut off]
+    - Local preferences not enforceable by traditional lint checks or deterministic tooling
 - Drift check: are requirements, code, and acceptance tests all aligned
 
 #### Dynamic Workflows vs Static Workflows
