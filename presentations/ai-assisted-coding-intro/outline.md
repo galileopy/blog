@@ -189,5 +189,5 @@ It's about encoding what you do in prompts and then iterating automatically.
 ### References
 
 - groundcrew - https://github.com/ClipboardHealth/groundcrew
-- spec-kit
-- conductor
+- spec-kit - https://github.com/github/spec-kit
+- conductor - https://github.com/gemini-cli-extensions/conductor
