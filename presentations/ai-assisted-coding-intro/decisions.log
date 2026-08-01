@@ -140,6 +140,27 @@ slides, since those are the nested ones. Removed; flattening the 3D context is
 enough on its own. There is a comment in the theme warning against re-adding it
 or `will-change: transform`.
 
+## 2026-08-01 · Skeleton collapsed into Traditional
+
+The separate "The coding feedback loop" slide was the same list as Traditional
+with a placeholder build step. With actor glyphs on every row, Traditional
+carries the baseline on its own — all human, nothing marked — so the skeleton
+slide was one slide of throat-clearing. Removed from the deck and the outline;
+the stack is six stages again, matching the "n of 6" eyebrows.
+
+`assets/loops/loop-00-skeleton.svg` is now unreferenced.
+
+## 2026-08-01 · Actor glyphs: who performs each step
+
+Two `<symbol>`s in a sprite (`#i-human`, `#i-bot`), stroke-only at
+`currentColor` so they inherit the row colour and diff treatment. They sit in a
+fourth grid column so they hold one rail down the right edge regardless of tag
+width, on step rows and loop edges alike.
+
+The arc: Traditional is entirely human; each stage converts its `Prompt —` steps
+to the bot, ending with the human authoring only the workflows and the
+requirements while every execution step is a bot.
+
 ## 2026-08-01 · Loop diagrams replace the card, not fill it
 
 The seven SVGs in `assets/loops/` are wired into the stack. They stand in place
@@ -187,3 +208,321 @@ makes it survive `baseurl: "/blog"`.
   brownfield badge, though the outline files it under Brownfield. Undecided.
 - `outline.md` line ~125: "Local preferences not enforceable by [tooling? —
   sentence looks cut off]" — needs the real wording before it goes on a slide.
+
+## 2026-08-01 · AI stage keeps Traditional's wording; the glyph carries the change
+
+First pass reworded the changed row to "Prompt — generate code". Reverted: the
+row now reads "Code, compile", word-for-word what Traditional shows, still
+carrying the blue highlight and `changed` tag. The bot glyph is what marks the
+row as different now, not the text — so the same activity is visibly the same
+line, just performed by a different actor.
+
+Note: `outline.md` still lists this step as "Prompt - generate code" — left
+alone, since this was a display-only call. Outline and deck now intentionally
+diverge on this one line; flagged to the user.
+
+## 2026-08-01 · Loop headings normalized to "Feedback Loops / <name>"
+
+Headings previously varied in shape ("AI Feedback Loop" one line, "Traditional
+Feedback Loop" two lines split before "Feedback Loop", "Spec Driven Loop with
+Predefined Workflows" split mid-clause). Now uniform: line one is always
+"Feedback Loops", line two is the loop's name only. Synced into outline.md's
+section headers (`### Feedback Loops: Traditional`, etc.) so the two documents
+group the same way.
+
+Consequence: the eyebrow ("Feedback Loops · N of 6") repeated the now-heading
+word, so it was trimmed to just the counter ("N of 6").
+
+## 2026-08-01 · LVL 0-5 added; bot glyph ratchets forward from LVL 1
+
+Each stage's eyebrow now reads "LVL n \u00b7 N of 6" \u2014 LVL 0 Traditional, LVL 1
+AI Assisted Coding, LVL 2 Autonomous, LVL 3 TDD, LVL 4 Spec Driven, LVL 5 Spec
+Driven + Predefined Workflows. Kept in the eyebrow rather than a standalone
+badge (asked directly), accepting that the level and the stack position are
+now one string \u2014 if the stack is ever reordered or split, they could drift
+apart and would need re-deriving together.
+
+Actor glyphs completed for stages 3\u20136 (Autonomous, TDD, Spec Driven, Spec
+Driven + Workflows), which only had them on Traditional and AI before. Rule
+applied: the bot glyph ratchets forward and stays \u2014 once a step is bot-
+performed at the level that introduces it, every later stage keeps the bot mark
+on that same step, whether or not it is that stage's `diff-move` row. Concretely,
+only "generate code" carries the bot (from LVL 1 on); every other step, including
+newly-added or newly-changed ones (failing tests, refactor, specs, author
+workflows), stays human unless a future instruction hands it over too. So a
+stage's `changed`/`added` tag and its actor glyph are independent signals now:
+one says what\u2019s new, the other says who does it.
+
+LVL 1's heading changed from "AI" to "AI Assisted Coding" for clarity, synced
+into outline.md's header too.
+
+## 2026-08-01 · Eyebrow spells out "Level" instead of "LVL"
+
+All six stack slides: "LVL n" -> "Level n" in the eyebrow. Same reasoning as
+always spelling out rather than abbreviating in this deck's voice.
+
+## 2026-08-01 · Second bot handoff: Iterate, feed test results back into agent
+
+Level 2 (Autonomous) is where this step's own `changed` tag lives \u2014 it is the
+step Autonomous introduces, replacing "Iterate, manually". It now also carries
+the bot glyph, and per the same ratchet rule as "Code", the mark carries forward
+unmarked through TDD, Spec Driven, and Spec Driven + Workflows (all three
+already had this exact row, previously human).
+
+So as of Level 5 there are two automated steps: generate code (from Level 1) and
+iterate on test results (from Level 2). Everything else \u2014 generate specs,
+generate failing tests, refactor, author workflows \u2014 stays human until a
+future instruction hands it over.
+
+## 2026-08-01 · "Code, compile" wording carried through all levels
+
+The "Prompt \u2014 generate code" text was an artifact of no longer having a way to
+mark who performs a step; now that the bot glyph does that job, the "Prompt \u2014"
+framing was redundant on this row specifically. Applied everywhere it still
+said "Prompt \u2014 generate code" (Autonomous, TDD, Spec Driven, Spec Driven +
+Workflows) \u2014 all four now read "Code, compile", matching Traditional and AI
+Assisted Coding. The SVGs already used a plain "Code" node label, so this also
+closes a wording gap between the list and the diagram.
+
+`outline.md` still says "Prompt - generate code" at every level (see the
+2026-08-01 divergence note above) \u2014 left alone again; this was scoped to deck
+wording, same as the earlier AI-stage fix.
+
+## 2026-08-01 · Outline normalized: canonical steps, explicit glyphs, Level tags
+
+The outline is now the single source for the loop progression, structured so the
+slides and SVGs can be annotated mechanically from it.
+
+Canonical step vocabulary, in fixed order. A level carries every step that has
+been introduced at or before it; nothing is ever dropped, only added:
+
+  once   Author project specific workflows   L5
+  start  Collect requirements                all
+   1     Generate specs                      L4+
+   2     Technical design of a solution *    all
+   3     Generate failing tests              L3+
+   4     Code                                all
+   5     Run                                 all
+   6     Test                                all
+   7     Iterate                             all
+   8     Refactor                            L3+
+  stop   Until requirements are satisfied    all
+
+Three actors, explicit on every step (no "unmarked means human" default) so the
+outline maps 1:1 to the slide rows, which already draw a glyph per row:
+:human:, :bot:, :laptop:. Run is :laptop: at every level including Traditional —
+it was always the computer executing; it is not a human step that gets taken
+over, which is why it never appears in the ratchet.
+
+Bot ratchet — a step flips at the level that introduces the change and stays
+flipped downstream: Code at L1, Test + Iterate at L2, Generate failing tests at
+L3, Generate specs + Refactor at L4, Technical design at L5.
+
+Dropped the "Prompt - " prefix everywhere (generate specs / generate failing
+tests / refactor). Same reasoning as the earlier "Code, compile" fix: the prefix
+was standing in for who performs the step, and the glyph now does that job.
+This also closes the outline-vs-deck divergence flagged on 2026-08-01 — the
+outline's "Prompt - generate code" is now plain "Code" at every level.
+
+Wording collapsed to one form per step: "Test" (was also "Test, get feedback"),
+"Iterate" (was also "Iterate, manually" and "Iterate, feed test results back
+into agent"), "Code" (was also "Prompt - generate code"), "Refactor" (was also
+"Prompt - refactor").
+
+Reverted "Start: Collect requirements :bot:" at L4 to :human: — it contradicted
+the stated endpoint, where the human authors only workflows and requirements.
+
+Judgment calls made while normalizing, flagged for review:
+  - L3 Refactor is :human: and flips to :bot: at L4. TDD's refactor step is the
+    one a developer drives; spec-driven hands it over.
+  - L5 Technical design flips to :bot: — the workflows encode the design
+    conventions, so the agent applies them. This is the last human execution
+    step to go, which is what makes L5 the end of the progression.
+  - L5 gained "Use case: brownfield projects"; it was the only level without one.
+
+Formatting: Once/Start/Stop hug the step list (they are loop edges, not numbered
+steps), blank line before "Use case:".
+
+Not yet propagated: index.html has only #i-human and #i-bot in its sprite and
+needs a third :laptop: symbol, plus a Run-row and Technical-design-row update at
+several levels. The SVGs are likewise unannotated.
+
+## 2026-08-01 · Outline changes propagated into the deck HTML
+
+Added `#i-laptop` to the actor sprite and `.actor.machine` for it. First pass
+coloured it `--gp-graphite` (#636363), which is *darker* than the human glyph's
+`--gp-steel` (#c2c2c2) on this canvas — so Run, the one step that never changes
+hands, read as the loudest mark on the row. Corrected to `--gp-fog`: Run is
+background machinery and belongs below human in prominence, not above. Also
+stopped `li.diff-move .actor` from recolouring a machine glyph blue — a machine
+glyph is never the thing that changed.
+
+Merged "Collect requirements" and "Generate specs" into one edge step at L4 and
+L5: from Level 4 on the spec *is* the requirements, so keeping them apart was
+double-counting one activity. The merged edge reads "Collect requirements,
+generate specs" and carries two glyphs, human + bot — the first genuinely
+collaborative step in the deck. This is now L4's own marked change (`changed`
+on the edge) rather than an `added` numbered step, and it drops L4 and L5 to
+8 and 9 rows, easing the density problem on the widest slide.
+
+Two actors on one row needed a `.actors` flex wrapper and the glyph column
+widened 24px -> 44px on both `.loop-edge` and `ol.agenda.diff li`, right-aligned
+so the single-actor rows keep the same rail.
+
+Verified by screenshot at 1280x720 on levels 0, 4, 5: glyphs render, three
+colours are distinguishable, L5 fits with room to spare.
+
+Still out of sync: the SVG diagrams. They carry a separate "Specs" node, and
+node labels ("Fail tests", "Feed back") predate the normalized vocabulary. No
+diagram shows actors at all.
+
+## 2026-08-01 · Flagged every actor handover; "Specify requirements"; brownfield folded in
+
+Three actor handovers were unflagged: Test at L2, Refactor at L4, Technical
+design at L5. Only the *first* of a level's changes had been marked. Rule now:
+a step is flagged `changed` at the level where its actor changes, regardless of
+how many other rows on that slide also changed. L2 therefore carries two flags
+(Test and Iterate), which is the honest reading of "Autonomous" — the agent
+takes over both testing and iterating in one step.
+
+Renamed the start edge to "Specify requirements" at all six levels. "Collect
+requirements, generate specs" was accurate after the merge but too long for the
+row; the shorter name covers both halves and keeps the edge to one line.
+
+Two layout bugs the flags exposed, both on L5's design row — the only row that
+carries two tags (`optional` + `changed`):
+  1. `ol.agenda.diff li` had a single tag column, so the second tag auto-placed
+     into the glyph column and pushed the actor onto a second line. Now two auto
+     tag columns. This is the same failure the existing comment already warned
+     about for one tag; it recurred at two.
+  2. That widening then wrapped the label. Fixed by taking the glyph column back
+     from 44px to 24px on numbered rows — only a *loop edge* ever carries two
+     glyphs — and right-aligning every glyph so edges and steps still share one
+     rail.
+
+Folded the "Brownfield Projects" section into Level 5 rather than keeping it as
+its own outline section: it existed to introduce a context that is now just this
+loop's use case. The `.use-case.brownfield::before { content: "context" }`
+variant is gone, so all six bars read "use case". "Brownfield projects have more
+context baked in" survives as the slide's uc-note, the same slot L2 and L3 use.
+
+## 2026-08-01 · Pinned the loop edges so the numbered list never moves
+
+Level 5's pre-loop "once" row pushed its start edge and whole numbered list down
+relative to the other five, so paging through the stack made the list jump. The
+other five now reserve that slot with an invisible copy of the row
+(`.loop-edge.pre.spacer`, `visibility: hidden`, `aria-hidden`) rather than a
+hand-computed offset — the edges are <p> elements carrying block margins on top
+of row padding and a border, so the arithmetic is not just row height and would
+rot the moment any of those change.
+
+The spacer carries the same children as the real row (tag span + actor glyph),
+not just the label: a bare text line boxes 2px shorter than one containing an
+11px mono tag and a 17px svg.
+
+Separately, the paired-glyph `.actors` wrapper needed `align-self: center` to
+match a bare `.actor`. Under the grid's `align-items: baseline` the wrapper's
+baseline differs from a lone svg's, which dropped L4 and L5 by 2px — visible
+only when measured, but it defeated the point of pinning.
+
+Verified by measuring text-row tops off the screenshots rather than by eye: all
+six levels now put the start edge at y=227 and step 01 at y=278, with L5's once
+row at y=176.
+
+Note for future screenshot runs: Chrome blocks port 5060 (ERR_UNSAFE_PORT) and
+silently captures an error page, which reads as a plausible-looking measurement.
+Use a port outside Chrome's blocked list.
+
+## 2026-08-01 · Pinned the stop edge too
+
+Same argument as the start edge: the two edges bracket the loop, so the steps
+should grow *into* the frame rather than push its bottom down. Implemented as a
+`min-height` on `.layout-loop ol.agenda.diff` sized to Level 5's eight-step list
+(244px); shorter stages leave the remainder empty. All six now put start at
+y=227, stop at y=522.
+
+First attempt used 284px — derived from row-height arithmetic rather than the
+measured list — and pushed stop to 562 on every slide, i.e. consistently wrong
+rather than obviously wrong. Measured the real list height instead. Worth
+remembering: with a pin like this, an error is uniform across all slides and so
+looks like the intended design.
+
+Cost: Level 0 has ~100px of empty space between "Iterate" and the stop line, and
+Levels 1-2 the same. Read as "room the later levels fill", which supports the
+progression; read uncharitably, as a layout bug. Reversible by deleting the one
+min-height rule.
+
+Correction, same day: replaced the `min-height` pin with hidden `li.spacer` rows
+padding each short list to the longest one (seven steps). Same rendered result —
+start y=227, stop y=522 on all six — but no pixel constant to go stale, and a
+level that gains a step later simply needs one fewer spacer instead of a
+recomputed height. This is the same technique as the pre-edge spacer, so both
+pins now work the same way.
+
+Two details that make it safe: a hidden row still increments the step counter,
+so spacers only ever go at the end of a list; and `visibility: hidden` hides the
+row's hairline separator too, so the reserved space reads as clean white rather
+than a run of empty ruled rows.
+
+The max step count is seven, not eight as the min-height attempt assumed —
+another reason the measured/structural approach beats the arithmetic one.
+
+## 2026-08-01 · One background colour for the whole deck
+
+Exactly one slide was off: Temperature Check carried `s-cloud` (#f7f7f7) while
+the other eight were `s-canvas` (#ffffff) — enough to read as a flicker when
+paging past it, not enough to look intentional. Now `s-canvas` throughout;
+sampled every slide and the only non-white pixels left are the title slide's
+blue chevrons, which are artwork rather than a band.
+
+This drops the design system's canvas -> cloud -> fog -> ink band rhythm, which
+the skill treats as the section-boundary signal. Deliberate: this deck carries
+its structure in the loop stack and the Level eyebrows, and a single surface
+keeps the six loop slides reading as one continuous topic. If dividers or a
+closing ink slab get added later, revisit — the rhythm is worth more once there
+are sections to separate.
+
+## 2026-08-01 · Both loop edges become collaborative
+
+The stop condition ("Until requirements are satisfied") takes the bot glyph
+alongside the human from Level 4 on, and authoring the workflows is human + bot
+at Level 5. Flagged `changed` at L4 where the stop actor first changes; carried
+unflagged at L5, per the ratchet.
+
+Effect on the argument: at Level 4 both edges — specify requirements and the
+stop condition — are human + bot, so the loop is now *bracketed* by
+collaboration rather than merely containing it. The human no longer hands work
+over and waits; they judge "done" together with the agent. That is a stronger
+end state than "every execution step is a bot", and it is the one the deck now
+builds to.
+
+Level 5's authoring row keeps its `added` flag and gains the pair, so the only
+purely human marks left anywhere in the stack are gone — every row is bot,
+laptop, or human+bot.
+
+The five pre-edge spacers were updated to carry the paired-glyph wrapper too:
+they exist to mirror the real row's height, so they have to track its structure,
+not just its text. Re-measured after the change — start y=227, stop y=522 on all
+six, unchanged.
+
+Also removed a stray blank line before L4's `Stop:` in outline.md; every level
+now brackets its list the same way.
+
+## 2026-08-01 · Refactor arrives collaborative at L3, goes bot-only at L4
+
+Refactor now enters as human + bot at Level 3 (still tagged `added`) and becomes
+bot-only at Level 4 (tagged `changed`). Previously it entered human-only, which
+overstated how much of TDD's refactor step a person actually drives.
+
+This gives the deck a second three-beat handover — appears collaborative, then
+goes fully to the agent — matching the shape the requirements/spec edge already
+has, rather than every step flipping human -> bot in a single move.
+
+First numbered row to carry two glyphs, so the paired-glyph wrapper needed a
+grid column inside `ol.agenda.diff li`, and that row alone needs the wide 44px
+glyph column. Scoped with `li:has(.actors)` rather than widening every row —
+each row is its own grid, so the wide column would otherwise squeeze the labels
+on rows that carry two tags (which is what wrapped L5's design row earlier).
+Both variants right-align, so the glyph rail still reads as one column.
+
+Re-measured: start y=227, stop y=522 on all six.

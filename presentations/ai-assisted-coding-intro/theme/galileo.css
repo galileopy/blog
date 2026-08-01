@@ -620,7 +620,6 @@
   font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
   color: var(--gp-steel);
 }
-.reveal .use-case.brownfield::before { content: "context"; }
 .reveal .use-case .uc-text { font-size: 18px; color: var(--gp-ink); }
 .reveal .use-case .uc-note {
   margin-left: auto; font-size: 14px; letter-spacing: 0.32px;
@@ -632,7 +631,7 @@
    an agenda row, with a mono label where the number would be. */
 .reveal .loop-edge {
   display: grid;
-  grid-template-columns: 56px 1fr auto;
+  grid-template-columns: 56px 1fr auto 44px;
   gap: 20px;
   align-items: baseline;
   padding: 8px 0;
@@ -648,6 +647,11 @@
   color: var(--gp-steel);
 }
 .reveal .loop-edge.pre::before { content: "once"; }
+/* Only Level 5 has a pre-loop step, but the numbered list must start at the
+   same y on all six slides or the stack jitters when you page through it. The
+   other five reserve the slot with an invisible copy of the row rather than a
+   hand-computed offset, so it stays correct if the row metrics change. */
+.reveal .loop-edge.spacer { visibility: hidden; }
 .reveal .loop-edge.in::before { content: "start"; }
 .reveal .loop-edge.out::before { content: "stop"; }
 .reveal .loop-edge.pre,
@@ -664,6 +668,12 @@
 .reveal ol.agenda.diff { margin-top: 14px; }
 .reveal .loop-edge.in + ol.agenda.diff { margin-top: 0; }
 .reveal ol.agenda.diff + .loop-edge.out { margin-top: 0; }
+/* The two edges bracket the loop, so neither should move: the steps grow *into*
+   the frame rather than pushing its bottom down. Short stages pad their list to
+   the widest stage's length with hidden rows — same trick as the pre-edge
+   spacer, and for the same reason: no pixel arithmetic to go stale. A hidden
+   row still increments the step counter, so spacers only ever go at the END. */
+.reveal ol.agenda.diff li.spacer { visibility: hidden; }
 .reveal ol.agenda.diff li { color: var(--gp-graphite); }
 .reveal ol.agenda.diff li::before { color: var(--gp-steel); }
 
@@ -671,12 +681,29 @@
    default 20px/16px agenda rhythm overflows 720px well before that, so the
    whole stack runs tighter. Applied to all stages, not just the long ones, so
    row height is identical as you arrow down. */
-/* the third column holds the trailing tag; without it the tag is auto-placed on
-   a new row and doubles the height of the step. */
+/* Columns 3 and 4 hold the trailing tags; without them a tag is auto-placed on
+   a new row and doubles the height of the step. TWO tag columns, not one: a row
+   can carry both `optional` and `changed` (Level 5's design step does), and with
+   a single tag column the second tag lands in the glyph column and shoves the
+   actor onto a second line. Empty auto columns collapse, so single-tag and
+   no-tag rows keep the same rail. */
 .reveal ol.agenda.diff li {
   padding: 8px 0; font-size: 18px;
-  grid-template-columns: 56px 1fr auto;
+  grid-template-columns: 56px 1fr auto auto 24px;
 }
+/* Only a loop edge ever carries two glyphs, so numbered rows keep the narrow
+   column and hand the width back to the label. Everything right-aligns, so the
+   glyphs still form one rail across edges and steps alike. */
+.reveal ol.agenda.diff li .actor,
+.reveal ol.agenda.diff li .actors { grid-column: 5; }
+/* A numbered row carrying two glyphs needs the wide column; every row is its own
+   grid, so widening just that row leaves the others' labels alone. Both variants
+   right-align, so the glyph rail still lines up across the whole list. */
+.reveal ol.agenda.diff li:has(.actors) {
+  grid-template-columns: 56px 1fr auto auto 44px;
+}
+.reveal ol.agenda.diff li .actor,
+.reveal .loop-edge .actor { justify-self: end; }
 
 .reveal ol.agenda.diff li.diff-move {
   color: var(--gp-ink);
@@ -689,6 +716,35 @@
   font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
   color: var(--gp-primary); margin-left: 10px;
 }
+/* actor glyph — who performs this step. Sits in its own trailing column so it
+   holds one rail down the right edge regardless of tag or label width. */
+.reveal .actor {
+  grid-column: 4;
+  align-self: center;
+  width: 17px; height: 17px;
+  color: var(--gp-steel);
+}
+.reveal .actor.bot { color: var(--gp-primary); }
+/* Run is background machinery — it never changes hands, so it must sit *below*
+   human in prominence, not above. Graphite is darker than steel on this canvas
+   and read as the loudest glyph on the row; fog is the correct direction. */
+.reveal .actor.machine { color: var(--gp-fog); }
+.reveal ol.agenda.diff li.diff-move .actor { color: var(--gp-primary); }
+/* ...but a machine glyph is never the thing that changed, even on a marked row. */
+.reveal ol.agenda.diff li.diff-move .actor.machine { color: var(--gp-fog); }
+/* a step can be performed by more than one actor — collecting requirements and
+   writing the spec is one collaborative step from Level 4 on. The glyph column
+   is sized for two so the rail still lines up on single-actor rows. */
+.reveal .actors {
+  grid-column: 4;
+  display: flex; gap: 6px;
+  align-items: center; justify-content: flex-end;
+  /* centre-aligned like a bare .actor — left to the grid's baseline alignment,
+     the wrapper's baseline differs from a lone svg's and drops the row 2px. */
+  align-self: center;
+}
+.reveal .actors .actor { grid-column: auto; }
+
 /* optional steps: always on the board, never required */
 .reveal ol.agenda.diff li .opt {
   font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;

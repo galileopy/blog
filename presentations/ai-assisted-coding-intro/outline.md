@@ -16,102 +16,89 @@
 It is still coding.
 You have a different feedback loop.
 
-### The coding feedback loop
+### Feedback Loops: Traditional (Level 0)
+Start: Specify requirements :human:
+- Technical design of a solution * :human:
+- Code :human:
+- Run :laptop:
+- Test :human:
+- Iterate :human:
 
-Start: Collect requirements
-- Technical design of a solution *
-- Build step
-- Run
-- Test, get feedback
-- Iterate
+Stop: Until requirements are satisfied :human:
 
-Stop: Until requirements are satisfied
-
-### Traditional Feedback Loop
-Start: Collect requirements
-- Technical design of a solution *
-- Code, compile
-- Run
-- Test, get feedback
-- Iterate, manually
-
-Stop: Until requirements are satisfied
 Use case: Traditionally, all of it
 
-### AI Feedback Loop
-Start: Collect requirements
-- Technical design of a solution *
-- Prompt - generate code
-- Run
-- Test, get feedback
-- Iterate, manually
+### Feedback Loops: AI Assisted Coding (Level 1)
+Start: Specify requirements :human:
+- Technical design of a solution * :human:
+- Code :bot:
+- Run :laptop:
+- Test :human:
+- Iterate :human:
 
-Stop: Until requirements are satisfied
+Stop: Until requirements are satisfied :human:
+
 Use case: center a div
 
-### Autonomous Feedback Loop
-Start: Collect requirements
-- Technical design of a solution *
-- Prompt - generate code
-- Run
-- Test, get feedback
-- Iterate, feed test results back into agent
+### Feedback Loops: Autonomous (Level 2)
+Start: Specify requirements :human:
+- Technical design of a solution * :human:
+- Code :bot:
+- Run :laptop:
+- Test :bot:
+- Iterate :bot:
 
-Stop: Until requirements are satisfied
+Stop: Until requirements are satisfied :human:
 
 Use case: Debugging
 You can use this with plan mode in most tools
 
-### Test Driven Feedback Loop - TDD
-Start: Collect requirements
-- Technical design of a solution *
-- Prompt - generate failing tests
-- Prompt - generate code
-- Run
-- Test, get feedback
-- Iterate, feed test results back into agent
-- Prompt - refactor
+### Feedback Loops: Test Driven - TDD (Level 3)
+Start: Specify requirements :human:
+- Technical design of a solution * :human:
+- Generate failing tests :bot:
+- Code :bot:
+- Run :laptop:
+- Test :bot:
+- Iterate :bot:
+- Refactor :human: :bot:
 
-Stop: Until requirements are satisfied
+Stop: Until requirements are satisfied :human:
 
 Use case: add complex feature
 
 You'd need specific skills
 
-### Spec Driven Feedback Loop
-Start: Collect requirements
-- Prompt - generate specs
-- Technical design of a solution *
-- Prompt - generate failing tests
-- Prompt - generate code
-- Run
-- Test, get feedback
-- Iterate, feed test results back into agent
-- Prompt - refactor
+### Feedback Loops: Spec Driven (Level 4)
+Start: Specify requirements :human: :bot:
+- Technical design of a solution * :human:
+- Generate failing tests :bot:
+- Code :bot:
+- Run :laptop:
+- Test :bot:
+- Iterate :bot:
+- Refactor :bot:
+Stop: Until requirements are satisfied :human: :bot:
 
-Stop: Until requirements are satisfied
 Use case: generate new greenfield apps
 
 You can use plan mode or start using more complex frameworks.
 
-## Brownfield Projects
+### Feedback Loops: Spec Driven, Predefined Workflows (Level 5)
+Once: Author project workflows :human: :bot:
+Start: Specify requirements :human: :bot:
+- Technical design of a solution * :bot:
+- Generate failing tests :bot:
+- Code :bot:
+- Run :laptop:
+- Test :bot:
+- Iterate :bot:
+- Refactor :bot:
+Stop: Until requirements are satisfied :human: :bot:
+
+Use case: brownfield projects
+
 Brownfield projects have more context baked in.
-
-### Spec Driven Feedback Loop with Predefined Workflows
-- Author project specific workflows
-
-Start: Collect requirements
-
-- Prompt - generate specs
-- Technical design of a solution *
-- Prompt - generate failing tests
-- Prompt - generate code
-- Run
-- Test, get feedback
-- Iterate, feed test results back into agent
-- Prompt - refactor
-
-Stop: Until requirements are satisfied
 
 ## Conventions
 - How to add X

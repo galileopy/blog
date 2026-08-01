@@ -14,6 +14,33 @@
 </head>
 <body>
 
+<!-- Actor glyphs, defined once and referenced with <use>. Three symbols:
+     who/what performs the step. Stroke-only at currentColor, so a row's colour
+     and its diff treatment carry into the icon for free. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-human" viewBox="0 0 24 24">
+    <circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M4.8 20.2c0-3.6 3.2-6 7.2-6s7.2 2.4 7.2 6" fill="none" stroke="currentColor"
+          stroke-width="1.6" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24">
+    <circle cx="12" cy="2.8" r="1.3" fill="currentColor"/>
+    <path d="M12 4.1v2.1M2.6 11v3M21.4 11v3" fill="none" stroke="currentColor"
+          stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="4.4" y="6.2" width="15.2" height="12" rx="3.2" fill="none"
+          stroke="currentColor" stroke-width="1.6"/>
+    <circle cx="9.2" cy="12.2" r="1.35" fill="currentColor"/>
+    <circle cx="14.8" cy="12.2" r="1.35" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24">
+    <rect x="5" y="4.5" width="14" height="9.5" rx="1.5" fill="none"
+          stroke="currentColor" stroke-width="1.6"/>
+    <path d="M2.5 17.5h19l-1.8 2.7a2 2 0 0 1-1.7.9H6a2 2 0 0 1-1.7-.9L2.5 17.5z"
+          fill="none" stroke="currentColor" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
 <div class="reveal">
   <div class="slides">
 
@@ -28,7 +55,7 @@
   <aside class="notes">Opener.</aside>
 </section>
 
-<section class="s-cloud">
+<section class="s-canvas">
   <div class="slide-inner">
     <p class="eyebrow">Temperature Check</p>
     <h3 class="d-lg" style="margin-bottom:32px;">Where are you at today?</h3>
@@ -56,41 +83,22 @@
   <section class="s-canvas layout-loop">
     <div class="slide-inner">
       <div class="grid-2">
-        <img class="loop-diagram" src="assets/loops/loop-00-skeleton.svg" alt="The coding feedback loop">
-        <div class="stack-md">
-          <p class="eyebrow" style="margin-bottom:0;">Feedback Loops &middot; the skeleton</p>
-          <h4 class="d-md">The coding<br>feedback loop</h4>
-          <p class="loop-edge in">Collect requirements</p>
-          <ol class="agenda diff">
-            <li>Technical design of a solution<span class="opt">optional</span></li>
-            <li class="diff-move">Build step<span class="diff-tag">varies</span></li>
-            <li>Run</li>
-            <li>Test, get feedback</li>
-            <li>Iterate</li>
-          </ol>
-          <p class="loop-edge out">Until requirements are satisfied</p>
-        </div>
-      </div>
-    </div>
-    <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
-  </section>
-
-  <section class="s-canvas layout-loop">
-    <div class="slide-inner">
-      <div class="grid-2">
         <img class="loop-diagram" src="assets/loops/loop-01-traditional.svg" alt="Traditional feedback loop">
         <div class="stack-md">
-          <p class="eyebrow" style="margin-bottom:0;">Feedback Loops &middot; 1 of 6</p>
-          <h4 class="d-md">Traditional<br>Feedback Loop</h4>
-          <p class="loop-edge in">Collect requirements</p>
+          <p class="eyebrow" style="margin-bottom:0;">Level 0 &middot; 1 of 6</p>
+          <h4 class="d-md">Feedback Loops<br>Traditional</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
           <ol class="agenda diff">
-            <li>Technical design of a solution<span class="opt">optional</span></li>
-            <li>Code, compile</li>
-            <li>Run</li>
-            <li>Test, get feedback</li>
-            <li>Iterate, manually</li>
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Code<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Iterate<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="spacer" aria-hidden="true">Technical design of a solution<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="spacer" aria-hidden="true">Technical design of a solution<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
           </ol>
-          <p class="loop-edge out">Until requirements are satisfied</p>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
         </div>
       </div>
     </div>
@@ -103,17 +111,20 @@
       <div class="grid-2">
         <img class="loop-diagram" src="assets/loops/loop-02-ai.svg" alt="AI feedback loop">
         <div class="stack-md">
-          <p class="eyebrow" style="margin-bottom:0;">Feedback Loops &middot; 2 of 6</p>
-          <h4 class="d-md">AI Feedback Loop</h4>
-          <p class="loop-edge in">Collect requirements</p>
+          <p class="eyebrow" style="margin-bottom:0;">Level 1 &middot; 2 of 6</p>
+          <h4 class="d-md">Feedback Loops<br>AI Assisted Coding</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
           <ol class="agenda diff">
-            <li>Technical design of a solution<span class="opt">optional</span></li>
-            <li class="diff-move">Prompt &mdash; generate code<span class="diff-tag">changed</span></li>
-            <li>Run</li>
-            <li>Test, get feedback</li>
-            <li>Iterate, manually</li>
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="diff-move">Code<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Iterate<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="spacer" aria-hidden="true">Technical design of a solution<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="spacer" aria-hidden="true">Technical design of a solution<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
           </ol>
-          <p class="loop-edge out">Until requirements are satisfied</p>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
         </div>
       </div>
     </div>
@@ -126,17 +137,20 @@
       <div class="grid-2">
         <img class="loop-diagram" src="assets/loops/loop-03-autonomous.svg" alt="Autonomous feedback loop">
         <div class="stack-md">
-          <p class="eyebrow" style="margin-bottom:0;">Feedback Loops &middot; 3 of 6</p>
-          <h4 class="d-md">Autonomous<br>Feedback Loop</h4>
-          <p class="loop-edge in">Collect requirements</p>
+          <p class="eyebrow" style="margin-bottom:0;">Level 2 &middot; 3 of 6</p>
+          <h4 class="d-md">Feedback Loops<br>Autonomous</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
           <ol class="agenda diff">
-            <li>Technical design of a solution<span class="opt">optional</span></li>
-            <li>Prompt &mdash; generate code</li>
-            <li>Run</li>
-            <li>Test, get feedback</li>
-            <li class="diff-move">Iterate, feed test results back into agent<span class="diff-tag">changed</span></li>
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li class="diff-move">Test<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li class="diff-move">Iterate<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li class="spacer" aria-hidden="true">Technical design of a solution<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="spacer" aria-hidden="true">Technical design of a solution<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
           </ol>
-          <p class="loop-edge out">Until requirements are satisfied</p>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
         </div>
       </div>
     </div>
@@ -149,19 +163,20 @@
       <div class="grid-2">
         <img class="loop-diagram" src="assets/loops/loop-04-tdd.svg" alt="Test driven feedback loop">
         <div class="stack-md">
-          <p class="eyebrow" style="margin-bottom:0;">Feedback Loops &middot; 4 of 6</p>
-          <h4 class="d-md">Test Driven<br>Feedback Loop &mdash; TDD</h4>
-          <p class="loop-edge in">Collect requirements</p>
+          <p class="eyebrow" style="margin-bottom:0;">Level 3 &middot; 4 of 6</p>
+          <h4 class="d-md">Feedback Loops<br>Test Driven &mdash; TDD</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
           <ol class="agenda diff">
-            <li>Technical design of a solution<span class="opt">optional</span></li>
-            <li class="diff-move">Prompt &mdash; generate failing tests<span class="diff-tag">added</span></li>
-            <li>Prompt &mdash; generate code</li>
-            <li>Run</li>
-            <li>Test, get feedback</li>
-            <li>Iterate, feed test results back into agent</li>
-            <li class="diff-move">Prompt &mdash; refactor<span class="diff-tag">added</span></li>
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="diff-move">Generate failing tests<span class="diff-tag">added</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Iterate<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li class="diff-move">Refactor<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></li>
           </ol>
-          <p class="loop-edge out">Until requirements are satisfied</p>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
         </div>
       </div>
     </div>
@@ -174,20 +189,20 @@
       <div class="grid-2">
         <img class="loop-diagram" src="assets/loops/loop-05-spec.svg" alt="Spec driven feedback loop">
         <div class="stack-md">
-          <p class="eyebrow" style="margin-bottom:0;">Feedback Loops &middot; 5 of 6</p>
-          <h4 class="d-md">Spec Driven<br>Feedback Loop</h4>
-          <p class="loop-edge in">Collect requirements</p>
+          <p class="eyebrow" style="margin-bottom:0;">Level 4 &middot; 5 of 6</p>
+          <h4 class="d-md">Feedback Loops<br>Spec Driven</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in diff-move">Specify requirements<span class="diff-tag">changed</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
           <ol class="agenda diff">
-            <li class="diff-move">Prompt &mdash; generate specs<span class="diff-tag">added</span></li>
-            <li>Technical design of a solution<span class="opt">optional</span></li>
-            <li>Prompt &mdash; generate failing tests</li>
-            <li>Prompt &mdash; generate code</li>
-            <li>Run</li>
-            <li>Test, get feedback</li>
-            <li>Iterate, feed test results back into agent</li>
-            <li>Prompt &mdash; refactor</li>
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Generate failing tests<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Iterate<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li class="diff-move">Refactor<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
           </ol>
-          <p class="loop-edge out">Until requirements are satisfied</p>
+          <p class="loop-edge out diff-move">Until requirements are satisfied<span class="diff-tag">changed</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
           <aside class="notes">You can use plan mode or start using more complex frameworks.</aside>
         </div>
       </div>
@@ -201,25 +216,24 @@
       <div class="grid-2">
         <img class="loop-diagram" src="assets/loops/loop-06-workflows.svg" alt="Spec driven feedback loop with predefined workflows">
         <div class="stack-md">
-          <p class="eyebrow" style="margin-bottom:0;">Feedback Loops &middot; 6 of 6</p>
-          <h4 class="d-md">Spec Driven Loop<br>with Predefined Workflows</h4>
-          <p class="loop-edge pre diff-move">Author project specific workflows<span class="diff-tag">added</span></p>
-          <p class="loop-edge in">Collect requirements</p>
+          <p class="eyebrow" style="margin-bottom:0;">Level 5 &middot; 6 of 6</p>
+          <h4 class="d-md">Feedback Loops<br>Spec Driven, Predefined Workflows</h4>
+          <p class="loop-edge pre diff-move">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
           <ol class="agenda diff">
-            <li>Prompt &mdash; generate specs</li>
-            <li>Technical design of a solution<span class="opt">optional</span></li>
-            <li>Prompt &mdash; generate failing tests</li>
-            <li>Prompt &mdash; generate code</li>
-            <li>Run</li>
-            <li>Test, get feedback</li>
-            <li>Iterate, feed test results back into agent</li>
-            <li>Prompt &mdash; refactor</li>
+            <li class="diff-move">Technical design of a solution<span class="opt">optional</span><span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Generate failing tests<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Iterate<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Refactor<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
           </ol>
-          <p class="loop-edge out">Until requirements are satisfied</p>
+          <p class="loop-edge out">Until requirements are satisfied<span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
         </div>
       </div>
     </div>
-    <div class="use-case brownfield"><span class="uc-text">Brownfield projects have more context baked in</span></div>
+    <div class="use-case"><span class="uc-text">brownfield projects</span><span class="uc-note">Brownfield projects have more context baked in.</span></div>
     <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
   </section>
 </section>

@@ -59,13 +59,17 @@ only. See `decisions.log` for why this replaced the earlier +/- diff.
 | # | Hash | Layout | Content |
 |---|---|---|---|
 | 03 | `#/2` | L-04 statement | "It is still coding. / You have a different feedback loop." |
-| 04 | `#/3/0` | L-06 | **The coding feedback loop** — the skeleton, build step tagged *varies* |
-| 04 | `#/3/1` | L-06 | Traditional — code, compile · all of it |
-| 04 | `#/3/2` | L-06 | AI — *changed*: prompt, generate code · center a div |
-| 04 | `#/3/3` | L-06 | Autonomous — *changed*: iterate, feed results back · debugging |
-| 04 | `#/3/4` | L-06 | TDD — *added*: prompt, generate failing tests · complex feature |
-| 04 | `#/3/5` | L-06 | Spec driven — *added*: prompt, generate specs · greenfield |
-| 04 | `#/3/6` | L-06 | Spec driven + workflows — *added*: author workflows · brownfield |
+| 04 | `#/3/0` | L-06 | Traditional — the baseline, every step human · all of it |
+| 04 | `#/3/1` | L-06 | AI — *changed*: prompt, generate code · center a div |
+| 04 | `#/3/2` | L-06 | Autonomous — *changed*: iterate, feed results back · debugging |
+| 04 | `#/3/3` | L-06 | TDD — *added*: failing tests, *added*: refactor · complex feature |
+| 04 | `#/3/4` | L-06 | Spec driven — *added*: prompt, generate specs · greenfield |
+| 04 | `#/3/5` | L-06 | Spec driven + workflows — *added*: author workflows · brownfield |
+
+**Actor glyphs**: every row carries a human or bot mark in a trailing column,
+showing who performs the step. Traditional is all human; the bot progressively
+takes over the `Prompt —` steps, ending with the human authoring only workflows
+and requirements. In progress — Traditional done, stages 2–6 pending.
 
 Open items:
 - [x] Author the loop SVG diagrams (seven: skeleton + 1–6) in `assets/loops/` — wiring into placeholders still open for the slides agent.
