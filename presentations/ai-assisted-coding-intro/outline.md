@@ -1,5 +1,10 @@
 # On AI Assisted Coding
 
+## Contents
+- Part 1 - The Evolution of the Feedback Loop
+- Part 2 - Managing Context
+- Part 3 - Cool Tips, Tricks and Links
+
 ## Temperature Check
 - Prompt tests or new functions
 - Vibe coding simple apps

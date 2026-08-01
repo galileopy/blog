@@ -575,3 +575,23 @@ Layout fix: `.grid-2` is `align-items: center`, correct for L-06's
 visual-left/copy-right pairing but wrong for two peer cards — they rendered at
 different heights on different top edges. Scoped `:has(> .card)` to stretch
 instead of changing the shared rule.
+
+## 2026-08-01 · Contents slide and Part 1 divider
+
+Added a "Three parts" contents slide after the title, and the missing Part 1
+divider before the intro statement. All three parts are now announced the same
+way; previously Parts 2 and 3 got ink slabs and Part 1 simply began.
+
+Placed the contents slide *before* Temperature Check rather than after. The
+temperature check is a poll that reads as a warm-up, so it wants to sit close to
+the opening; and putting contents directly before the Part 1 divider would stack
+two structural slides back to back.
+
+The contents slide is `s-canvas`, not the `s-cloud` the L-02 reference
+specifies — same single-surface rule the rest of the deck follows.
+
+Sub-lines on the three entries are compressions of existing material (the
+ladder line from the Feedback Loops intro; the three section names of Part 2),
+except "where to go next" for Part 3, which is new connective text.
+
+Deck is now 17 slides. `outline.md` gained a matching `## Contents` section.
