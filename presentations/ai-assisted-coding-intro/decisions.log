@@ -549,3 +549,29 @@ through shows steps appearing in place rather than the loop rotating. Same
 principle as the hidden spacer rows in the step list, applied to the circle.
 
 Spec and the agent prompt live in `svg-prompts.md`.
+
+## 2026-08-01 · Part 2 built
+
+Six slides: ink divider, Conventions three-up, Workflows statement, four-up of
+what you encode, guidelines two-up, dynamic vs static two-up. Deck is now 15
+slides.
+
+Ink dividers are the deck's only band change, so a Part boundary is the one
+place the surface shifts — that is what makes it read as structure rather than
+decoration. Content slides stay `s-canvas` even where the layout reference says
+`s-cloud` (L-07, L-10), per the single-surface decision.
+
+Two wording calls, both tightening outline prose to slide length rather than
+adding claims:
+  - Statement slide reads "Encode what you do in prompts, then iterate
+    automatically" — the outline's sentence at 13 words was well over L-04's
+    ~8-word guidance.
+  - The completed clean-code line became the guidelines slide's framing line
+    ("The conventions traditional lint checks and deterministic tooling cannot
+    enforce") rather than staying a third sub-bullet. It is the sharpest
+    sentence in Part 2 and was in its least prominent possible position.
+
+Layout fix: `.grid-2` is `align-items: center`, correct for L-06's
+visual-left/copy-right pairing but wrong for two peer cards — they rendered at
+different heights on different top edges. Scoped `:has(> .card)` to stretch
+instead of changing the shared rule.

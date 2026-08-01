@@ -323,6 +323,9 @@
    6 · LAYOUT PRIMITIVES
    ========================================================================== */
 .reveal .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+/* ...but a two-card grid wants equal-height cards sharing a top edge; centering
+   is for L-06's visual-left/copy-right pairing, not for peers. */
+.reveal .grid-2:has(> .card) { align-items: stretch; }
 .reveal .grid-2-wide-l { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: center; }
 .reveal .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .reveal .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
