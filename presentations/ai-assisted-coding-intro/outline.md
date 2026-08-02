@@ -128,6 +128,20 @@ Next:
 
 ## Part 2 - Workflows
 
+### Three runs at the same goal
+Same goal, three runs. What changes is when the correction was authored.
+
+- Correct as you go
+    - Manual prompting in chat
+- Plan first, then execute
+    - Prompt a plan into existence, then execute and correct when needed
+    - A plan.md or a tool's plan mode, or an LLM-generated self-contained prompt
+      encoding the goal, the checkpoints, and how to verify them
+- Reusable workflow
+    - A pre-set skill per step, collected in an orchestrator prompt that knows
+      how to use them
+- Bonus: a skill that composes the workflow dynamically according to the problem
+
 ### Conventions
 Applies to anything that is managed by code
 
