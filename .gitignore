@@ -18,3 +18,4 @@ MISSING-IMAGES.md
 
 # Translation TODO (local working doc, not site content)
 TRANSLATIONS.md
+__pycache__/

@@ -2,7 +2,7 @@
 
 ## Contents
 - Part 1 - The Evolution of the Feedback Loop
-- Part 2 - Managing Context
+- Part 2 - Workflows
 - Part 3 - Cool Tips, Tricks and Links
 
 ## Temperature Check
@@ -123,10 +123,10 @@ Brownfield projects have more context baked in.
 Questions so far?
 
 Next:
-- Part 2 - Managing Context
+- Part 2 - Workflows
 - Part 3 - Cool Tips, Tricks and Links
 
-## Part 2 - Managing Context
+## Part 2 - Workflows
 
 ### Conventions
 Applies to anything that is managed by code

@@ -518,6 +518,13 @@
   background: var(--gp-fog); display: grid; place-items: center;
 }
 .reveal .layout-fullbleed .bleed img { width: 100%; height: 100%; object-fit: cover; }
+/* Full-bleed diagram variant: the catalog's .bleed is --gp-fog, but this deck is
+   white throughout (see the band rule above), so diagram slides set the canvas
+   surface inline and the SVG scales to the stage width rather than cover-cropping. */
+.reveal .layout-fullbleed .bleed svg.timelines {
+  width: 100%; height: auto; max-height: 100%;
+}
+
 .reveal .layout-fullbleed .caption-bar {
   position: relative; background: var(--gp-ink); color: var(--gp-on-ink);
   padding: 28px var(--gp-pad-x) 34px;
@@ -781,6 +788,19 @@
 .reveal .slides section > section {
   transition: none !important;
   animation: none !important;
+}
+
+/* Fragments are the third source of the same bug, and the block above does NOT
+   cover them — it targets .slides and sections only. reveal ships
+   `.reveal .fragment { transition: all .2s }` plus `will-change` on every
+   `.fragment:not(.custom)`, and that `will-change` promotes a composited layer
+   exactly like the properties warned about below: text on the slide rasterises
+   once and is scaled, so it reads as blurry while standing still. Fragments here
+   appear/disappear instantly, like every other transition in this deck. */
+.reveal .fragment,
+.reveal .fragment:not(.custom) {
+  transition: none !important;
+  will-change: auto !important;
 }
 
 /* Do NOT add `backface-visibility: hidden` or `will-change: transform` here.
