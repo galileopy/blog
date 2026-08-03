@@ -812,3 +812,26 @@ Delivery caveats to notes: "agents love red herrings" (incidents) and worktrees
 needing real workflow familiarity. Both are things to say, not slide claims.
 
 Part 3 is now: divider, Beyond writing the code, Helpful links. Deck is 21 slides.
+
+## 2026-08-03 — Sweep: no coda, no metaphor, facts only
+
+Removed "up close" from both the Validation slide and its card. The slide is a
+zoom on one step; saying so twice in the copy adds nothing the position on the
+stack does not already say.
+
+Other lines the sweep caught:
+- Title subtitle "A tour of feedback loops, workflows, and conventions" — "a
+  tour of" is coda, and "conventions" was stale (that section dissolved into the
+  stage tables). Now "Feedback loops, workflows, and where to go next", which
+  names the three parts.
+- Contents, Part 2 sub-line: "conventions, workflows, infrastructure" was flatly
+  wrong after the restructure — infrastructure moved to Part 3 and conventions is
+  gone. Now "pre-built prompts and skills for each stage".
+- Refactor row: "The blue beat in cycle" — the metaphor leans on the red/green/
+  blue naming one row above and reads as cute rather than clear. Now "In each
+  cycle, then once more across the finished slice".
+
+Kept: "It is still coding. You have a different feedback loop." (the thesis, and
+a statement of fact), "Not everything needs to be fixed the same way", and
+"Brownfield projects have more context baked in" — all outline lines making
+claims, not decoration.

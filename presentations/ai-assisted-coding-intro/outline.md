@@ -157,14 +157,14 @@ Applies to anything that is managed by code.
     - Technical design - requirements plus repo access, an outline of the code changes
     - Plan - sequence the work, opt into red/green or red/green/blue cycles
     - Code - work the task list, one verifiable step at a time
-    - Refactor - the blue beat in cycle, then once more across the slice
+    - Refactor - in each cycle, then once more across the finished slice
         - General authoring practices
         - Object oriented preferences
         - Local preferences not enforceable by traditional lint checks or deterministic tooling
     - Validation - the last step, and what the agent iterates against
     - (notes) Stencils - the stage repeats, so learn from the plans and build stencils for
       recurring patterns: unit tests, integration tests, endpoints, controllers, resolvers
-- Validation - implementation's last step, up close
+- Validation - implementation's last step
     - End to end - curl, Playwright, a way to exercise the running system
     - Test tiers - review the requirements and pick the right tier for each; not everything
       needs a unit test, not everything needs an e2e test. The validation plan feeds back into the
