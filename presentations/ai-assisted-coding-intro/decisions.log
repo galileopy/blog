@@ -935,3 +935,12 @@ so it reads better at the bottom than wedged between two short ones.
 spec-kit and conductor are both "a reusable spec driven framework". Two identical
 cells read as a copy-paste error, so conductor's says "The same, packaged as a
 Gemini CLI extension" — a distinction taken from its own URL rather than invented.
+
+## 2026-08-04 — "Pre-built prompts and skills" becomes "Workflow"
+
+The old title named the artifacts; the new one names the thing: a predefined set
+of steps to follow during implementation. That is also what the three cards under
+it are — stages of one workflow, not a catalogue of prompts.
+
+Split across title and framing line rather than run as one sentence with a colon,
+matching every other slide in the stack (title, then a muted line under it).

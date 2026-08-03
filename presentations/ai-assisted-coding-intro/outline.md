@@ -142,8 +142,8 @@ Same goal, three runs. What changes is when the correction was authored.
       how to use them
 - Bonus: a skill that composes the workflow dynamically according to the problem
 
-### Pre-built prompts and skills
-Applies to anything that is managed by code.
+### Workflow
+A predefined set of steps to follow during implementation.
 
 - Requirements
     - Stage goal: clear requirements, functional and non functional
