@@ -877,3 +877,35 @@ Fixed:
 
 One em dash was declined in favour of a full stop (Test tiers), keeping the
 earlier no-dash rule intact.
+
+## 2026-08-04 — Restructured into Requirements, Planning, Implementation
+
+The old Requirements / Implementation / Validation split was wrong in two ways.
+Validation contained planning work (deciding test tiers is a planning decision,
+not a verification one), and implementation was sitting in the middle when the
+loop it describes is what everything else feeds into. Now:
+
+**Requirements** — unchanged. Goal: clear requirements, functional and non
+functional.
+
+**Planning** (new) — goal: steps the agent can run unattended, with checkpoints
+to validate progress. Technical design, testing plan (verifies against the
+requirements), implementation plan (verified against the tests), testing tiers
+review. Note the verification chain: requirements verify the tests, tests verify
+the code plan. That ordering is the reason planning is its own stage.
+
+**Implementation loop** — goal: working code that satisfies the requirements.
+Seven steps, three of them Code: implement the tests, make them pass, refactor
+while they stay passing. Then review (another model, iterate the loop),
+validation (end to end, then iterate or submit proof of work), drift check
+(code/requirements/checks triplet), and All green → merge. Uses table.cmp.dense
+since seven rows are past plain .cmp's comfortable cap.
+
+The old standalone Validation slide is gone; its four rows redistributed —
+test tiers to Planning, review cycle and drift check into the loop, end to end
+into the validation step.
+
+Closing the stack: an L-04 statement that the agent can fall back to human
+control at any stage, when requirements were too ambiguous or scope creep got
+into the loop or was implied in the original spec. It applies to all three
+stages, so a row on any single table would have understated it.
