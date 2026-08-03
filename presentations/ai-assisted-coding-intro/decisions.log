@@ -786,3 +786,12 @@ not everything needs a unit test, not everything needs e2e — and feed the plan
 back as notes), Review cycle (different model, against the requirements, in CI),
 Drift check (gate before a PR is merge-ready; requirements are tracked in code
 now, so it runs in CI and inside the loop).
+
+## 2026-08-03 — References slide: "Helpful links", as a table
+
+Retitled from "Where to go next" and converted from a three-up to table.cmp.
+The cards were doing nothing a card does — no numbering worth reading, no prose,
+just a name and a URL each, which is a two-column table wearing a costume. The
+table also puts the three URLs on one left rail so they scan as a set, and it
+matches the stage tables in Part 2 rather than repeating the card treatment used
+by the two Cool Tricks slides right before it.

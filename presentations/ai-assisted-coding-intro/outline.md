@@ -201,7 +201,7 @@ Applies to anything that is managed by code.
     - Needs a way to spin up an isolated stack
     - Requires familiarity with workflows.
 
-### References
+### Helpful links
 
 - groundcrew - https://github.com/ClipboardHealth/groundcrew
 - spec-kit - https://github.com/github/spec-kit
