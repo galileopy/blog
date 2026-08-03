@@ -909,3 +909,14 @@ Closing the stack: an L-04 statement that the agent can fall back to human
 control at any stage, when requirements were too ambiguous or scope creep got
 into the loop or was implied in the original spec. It applies to all three
 stages, so a row on any single table would have understated it.
+
+## 2026-08-04 — Implementation loop: three Code rows collapse to one
+
+"Implement the tests / Make the tests pass / Refactor" are one red-green-blue
+turn, not three steps of the loop — splitting them made the TDD cycle look like
+a third of the loop's weight when the other four rows are each a distinct beat.
+Now one row: "Implement the tests, implement the code for those tests, then
+refactor keeping the tests green."
+
+Five rows fits plain table.cmp again, so .dense came back off and the row rhythm
+matches the Requirements and Planning tables.

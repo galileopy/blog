@@ -159,9 +159,7 @@ Applies to anything that is managed by code.
     - Testing tiers review - check both plans for a better distribution of tests, following company
       policy: integration first, testing pyramid, testing trophy, or e2e only
 - Implementation loop
-    - Code - implement the tests
-    - Code - make the tests pass
-    - Code - refactor using best practices, keeping the tests passing
+    - Code - implement the tests, implement the code for those tests, then refactor keeping the tests green
     - Review - get another model's input and iterate the implementation loop
     - Validation - run the end to end validation steps, then iterate or submit proof of the work done
     - Drift check - review code, requirements and checks, and ensure the triplet aligns
