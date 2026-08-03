@@ -1,4 +1,8 @@
 # On AI Assisted Coding
+Galileo Sanchez
+
+The development loop as a feedback loop for AI, and how to find the right
+abstractions to build reusable workflows.
 
 ## Contents
 - Part 1 - The Evolution of the Feedback Loop

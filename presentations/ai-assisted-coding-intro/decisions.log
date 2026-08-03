@@ -970,3 +970,16 @@ while wiring it up:
 ./export-pdf.sh writes on-ai-assisted-coding.pdf, 22 pages at 960x540pt, with
 the vertical stacks flattened in reading order. Verified by rendering page 17
 back to PNG. PDFs are gitignored — the script is the artifact, not its output.
+
+## 2026-08-04 — Title slide: byline replaces the "Talk" eyebrow
+
+"Talk" was a label for the deck's type, which the audience can see for itself.
+The eyebrow slot now carries the speaker's name, which is what a title slide
+conventionally puts there and what the room actually needs.
+
+Subtitle replaced with the real thesis: "The development loop as a feedback loop
+for AI, and how to find the right abstractions to build reusable workflows." The
+old line ("Feedback loops, workflows, and where to go next") was a table of
+contents in sentence form — it named the parts without saying what the talk
+argues. This one states the argument, and the two halves map onto Part 1 and
+Part 2. Wraps to two lines at body-lg, which is fine on the title.
