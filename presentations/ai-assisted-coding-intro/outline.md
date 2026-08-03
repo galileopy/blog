@@ -155,7 +155,7 @@ Applies to anything that is managed by code.
 - Implementation
     - Stage goal: working code that satisfies the requirements
     - Technical design - feed the agent the requirements and repo access to produce an outline of the code changes
-    - Plan - sequence the work, and opt into red/green or red/green/blue cycles
+    - Plan - sequence the work, and opt into red/green or red/green/blue TDD cycles
     - Code - work the task list one verifiable step at a time
     - Refactor - clean up inside each cycle, then once more across the finished slice
         - General authoring practices
