@@ -920,3 +920,18 @@ refactor keeping the tests green."
 
 Five rows fits plain table.cmp again, so .dense came back off and the row rhythm
 matches the Requirements and Planning tables.
+
+## 2026-08-04 — Helpful links: descriptions, URL under the name
+
+The table was a name and a URL, which told the audience nothing about why any of
+the three is worth opening. Second column is now "What it is"; the URL moved
+under the project name in small mono (new .link rule in the theme, scoped to
+table.cmp td).
+
+Reordered so the two spec driven frameworks sit together and groundcrew, which
+is a different kind of tool, comes last. Its description is also the longest,
+so it reads better at the bottom than wedged between two short ones.
+
+spec-kit and conductor are both "a reusable spec driven framework". Two identical
+cells read as a copy-paste error, so conductor's says "The same, packaged as a
+Gemini CLI extension" — a distinction taken from its own URL rather than invented.

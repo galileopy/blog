@@ -191,6 +191,7 @@ or scope creep was introduced into the loop or implied in the original spec.
 
 ### Helpful links
 
-- groundcrew - https://github.com/ClipboardHealth/groundcrew
-- spec-kit - https://github.com/github/spec-kit
-- conductor - https://github.com/gemini-cli-extensions/conductor
+- spec-kit - a reusable spec driven framework - https://github.com/github/spec-kit
+- conductor - the same, packaged as a Gemini CLI extension - https://github.com/gemini-cli-extensions/conductor
+- groundcrew - a task list monitor that dispatches CLI agents with refined tickets for
+  autonomous execution - https://github.com/ClipboardHealth/groundcrew
