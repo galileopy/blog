@@ -716,3 +716,11 @@ so every slide still traces to an outline node.
 
 Part 2 is now: divider → three-runs fullbleed → the stack → Dynamic vs static.
 Deck is 22 slides.
+
+## 2026-08-03 — "Prompt / skill" → "Step"
+
+Column header on the three stage tables. The rows are stages of the process —
+Gather, Plan, Refactor, Review cycle. Whether each is a prompt, a skill, or a
+whole sub-workflow is an implementation detail that varies by setup, and naming
+the artifact promised a specificity the rows do not have. "Step" is what they
+actually are.
