@@ -147,29 +147,29 @@ Applies to anything that is managed by code.
 
 - Requirements
     - Stage goal: clear requirements, functional and non functional
-    - Gather - LLM as PM, doing PM drilling: one question at a time, prodding for edge cases
-    - Refine tickets - raw requirements into clean structured requirements using industry standard frameworks: User Stories, EARS definitions, Gherkin scenarios
-    - Scope trimming - INVEST over the user stories to organize one vertical slice of improvement at a time, then rebuild the requirements
-    - Narrative (optional) - specs a less technical audience can review
+    - Gather - let the agent act as a PM and drill you one question at a time, prodding for edge cases
+    - Refine tickets - turn the raw requirements into structured ones using User Stories, EARS and Gherkin
+    - Scope trimming - run INVEST over the stories to isolate one vertical slice, then rebuild the requirements
+    - Narrative (optional) - write the spec so a less technical audience can review it
         - (notes) no industry standard here; Joel Spolsky's four-part series on writing functional specs, condensed into a skill
 - Implementation
     - Stage goal: working code that satisfies the requirements
-    - Technical design - requirements plus repo access, an outline of the code changes
-    - Plan - sequence the work, opt into red/green or red/green/blue cycles
-    - Code - work the task list, one verifiable step at a time
-    - Refactor - in each cycle, then once more across the finished slice
+    - Technical design - feed the agent the requirements and repo access to produce an outline of the code changes
+    - Plan - sequence the work, and opt into red/green or red/green/blue cycles
+    - Code - work the task list one verifiable step at a time
+    - Refactor - clean up inside each cycle, then once more across the finished slice
         - General authoring practices
         - Object oriented preferences
         - Local preferences not enforceable by traditional lint checks or deterministic tooling
-    - Validation - the last step, and what the agent iterates against
+    - Validation - close the loop with the checks the agent iterates against
     - (notes) Stencils - the stage repeats, so learn from the plans and build stencils for
       recurring patterns: unit tests, integration tests, endpoints, controllers, resolvers
 - Validation - implementation's last step
-    - End to end - curl, Playwright, a way to exercise the running system
+    - End to end - give the agent curl or Playwright so it can exercise the running system
     - Test tiers - review the requirements and pick the right tier for each; not everything
       needs a unit test, not everything needs an e2e test. The validation plan feeds back into the
       implementation plan as notes
-    - Review cycle - adversarial review by a different model, against the requirements, and in CI
+    - Review cycle - have a different model review the work against the requirements, in CI
     - Drift check - a check before a PR is considered merge-ready; requirements are tracked in
       code now, so drift has to be prevented. Runs in CI and inside the implementation loop
 
@@ -182,12 +182,12 @@ Applies to anything that is managed by code.
 ## Part 3 - Cool Tips, Tricks and Links
 
 ### Cool Tricks
-- During incidents - live logs plus the repo, to triage likely root causes
+- During incidents - connect the agent to live logs alongside the repo to triage likely root causes
     - (notes) handle with care, agents love red herrings
-- Post mortems - generate monitoring dashboards
-- Infrastructure as code - Terraform, CDK; the same loop, swapped in for a code change
-- Load testing - improving and revalidating against the results
-- Isolated worktrees - features in parallel, needs an isolated stack per tree
+- Post mortems - have the agent generate the monitoring dashboards
+- Infrastructure as code - run the same loop against Terraform or CDK instead of service code
+- Load testing - improve and revalidate against the results
+- Isolated worktrees - develop features in parallel, with an isolated stack per worktree
     - (notes) requires real familiarity with the workflows before it pays off
 
 ### Helpful links

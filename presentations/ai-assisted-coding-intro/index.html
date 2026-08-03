@@ -414,7 +414,7 @@
       <article class="card">
         <span class="card-num">02</span>
         <h4 class="d-sm" style="margin-bottom:10px;">Implementation</h4>
-        <p class="cap muted">Design the change, sequence it, build it, refactor it &mdash; then validate.</p>
+        <p class="cap muted">Design the change, sequence it, build it, refactor it, then validate.</p>
       </article>
       <article class="card">
         <span class="card-num">03</span>
@@ -434,10 +434,10 @@
       <table class="cmp">
         <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
         <tbody>
-          <tr><td>Gather</td><td class="detail">LLM as PM, drilling &mdash; one question at a time, prodding for edge cases</td></tr>
-          <tr><td>Refine tickets</td><td class="detail">Raw requirements into structured ones &mdash; User Stories &middot; EARS &middot; Gherkin</td></tr>
-          <tr><td>Scope trimming</td><td class="detail">INVEST over the stories &mdash; one vertical slice at a time, then rebuild</td></tr>
-          <tr><td>Narrative <span class="opt">optional</span></td><td class="detail">Specs a less technical audience can review</td></tr>
+          <tr><td>Gather</td><td class="detail">Let the agent act as a PM and drill you one question at a time, prodding for edge cases.</td></tr>
+          <tr><td>Refine tickets</td><td class="detail">Turn the raw requirements into structured ones using User Stories, EARS and Gherkin.</td></tr>
+          <tr><td>Scope trimming</td><td class="detail">Run INVEST over the stories to isolate one vertical slice, then rebuild the requirements.</td></tr>
+          <tr><td>Narrative <span class="opt">optional</span></td><td class="detail">Write the spec so a less technical audience can review it.</td></tr>
         </tbody>
       </table>
     </div>
@@ -455,11 +455,11 @@
       <table class="cmp">
         <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
         <tbody>
-          <tr><td>Technical design</td><td class="detail">Requirements plus repo access &mdash; an outline of the code changes</td></tr>
-          <tr><td>Plan</td><td class="detail">Sequence the work &mdash; opt into red/green, or red/green/blue</td></tr>
-          <tr><td>Code</td><td class="detail">Work the task list, one verifiable step at a time</td></tr>
-          <tr><td>Refactor</td><td class="detail">In each cycle, then once more across the finished slice</td></tr>
-          <tr><td>Validation</td><td class="detail">The last step &mdash; and what the agent iterates against</td></tr>
+          <tr><td>Technical design</td><td class="detail">Feed the agent the requirements and repo access to produce an outline of the code changes.</td></tr>
+          <tr><td>Plan</td><td class="detail">Sequence the work, and opt into red/green or red/green/blue cycles.</td></tr>
+          <tr><td>Code</td><td class="detail">Work the task list one verifiable step at a time.</td></tr>
+          <tr><td>Refactor</td><td class="detail">Clean up inside each cycle, then once more across the finished slice.</td></tr>
+          <tr><td>Validation</td><td class="detail">Close the loop with the checks the agent iterates against.</td></tr>
         </tbody>
       </table>
     </div>
@@ -477,10 +477,10 @@
       <table class="cmp">
         <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
         <tbody>
-          <tr><td>End to end</td><td class="detail">curl &middot; Playwright &mdash; a way to exercise the running system</td></tr>
-          <tr><td>Test tiers</td><td class="detail">The right tier per requirement, fed back into the plan as notes</td></tr>
-          <tr><td>Review cycle</td><td class="detail">A different model, against the requirements &mdash; and in CI</td></tr>
-          <tr><td>Drift check</td><td class="detail">Before a PR is merge-ready: requirements, code and tests aligned</td></tr>
+          <tr><td>End to end</td><td class="detail">Give the agent curl or Playwright so it can exercise the running system.</td></tr>
+          <tr><td>Test tiers</td><td class="detail">Pick the right tier for each requirement and feed that back into the plan as notes.</td></tr>
+          <tr><td>Review cycle</td><td class="detail">Have a different model review the work against the requirements, in CI.</td></tr>
+          <tr><td>Drift check</td><td class="detail">Check that requirements, code and tests still agree before a PR is merge-ready.</td></tr>
         </tbody>
       </table>
     </div>
@@ -525,11 +525,11 @@
     <table class="cmp">
       <thead><tr><th>Trick</th><th>What it covers</th></tr></thead>
       <tbody>
-        <tr><td>During incidents</td><td class="detail">Live logs plus the repo, to triage likely root causes</td></tr>
-        <tr><td>Post mortems</td><td class="detail">Generate monitoring dashboards</td></tr>
-        <tr><td>Infrastructure as code</td><td class="detail">Terraform &middot; CDK &mdash; the same loop, swapped in for a code change</td></tr>
-        <tr><td>Load testing</td><td class="detail">Improving and revalidating against the results</td></tr>
-        <tr><td>Isolated worktrees</td><td class="detail">Features in parallel &mdash; needs an isolated stack per tree</td></tr>
+        <tr><td>During incidents</td><td class="detail">Connect the agent to live logs alongside the repo to triage likely root causes.</td></tr>
+        <tr><td>Post mortems</td><td class="detail">Have the agent generate the monitoring dashboards.</td></tr>
+        <tr><td>Infrastructure as code</td><td class="detail">Run the same loop against Terraform or CDK instead of service code.</td></tr>
+        <tr><td>Load testing</td><td class="detail">Improve and revalidate against the results.</td></tr>
+        <tr><td>Isolated worktrees</td><td class="detail">Develop features in parallel, with an isolated stack per worktree.</td></tr>
       </tbody>
     </table>
   </div>

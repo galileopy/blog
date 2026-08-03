@@ -835,3 +835,15 @@ Kept: "It is still coding. You have a different feedback loop." (the thesis, and
 a statement of fact), "Not everything needs to be fixed the same way", and
 "Brownfield projects have more context baked in" — all outline lines making
 claims, not decoration.
+
+## 2026-08-03 — Table cells become sentences
+
+Every "what it covers" cell was a fragment hinged on an em dash: "Requirements
+plus repo access — an outline of the code changes". The dash was doing the work
+a verb should do, and it made the column read as notes-to-self rather than
+instructions. Each cell is now a sentence with a subject and a verb, telling the
+reader what to actually do: "Feed the agent the requirements and repo access to
+produce an outline of the code changes."
+
+Applied across all three stage tables and the Cool Tricks table, plus the one
+card that carried the same construction. Outline updated in step.
