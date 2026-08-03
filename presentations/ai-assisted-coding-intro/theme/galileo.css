@@ -771,7 +771,8 @@
 .reveal .actors .actor { grid-column: auto; }
 
 /* optional steps: always on the board, never required */
-.reveal ol.agenda.diff li .opt {
+.reveal ol.agenda.diff li .opt,
+.reveal table.cmp td .opt {
   font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
   color: var(--gp-steel); margin-left: 8px;
 }

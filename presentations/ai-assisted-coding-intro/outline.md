@@ -146,9 +146,11 @@ Same goal, three runs. What changes is when the correction was authored.
 Applies to anything that is managed by code.
 
 - Requirements
-    - Gather - raw needs into structured requirements
-    - Refine tickets - shape the work before it starts
-    - Split - INVEST checks to break a feature into deliverable slices
+    - Stage goal: clear requirements, functional and non functional
+    - Gather - LLM as PM, doing PM drilling: one question at a time, prodding for edge cases
+    - Refine tickets - raw requirements into clean structured requirements using industry standard frameworks: User Stories, EARS definitions, Gherkin scenarios
+    - Scope trimming - INVEST over the user stories to organize one vertical slice of improvement at a time, then rebuild the requirements
+    - Narrative (optional) - bring it back for review by a less technical audience; no standard here, Joel Spolsky's four-part series on writing specs condensed into a skill
 - Implementation
     - Technical notes - collect the repo context
     - Plan - TDD, testing tier preferences

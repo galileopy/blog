@@ -724,3 +724,21 @@ Gather, Plan, Refactor, Review cycle. Whether each is a prompt, a skill, or a
 whole sub-workflow is an implementation detail that varies by setup, and naming
 the artifact promised a specificity the rows do not have. "Step" is what they
 actually are.
+
+## 2026-08-03 — Requirements table: approach per step, goal per stage
+
+Each stage table row gains a short description of the approach, starting with
+Requirements. The user proposed a third "Goal" column, then observed the goal
+is the same for every row — it belongs to the stage, not the step. So it is a
+framing line under the title ("Goal: clear requirements, functional and non
+functional"), not a column that would repeat one value four times.
+
+Steps renamed/expanded: Gather (LLM as PM, drilling one question at a time),
+Refine tickets (structure via User Stories / EARS / Gherkin — frameworks moved
+here from the old Split row), Scope trimming (was "Split"; INVEST, one vertical
+slice, then rebuild), and a new optional Narrative step (Spolsky's four-part
+specs series condensed into a skill, for less technical reviewers — no industry
+standard exists for this one).
+
+Reused the loop slides' `.opt` tag for "optional"; extended its CSS selector to
+cover `table.cmp td` since it was scoped to the agenda list.
