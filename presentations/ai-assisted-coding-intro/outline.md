@@ -14,7 +14,6 @@
     - In house
 - Workflows and dynamic workflows
     - Set of prompts that describe the whole SDLC
-- Managing context
 
 ## Part 1 - The Evolution of the Feedback Loop
 
