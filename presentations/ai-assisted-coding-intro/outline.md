@@ -150,7 +150,8 @@ Applies to anything that is managed by code.
     - Gather - LLM as PM, doing PM drilling: one question at a time, prodding for edge cases
     - Refine tickets - raw requirements into clean structured requirements using industry standard frameworks: User Stories, EARS definitions, Gherkin scenarios
     - Scope trimming - INVEST over the user stories to organize one vertical slice of improvement at a time, then rebuild the requirements
-    - Narrative (optional) - bring it back for review by a less technical audience; no standard here, Joel Spolsky's four-part series on writing specs condensed into a skill
+    - Narrative (optional) - specs a less technical audience can review
+        - (notes) no industry standard here; Joel Spolsky's four-part series on writing functional specs, condensed into a skill
 - Implementation
     - Technical notes - collect the repo context
     - Plan - TDD, testing tier preferences

@@ -742,3 +742,11 @@ standard exists for this one).
 
 Reused the loop slides' `.opt` tag for "optional"; extended its CSS selector to
 cover `table.cmp td` since it was scoped to the agenda list.
+
+## 2026-08-03 — Spolsky reference moved to speaker notes
+
+The Narrative row cited "Spolsky's series as a skill" on the slide. That is
+delivery, not the claim: the slide's job is to say the step exists and what it
+produces; where the technique came from is something to say out loud. Row now
+reads "Specs a less technical audience can review", with the four-part series
+and the no-standard caveat in <aside class="notes">.
