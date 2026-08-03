@@ -409,17 +409,17 @@
       <article class="card">
         <span class="card-num">01</span>
         <h4 class="d-sm" style="margin-bottom:10px;">Requirements</h4>
-        <p class="cap muted">Gather what is needed, refine it into a buildable ticket, split it into deliverable slices.</p>
+        <p class="cap muted">Gather what is needed, refine it into structured requirements, trim it to one slice.</p>
       </article>
       <article class="card">
         <span class="card-num">02</span>
         <h4 class="d-sm" style="margin-bottom:10px;">Implementation</h4>
-        <p class="cap muted">Collect the repo context, plan the work, build against it, then refactor for quality.</p>
+        <p class="cap muted">Design the change, sequence it, build it, refactor it &mdash; then validate.</p>
       </article>
       <article class="card">
         <span class="card-num">03</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">QA</h4>
-        <p class="cap muted">Exercise it end to end, at the right test tier, and review it with fresh eyes.</p>
+        <h4 class="d-sm" style="margin-bottom:10px;">Validation</h4>
+        <p class="cap muted">Implementation's last step, up close. It is what the agent iterates against.</p>
       </article>
     </div>
   </div>
@@ -450,32 +450,37 @@
   <section class="s-canvas">
     <div class="slide-inner">
       <p class="eyebrow">Workflows</p>
-      <h3 class="d-lg" style="margin-bottom:26px;">Implementation</h3>
+      <h3 class="d-lg" style="margin-bottom:10px;">Implementation</h3>
+      <p class="body muted" style="margin-bottom:26px;">Goal: working code that satisfies the requirements.</p>
       <table class="cmp">
         <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
         <tbody>
-          <tr><td>Technical notes</td><td class="detail">Collect the repo context</td></tr>
-          <tr><td>Plan</td><td class="detail">TDD flavour, testing tier preferences</td></tr>
-          <tr><td>Infra</td><td class="detail">Terraform &middot; CDK</td></tr>
-          <tr><td>Refactor</td><td class="detail">Code quality, clean code practices</td></tr>
-          <tr><td>Stencils</td><td class="detail">Interface surface &middot; frontend code &middot; repo conventions</td></tr>
+          <tr><td>Technical design</td><td class="detail">Requirements plus repo access &mdash; an outline of the code changes</td></tr>
+          <tr><td>Plan</td><td class="detail">Sequence the work &mdash; opt into red/green, or red/green/blue</td></tr>
+          <tr><td>Code</td><td class="detail">Work the task list, one verifiable step at a time</td></tr>
+          <tr><td>Refactor</td><td class="detail">The blue beat in cycle, then once more across the slice</td></tr>
+          <tr><td>Validation</td><td class="detail">The last step &mdash; and what the agent iterates against</td></tr>
         </tbody>
       </table>
     </div>
+    <aside class="notes">Stencils: this stage runs over and over, so learn from the
+      plans and build stencils for the patterns that repeat &mdash; how to write a unit
+      test, an integration test, how to add an endpoint, a controller, a resolver.</aside>
     <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
   </section>
 
   <section class="s-canvas">
     <div class="slide-inner">
       <p class="eyebrow">Workflows</p>
-      <h3 class="d-lg" style="margin-bottom:26px;">QA</h3>
+      <h3 class="d-lg" style="margin-bottom:10px;">Validation</h3>
+      <p class="body muted" style="margin-bottom:26px;">The last step of implementation, up close.</p>
       <table class="cmp">
         <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
         <tbody>
-          <tr><td>End to end</td><td class="detail">curl &middot; Playwright</td></tr>
-          <tr><td>Test tiers</td><td class="detail">e2e &middot; integration &middot; unit</td></tr>
-          <tr><td>Review cycle</td><td class="detail">Adversarial review, using a different model</td></tr>
-          <tr><td>Drift check</td><td class="detail">Are requirements, code and acceptance tests aligned?</td></tr>
+          <tr><td>End to end</td><td class="detail">curl &middot; Playwright &mdash; a way to exercise the running system</td></tr>
+          <tr><td>Test tiers</td><td class="detail">The right tier per requirement, fed back into the plan as notes</td></tr>
+          <tr><td>Review cycle</td><td class="detail">A different model, against the requirements &mdash; and in CI</td></tr>
+          <tr><td>Drift check</td><td class="detail">Before a PR is merge-ready: requirements, code and tests aligned</td></tr>
         </tbody>
       </table>
     </div>
@@ -543,16 +548,21 @@
   <div class="slide-inner">
     <p class="eyebrow">Cool Tricks</p>
     <h3 class="d-lg" style="margin-bottom:32px;">Running wider</h3>
-    <div class="grid-2">
+    <div class="grid-3">
       <article class="card">
         <span class="card-num">01</span>
+        <h4 class="d-sm" style="margin-bottom:10px;">Infrastructure as code</h4>
+        <p class="cap muted">Terraform · CDK. The same loop as a service code change, swapped in for it.</p>
+      </article>
+      <article class="card">
+        <span class="card-num">02</span>
         <h4 class="d-sm" style="margin-bottom:10px;">Load testing</h4>
         <p class="cap muted">Improving and revalidating against the results.</p>
       </article>
       <article class="card">
-        <span class="card-num">02</span>
+        <span class="card-num">03</span>
         <h4 class="d-sm" style="margin-bottom:10px;">Isolated worktrees</h4>
-        <p class="cap muted">Develop features concurrently. Needs a way to spin up an isolated stack, and familiarity with workflows.</p>
+        <p class="cap muted">Develop features concurrently. Needs an isolated stack, and familiarity with workflows.</p>
       </article>
     </div>
   </div>

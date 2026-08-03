@@ -153,21 +153,25 @@ Applies to anything that is managed by code.
     - Narrative (optional) - specs a less technical audience can review
         - (notes) no industry standard here; Joel Spolsky's four-part series on writing functional specs, condensed into a skill
 - Implementation
-    - Technical notes - collect the repo context
-    - Plan - TDD, testing tier preferences
-    - Infra - Terraform, CDK
-    - Refactor - code quality, clean code practices
+    - Stage goal: working code that satisfies the requirements
+    - Technical design - requirements plus repo access, an outline of the code changes
+    - Plan - sequence the work, opt into red/green or red/green/blue cycles
+    - Code - work the task list, one verifiable step at a time
+    - Refactor - the blue beat in cycle, then once more across the slice
         - General authoring practices
         - Object oriented preferences
         - Local preferences not enforceable by traditional lint checks or deterministic tooling
-    - Stencils - repo conventions for how to add X
-        - External interface - REST endpoint, GraphQL field, RPC/WS handler
-        - Frontend code
-- QA
-    - End to end - curl, Playwright
-    - Test tiers - e2e, integration, unit
-    - Review cycle - adversarial review, use a different model
-    - Drift check - are requirements, code, and acceptance tests all aligned
+    - Validation - the last step, and what the agent iterates against
+    - (notes) Stencils - the stage repeats, so learn from the plans and build stencils for
+      recurring patterns: unit tests, integration tests, endpoints, controllers, resolvers
+- Validation - implementation's last step, up close
+    - End to end - curl, Playwright, a way to exercise the running system
+    - Test tiers - review the requirements and pick the right tier for each; not everything
+      needs a unit test, not everything needs an e2e test. The validation plan feeds back into the
+      implementation plan as notes
+    - Review cycle - adversarial review by a different model, against the requirements, and in CI
+    - Drift check - a check before a PR is considered merge-ready; requirements are tracked in
+      code now, so drift has to be prevented. Runs in CI and inside the implementation loop
 
 #### Dynamic Workflows vs Static Workflows
 - Not everything needs to be fixed the same way.
@@ -190,6 +194,8 @@ Applies to anything that is managed by code.
     - Handle with care, agents love red herrings.
 - Post mortems
     - Generate monitoring dashboards
+- Infrastructure as code - Terraform, CDK
+    - Same loop as a service code change, swapped in for it
 - Load testing and improving/revalidating
 - Using isolated worktrees to develop features concurrently
     - Needs a way to spin up an isolated stack

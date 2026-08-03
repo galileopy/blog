@@ -750,3 +750,39 @@ delivery, not the claim: the slide's job is to say the step exists and what it
 produces; where the technique came from is something to say out loud. Row now
 reads "Specs a less technical audience can review", with the four-part series
 and the no-standard caveat in <aside class="notes">.
+
+## 2026-08-03 — Implementation and Validation stages, drilled one step at a time
+
+Same structure as Requirements: a stage-goal framing line plus an approach note
+per row. Content came from asking one question per step.
+
+Implementation — goal: working code that satisfies the requirements.
+- "Technical notes" is really **Technical design**: requirements plus repo
+  access produce an outline of the code changes, i.e. a design document. Now
+  matches the loop slides' "technical design of a solution".
+- **Plan** sequences the work and is where you opt into TDD — red/green, or
+  red/green/blue with the refactor beat.
+- **Code** added; nothing named the build itself once Infra and Stencils left.
+  Named "Code" rather than "Execute" so the vocabulary matches Part 1.
+- **Refactor** is both: the blue beat inside each cycle, and one pass across
+  the finished slice.
+- **Infra** removed. It is an optional step interchangeable with a service code
+  change — same loop, different target — so it moved to Part 3 "Running wider"
+  (now a three-up) rather than sitting in the main sequence.
+- **Stencils** moved to speaker notes. It is not a step in the loop; it is what
+  you build *because* the loop repeats — stencils for unit tests, integration
+  tests, endpoints, controllers, resolvers.
+
+QA renamed **Validation** and nested as Implementation's last step, because the
+agent needs it to iterate: it feeds the coding loop rather than following it. It
+keeps its own slide so the four checks are not crowded into the Implementation
+table — the slide reads as zooming into that one step. Row: "Validation — the
+last step, and what the agent iterates against"; slide framing: "The last step of
+implementation, up close."
+
+Validation rows: End to end (curl/Playwright — a way to exercise the *running*
+system), Test tiers (review requirements, pick the right tier per requirement —
+not everything needs a unit test, not everything needs e2e — and feed the plan
+back as notes), Review cycle (different model, against the requirements, in CI),
+Drift check (gate before a PR is merge-ready; requirements are tracked in code
+now, so it runs in CI and inside the loop).
