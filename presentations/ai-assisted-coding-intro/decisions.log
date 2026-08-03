@@ -951,3 +951,22 @@ It was the only item on the list that is not a way of working the audience could
 raise a hand to. The other five name a practice — prompting functions, vibe
 coding, plan mode, spec driven frameworks, workflows — and "managing context" is
 a concern that runs through all of them. Five items also sits better in L-02.
+
+## 2026-08-04 — PDF export: decktape, wrapped in export-pdf.sh
+
+Chrome's own print-to-pdf is not usable for this deck, confirmed twice now. The
+CLI ignores the @page size reveal injects (that needs DevTools'
+preferCSSPageSize, which has no CLI equivalent), so it exports letter-portrait,
+the 1280px stage overflows, and the grid layouts collapse. Do not try to fix it
+by adding @page to the theme — a competing @page declaration puts every slide on
+one page.
+
+decktape drives a real browser and honours the slide size. Two gotchas found
+while wiring it up:
+- Puppeteer's bundled Chrome crashes on launch here; it needs --no-sandbox
+  (plus --disable-gpu, --disable-dev-shm-usage).
+- Same port trap as the screenshot workflow: 5081, never 5060.
+
+./export-pdf.sh writes on-ai-assisted-coding.pdf, 22 pages at 960x540pt, with
+the vertical stacks flattened in reading order. Verified by rendering page 17
+back to PNG. PDFs are gitignored — the script is the artifact, not its output.
