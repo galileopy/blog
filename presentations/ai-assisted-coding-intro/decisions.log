@@ -992,3 +992,24 @@ existing middot separator rather than a hyphen, matching the separator used in
 card copy and sub-lines throughout.
 
 Also corrected the title slide's byline to "Sánchez" with the accent, to match.
+
+## 2026-08-04 — Close: Questions (ink) then Thank you (canvas, two chevrons)
+
+Two slides added, and the deck's last structural gap is now filled.
+
+Questions is the L-13 closing the design system requires: ink slab, rule-accent,
+one right chevron. The deck's only other ink surfaces are the three Part
+dividers, so arriving here reads as the end of the argument rather than another
+section break.
+
+Thank you mirrors the title slide exactly — same white canvas, same two chevrons
+(solid left, soft right), name under the display line. The deck therefore opens
+and closes on the same surface with the same motif, which brackets it.
+
+Note this inverts the catalog's usual order (it ends on ink). Ending on the
+white bookend instead is deliberate: the ink slab does the work of stopping the
+talk, and Thank you is what stays on screen through the Q&A.
+
+Deck is 24 slides across 15 top-level sections. Questions is #/13, Thank you
+#/14 — and reveal clamps out-of-range hashes to the last slide, so a screenshot
+of #/15 silently returns Thank you rather than erroring.
