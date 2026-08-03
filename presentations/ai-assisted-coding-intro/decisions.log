@@ -983,3 +983,12 @@ old line ("Feedback loops, workflows, and where to go next") was a table of
 contents in sentence form — it named the parts without saying what the talk
 argues. This one states the argument, and the two halves map onto Part 1 and
 Part 2. Wraps to two lines at body-lg, which is fine on the title.
+
+## 2026-08-04 — Byline in the slide footer on every slide
+
+Footer brand goes from "On AI Assisted Coding" to "On AI Assisted Coding ·
+Galileo Sánchez" on all 20 slides that carry a footer. Applied with the deck's
+existing middot separator rather than a hyphen, matching the separator used in
+card copy and sub-lines throughout.
+
+Also corrected the title slide's byline to "Sánchez" with the accent, to match.
