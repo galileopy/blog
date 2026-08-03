@@ -201,6 +201,11 @@ or scope creep was introduced into the loop or implied in the original spec.
 
 ## Close
 
+### Quote
+
+The best way to learn these systems is trying, failing and learning. There is no
+right way to do it, but there are many ways to have fun and keep learning.
+
 ### Questions
 
 Questions?

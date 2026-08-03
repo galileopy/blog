@@ -1013,3 +1013,20 @@ talk, and Thank you is what stays on screen through the Q&A.
 Deck is 24 slides across 15 top-level sections. Questions is #/13, Thank you
 #/14 — and reveal clamps out-of-range hashes to the last slide, so a screenshot
 of #/15 silently returns Thank you rather than erroring.
+
+## 2026-08-04 — Quote slide after Helpful links
+
+L-11, ink, no attribution block. The line is the speaker's own, and attributing
+yourself on your own slide reads oddly; the layout works fine as quote-mark plus
+blockquote.
+
+Placed after Helpful links so the close runs quote → Questions → Thank you. Two
+ink slides in a row is deliberate here: they read as one closing movement, and
+returning to white for Thank you is what ends it.
+
+Wording keeps the "no right way" framing but drops the em dash, per the earlier
+sweep: "There is no right way to do it, but there are many ways to have fun and
+keep learning."
+
+Deck is 25 slides. Hash indices past Part 3 all shift by one: quote #/13,
+Questions #/14, Thank you #/15.
