@@ -847,3 +847,33 @@ produce an outline of the code changes."
 
 Applied across all three stage tables and the Cool Tricks table, plus the one
 card that carried the same construction. Outline updated in step.
+
+## 2026-08-03 — Sentence-by-sentence pass: every row stands alone
+
+Reviewed all 18 table sentences against one test: does this survive being read
+by someone who missed the row above it. Nine passed. Nine were leaning on a
+neighbour, almost always via a bare "the" pointing at something only the
+previous row defined.
+
+Fixed:
+- Scope trimming: "the stories" -> "the user stories", and "rebuild the
+  requirements" gained its object ("around it").
+- Code: "the task list" -> "the plan's task list".
+- Refactor: named the blue step outright instead of "each cycle".
+- Validation (row): "close the loop with the checks..." was the vaguest line in
+  the deck. Now states the mechanism including the iteration trigger, which is
+  the actual reason validation lives inside the loop.
+- Test tiers: leads with "not everything needs a unit test and not everything
+  needs e2e", which was the point of the step and had been buried.
+- Review cycle: "a different model" never said different from what. Now "a model
+  other than the one that wrote the code" — the adversarial point is the row.
+- Post mortems: "the monitoring dashboards" had no antecedent and no link to the
+  post mortem. Now "for what the incident exposed".
+- Infra as code: "the same loop" is unreadable this far from Part 1. Now "the
+  implementation workflow", which also matches Part 2's vocabulary.
+- Load testing: "Improve and revalidate against the results" was the weakest
+  line in the deck — the row name carried all the meaning. Now names the actor
+  and the target.
+
+One em dash was declined in favour of a full stop (Test tiers), keeping the
+earlier no-dash rule intact.

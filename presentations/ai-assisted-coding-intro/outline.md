@@ -149,27 +149,26 @@ Applies to anything that is managed by code.
     - Stage goal: clear requirements, functional and non functional
     - Gather - let the agent act as a PM and drill you one question at a time, prodding for edge cases
     - Refine tickets - turn the raw requirements into structured ones using User Stories, EARS and Gherkin
-    - Scope trimming - run INVEST over the stories to isolate one vertical slice, then rebuild the requirements
+    - Scope trimming - run INVEST over the user stories to isolate one vertical slice, then rebuild the requirements around it
     - Narrative (optional) - write the spec so a less technical audience can review it
         - (notes) no industry standard here; Joel Spolsky's four-part series on writing functional specs, condensed into a skill
 - Implementation
     - Stage goal: working code that satisfies the requirements
     - Technical design - feed the agent the requirements and repo access to produce an outline of the code changes
     - Plan - sequence the work, and opt into red/green or red/green/blue TDD cycles
-    - Code - work the task list one verifiable step at a time
-    - Refactor - clean up inside each cycle, then once more across the finished slice
+    - Code - work the plan's task list one verifiable step at a time
+    - Refactor - refactor as the blue step in each cycle, and again once the slice is done
         - General authoring practices
         - Object oriented preferences
         - Local preferences not enforceable by traditional lint checks or deterministic tooling
-    - Validation - close the loop with the checks the agent iterates against
+    - Validation - run the tests, verify the requirements are satisfied, and trigger another iteration if validation does not pass
     - (notes) Stencils - the stage repeats, so learn from the plans and build stencils for
       recurring patterns: unit tests, integration tests, endpoints, controllers, resolvers
 - Validation - implementation's last step
     - End to end - give the agent curl or Playwright so it can exercise the running system
-    - Test tiers - review the requirements and pick the right tier for each; not everything
-      needs a unit test, not everything needs an e2e test. The validation plan feeds back into the
-      implementation plan as notes
-    - Review cycle - have a different model review the work against the requirements, in CI
+    - Test tiers - not everything needs a unit test and not everything needs e2e. Pick the tier
+      per requirement and note it in the plan
+    - Review cycle - have a model other than the one that wrote the code review it against the requirements, in CI
     - Drift check - a check before a PR is considered merge-ready; requirements are tracked in
       code now, so drift has to be prevented. Runs in CI and inside the implementation loop
 
@@ -184,9 +183,9 @@ Applies to anything that is managed by code.
 ### Cool Tricks
 - During incidents - connect the agent to live logs alongside the repo to triage likely root causes
     - (notes) handle with care, agents love red herrings
-- Post mortems - have the agent generate the monitoring dashboards
-- Infrastructure as code - run the same loop against Terraform or CDK instead of service code
-- Load testing - improve and revalidate against the results
+- Post mortems - have the agent generate monitoring dashboards for what the incident exposed
+- Infrastructure as code - point the implementation workflow at Terraform or CDK instead of service code
+- Load testing - have the agent load test the service, then improve and revalidate against the results
 - Isolated worktrees - develop features in parallel, with an isolated stack per worktree
     - (notes) requires real familiarity with the workflows before it pays off
 
