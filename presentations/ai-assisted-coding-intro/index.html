@@ -395,12 +395,16 @@
        brand line lands on top of the caption text. -->
 </section>
 
-<!-- L-07 three-up. The catalog specifies s-cloud; this deck is s-canvas for every
-     content slide (ink is reserved for Part dividers), so the band is overridden. -->
+<!-- Vertical stack: an L-07 three-up names the three stages, then one per-stage
+     table on down-arrow. The catalog specifies s-cloud for the three-up; this deck
+     is s-canvas for every content slide (ink is reserved for Part dividers), so the
+     band is overridden. There is deliberately no whole-process overview table — the
+     cards are the overview, and a combined table repeated every row verbatim. -->
+<section>
 <section class="s-canvas">
   <div class="slide-inner">
     <p class="eyebrow">Workflows</p>
-    <h3 class="d-lg" style="margin-bottom:32px;">What can you encode in prompts?</h3>
+    <h3 class="d-lg" style="margin-bottom:32px;">Pre-built prompts and skills</h3>
     <div class="grid-3">
       <article class="card">
         <span class="card-num">01</span>
@@ -422,77 +426,56 @@
   <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
 </section>
 
-<section class="s-canvas">
-  <div class="slide-inner">
-    <p class="eyebrow">Conventions</p>
-    <h3 class="d-lg" style="margin-bottom:10px;">How to add X</h3>
-    <p class="body muted" style="margin-bottom:32px;">Applies to anything that is managed by code.</p>
-    <div class="grid-3">
-      <article class="card">
-        <span class="card-num">01</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">External interface</h4>
-        <p class="cap muted">REST endpoint · GraphQL field · RPC/WS handler</p>
-      </article>
-      <article class="card">
-        <span class="card-num">02</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Infrastructure component</h4>
-        <p class="cap muted">Terraform · CDK</p>
-      </article>
-      <article class="card">
-        <span class="card-num">03</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Tests and tiers</h4>
-        <p class="cap muted">e2e tests · integration tests · unit tests</p>
-      </article>
+  <section class="s-canvas">
+    <div class="slide-inner">
+      <p class="eyebrow">Workflows</p>
+      <h3 class="d-lg" style="margin-bottom:26px;">Requirements</h3>
+      <table class="cmp">
+        <thead><tr><th>Prompt / skill</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>Gather</td><td class="detail">Raw needs into structured requirements</td></tr>
+          <tr><td>Refine tickets</td><td class="detail">Shape the work before it starts</td></tr>
+          <tr><td>Split (INVEST)</td><td class="detail">Break a feature into deliverable slices</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
-</section>
+    <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
+  </section>
 
-<section class="s-canvas">
-  <div class="slide-inner">
-    <p class="eyebrow">Workflows</p>
-    <h3 class="d-lg" style="margin-bottom:32px;">What you encode</h3>
-    <div class="grid-4">
-      <article class="card" style="padding:20px;">
-        <h4 class="d-xs" style="margin-bottom:8px;">Tracking requirements</h4>
-        <p class="cap muted">Keep them attached to the work.</p>
-      </article>
-      <article class="card" style="padding:20px;">
-        <h4 class="d-xs" style="margin-bottom:8px;">Refining tickets</h4>
-        <p class="cap muted">Shape the work before it starts.</p>
-      </article>
-      <article class="card" style="padding:20px;">
-        <h4 class="d-xs" style="margin-bottom:8px;">Review cycle</h4>
-        <p class="cap muted">Adversarial review, using a different model.</p>
-      </article>
-      <article class="card" style="padding:20px;">
-        <h4 class="d-xs" style="margin-bottom:8px;">Drift check</h4>
-        <p class="cap muted">Are requirements, code and acceptance tests aligned?</p>
-      </article>
+  <section class="s-canvas">
+    <div class="slide-inner">
+      <p class="eyebrow">Workflows</p>
+      <h3 class="d-lg" style="margin-bottom:26px;">Implementation</h3>
+      <table class="cmp">
+        <thead><tr><th>Prompt / skill</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>Technical notes</td><td class="detail">Collect the repo context</td></tr>
+          <tr><td>Plan</td><td class="detail">TDD flavour, testing tier preferences</td></tr>
+          <tr><td>Infra</td><td class="detail">Terraform &middot; CDK</td></tr>
+          <tr><td>Refactor</td><td class="detail">Code quality, clean code practices</td></tr>
+          <tr><td>Stencils</td><td class="detail">Interface surface &middot; frontend code &middot; repo conventions</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
-</section>
+    <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
+  </section>
 
-<section class="s-canvas">
-  <div class="slide-inner">
-    <p class="eyebrow">Workflows</p>
-    <h3 class="d-lg" style="margin-bottom:10px;">Guidelines and practices</h3>
-    <p class="body muted" style="margin-bottom:32px;">The conventions traditional lint checks and deterministic tooling cannot enforce.</p>
-    <div class="grid-2">
-      <article class="card">
-        <span class="card-num">01</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Implementation process</h4>
-        <p class="cap muted">TDD · testing tier preferences</p>
-      </article>
-      <article class="card">
-        <span class="card-num">02</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Clean code practices</h4>
-        <p class="cap muted">General authoring practices · object oriented preferences · local preferences</p>
-      </article>
+  <section class="s-canvas">
+    <div class="slide-inner">
+      <p class="eyebrow">Workflows</p>
+      <h3 class="d-lg" style="margin-bottom:26px;">QA</h3>
+      <table class="cmp">
+        <thead><tr><th>Prompt / skill</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>End to end</td><td class="detail">curl &middot; Playwright</td></tr>
+          <tr><td>Test tiers</td><td class="detail">e2e &middot; integration &middot; unit</td></tr>
+          <tr><td>Review cycle</td><td class="detail">Adversarial review, using a different model</td></tr>
+          <tr><td>Drift check</td><td class="detail">Are requirements, code and acceptance tests aligned?</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
+    <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
+  </section>
 </section>
 
 <section class="s-canvas">

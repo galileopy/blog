@@ -394,6 +394,21 @@
 .reveal section.s-ink table.cmp td { border-color: rgba(255,255,255,0.18); color: var(--gp-on-ink); }
 .reveal section.s-ink table.cmp thead th { color: rgba(255,255,255,0.72); }
 
+/* Dense variant: the catalog caps .cmp at ~5 rows at the default type size. A
+   long menu-style table (one row per item, first column grouped with rowspan)
+   needs tighter rows to clear 720px. Type stays >=14px; below that it stops
+   being readable from the back of a room. */
+.reveal table.cmp.dense th,
+.reveal table.cmp.dense td { padding: 8px 20px; font-size: 15px; }
+.reveal table.cmp.dense .stage {
+  vertical-align: top; padding-top: 12px;
+  font-weight: 600; color: var(--gp-ink);
+  border-right: 1px solid var(--gp-hairline);
+  white-space: nowrap;
+}
+.reveal table.cmp.dense tbody tr.group-start td { border-top: 1px solid var(--gp-steel); }
+.reveal table.cmp.dense td.detail { color: var(--gp-graphite); }
+
 /* quote */
 .reveal .quote-mark {
   font-size: 96px; font-weight: 300; line-height: 0.6;

@@ -142,37 +142,29 @@ Same goal, three runs. What changes is when the correction was authored.
       how to use them
 - Bonus: a skill that composes the workflow dynamically according to the problem
 
-### Conventions
-Applies to anything that is managed by code
+### Pre-built prompts and skills
+Applies to anything that is managed by code.
 
-- How to add X
-    - External interface
-        - REST endpoint
-        - GraphQL Field
-        - RPC/WS handler
-    - Infrastructure component
-        - Terraform
-        - CDK
-    - Tests and tiers
-        - e2e tests
-        - Integration tests
-        - Unit tests
-
-### Workflows
-It's about encoding what you do in prompts and then iterating automatically.
-
-- Tracking requirements
-- Refining tickets
-- Review cycle
-    - Adversarial review, use a different model
-- Implementation process guidelines
-    - TDD
-    - Testing tier preferences
-- Clean code practices
-    - General authoring practices
-    - Object oriented preferences
-    - Local preferences not enforceable by traditional lint checks or deterministic tooling
-- Drift check: are requirements, code, and acceptance tests all aligned
+- Requirements
+    - Gather - raw needs into structured requirements
+    - Refine tickets - shape the work before it starts
+    - Split - INVEST checks to break a feature into deliverable slices
+- Implementation
+    - Technical notes - collect the repo context
+    - Plan - TDD, testing tier preferences
+    - Infra - Terraform, CDK
+    - Refactor - code quality, clean code practices
+        - General authoring practices
+        - Object oriented preferences
+        - Local preferences not enforceable by traditional lint checks or deterministic tooling
+    - Stencils - repo conventions for how to add X
+        - External interface - REST endpoint, GraphQL field, RPC/WS handler
+        - Frontend code
+- QA
+    - End to end - curl, Playwright
+    - Test tiers - e2e, integration, unit
+    - Review cycle - adversarial review, use a different model
+    - Drift check - are requirements, code, and acceptance tests all aligned
 
 #### Dynamic Workflows vs Static Workflows
 - Not everything needs to be fixed the same way.

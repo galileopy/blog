@@ -688,3 +688,31 @@ context material are things workflows encode, not the other way round.
 
 Updated in `outline.md` (Contents list + section heading) and in `index.html`
 (contents slide entry, Part 2 divider). PLAN.md still to follow.
+
+## 2026-08-03 — Part 2: collapse the workflow tables into one stack
+
+Removed the 11-row "Pre-built prompts and skills" overview table. Every one of
+its rows was repeated verbatim on the per-stage table below it — the stack said
+the same thing twice, once cramped and once legible.
+
+The three-up (Requirements / Implementation / QA) now carries that title and
+becomes the head of the stack, with the three per-stage tables nested under it.
+The cards *are* the overview: they name the stages and say what each is for; the
+tables give the prompts. Down-arrow drills in, right-arrow moves on — so the
+detail is optional at presentation time, which the flat overview table was not.
+
+Also deleted three slides now fully covered by those tables:
+- "How to add X" (Conventions) — infra → Implementation/Infra, tests and tiers →
+  QA/Test tiers, external interface → Implementation/Stencils.
+- "What you encode" — its four cards are Requirements/Gather, Refine tickets,
+  QA/Review cycle, and Drift check.
+- "Guidelines and practices" — implementation process → Implementation/Plan,
+  clean code practices → Implementation/Refactor.
+
+Drift check was the one item with no table row yet; added to the QA table rather
+than let it vanish. `outline.md` re-synced: `### Conventions` and `### Workflows`
+are replaced by a single `### Pre-built prompts and skills` carrying all of it,
+so every slide still traces to an outline node.
+
+Part 2 is now: divider → three-runs fullbleed → the stack → Dynamic vs static.
+Deck is 22 slides.
