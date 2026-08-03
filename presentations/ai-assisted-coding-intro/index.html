@@ -521,51 +521,20 @@
 <section class="s-canvas">
   <div class="slide-inner">
     <p class="eyebrow">Cool Tricks</p>
-    <h3 class="d-lg" style="margin-bottom:32px;">Beyond writing the code</h3>
-    <div class="grid-3">
-      <article class="card">
-        <span class="card-num">01</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">During refinement</h4>
-        <p class="cap muted">Connect to Linear to help refine tickets. Structured English &mdash; user stories, EARS, Gherkin scenarios. INVEST checks to split the feature.</p>
-      </article>
-      <article class="card">
-        <span class="card-num">02</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">During incidents</h4>
-        <p class="cap muted">Connect your agent to live logs while in the repo, or set of repos, to triage likely root causes.</p>
-      </article>
-      <article class="card">
-        <span class="card-num">03</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Post mortems</h4>
-        <p class="cap muted">Generate monitoring dashboards.</p>
-      </article>
-    </div>
+    <h3 class="d-lg" style="margin-bottom:26px;">Beyond writing the code</h3>
+    <table class="cmp">
+      <thead><tr><th>Trick</th><th>What it covers</th></tr></thead>
+      <tbody>
+        <tr><td>During incidents</td><td class="detail">Live logs plus the repo, to triage likely root causes</td></tr>
+        <tr><td>Post mortems</td><td class="detail">Generate monitoring dashboards</td></tr>
+        <tr><td>Infrastructure as code</td><td class="detail">Terraform &middot; CDK &mdash; the same loop, swapped in for a code change</td></tr>
+        <tr><td>Load testing</td><td class="detail">Improving and revalidating against the results</td></tr>
+        <tr><td>Isolated worktrees</td><td class="detail">Features in parallel &mdash; needs an isolated stack per tree</td></tr>
+      </tbody>
+    </table>
   </div>
-  <aside class="notes">Handle incident triage with care &mdash; agents love red herrings.</aside>
-  <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
-</section>
-
-<section class="s-canvas">
-  <div class="slide-inner">
-    <p class="eyebrow">Cool Tricks</p>
-    <h3 class="d-lg" style="margin-bottom:32px;">Running wider</h3>
-    <div class="grid-3">
-      <article class="card">
-        <span class="card-num">01</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Infrastructure as code</h4>
-        <p class="cap muted">Terraform · CDK. The same loop as a service code change, swapped in for it.</p>
-      </article>
-      <article class="card">
-        <span class="card-num">02</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Load testing</h4>
-        <p class="cap muted">Improving and revalidating against the results.</p>
-      </article>
-      <article class="card">
-        <span class="card-num">03</span>
-        <h4 class="d-sm" style="margin-bottom:10px;">Isolated worktrees</h4>
-        <p class="cap muted">Develop features concurrently. Needs an isolated stack, and familiarity with workflows.</p>
-      </article>
-    </div>
-  </div>
+  <aside class="notes">Incidents: handle with care, agents love red herrings.
+    Worktrees also require real familiarity with the workflows before they pay off.</aside>
   <div class="slide-foot"><span class="brand">On AI Assisted Coding</span></div>
 </section>
 

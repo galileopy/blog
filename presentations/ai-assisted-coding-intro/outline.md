@@ -182,24 +182,13 @@ Applies to anything that is managed by code.
 ## Part 3 - Cool Tips, Tricks and Links
 
 ### Cool Tricks
-- During refinement
-    - Connect to Linear and get help refining tickets
-    - Use structured English frameworks
-        - User Stories
-        - EARS
-        - Gherkin scenarios
-    - INVEST checks to split the feature
-- During incidents
-    - Connect your agent to live logs while in the repo or set of repos to triage likely root causes
-    - Handle with care, agents love red herrings.
-- Post mortems
-    - Generate monitoring dashboards
-- Infrastructure as code - Terraform, CDK
-    - Same loop as a service code change, swapped in for it
-- Load testing and improving/revalidating
-- Using isolated worktrees to develop features concurrently
-    - Needs a way to spin up an isolated stack
-    - Requires familiarity with workflows.
+- During incidents - live logs plus the repo, to triage likely root causes
+    - (notes) handle with care, agents love red herrings
+- Post mortems - generate monitoring dashboards
+- Infrastructure as code - Terraform, CDK; the same loop, swapped in for a code change
+- Load testing - improving and revalidating against the results
+- Isolated worktrees - features in parallel, needs an isolated stack per tree
+    - (notes) requires real familiarity with the workflows before it pays off
 
 ### Helpful links
 

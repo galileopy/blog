@@ -795,3 +795,20 @@ just a name and a URL each, which is a two-column table wearing a costume. The
 table also puts the three URLs on one left rail so they scan as a set, and it
 matches the stage tables in Part 2 rather than repeating the card treatment used
 by the two Cool Tricks slides right before it.
+
+## 2026-08-03 — Cool Tricks: two card slides merged into one table
+
+"Beyond writing the code" and "Running wider" became a single five-row table.cmp
+under the first title. They were one list split across two slides for no reason
+other than the three-up cap, and Part 3 was running three card slides back to
+back.
+
+Dropped the "During refinement" card entirely: Linear, User Stories, EARS,
+Gherkin and INVEST all appear on the Requirements stage table in Part 2, which
+says it better and gets there first. A trick the audience already saw is not a
+trick.
+
+Delivery caveats to notes: "agents love red herrings" (incidents) and worktrees
+needing real workflow familiarity. Both are things to say, not slide claims.
+
+Part 3 is now: divider, Beyond writing the code, Helpful links. Deck is 21 slides.
