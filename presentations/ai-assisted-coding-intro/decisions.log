@@ -1131,3 +1131,20 @@ viewBox grew from 470 to 494 to make room; the caption bar is unaffected.
 It is deliberately outside the fragment groups, so it is on screen from the
 first timeline. Revealing a key one symbol at a time would make the audience
 re-read it three times.
+
+## Legend entries arrive with the marker they explain
+
+Reversed the previous decision. Each timeline introduces exactly one new marker,
+so each legend entry now lives inside that timeline's fragment group: the filled
+dot with "Correct as you go", the diamond with "Plan first, then execute", the
+dotted outline with "Reusable workflow".
+
+The earlier all-at-once legend explained two markers that were not on screen yet.
+Progressive reveal costs nothing here because there is no re-reading to do — a
+line is added, never rearranged.
+
+Relaid the legend as three stacked rows rather than two, so an entry appearing
+only ever appends below and never reflows the entries above it.
+
+Fragment states deep-link as #/7/0/1 and #/7/0/2 — the h/v/f hash. A ?fragment=
+query string silently lands on slide 1 and screenshots the title slide.
