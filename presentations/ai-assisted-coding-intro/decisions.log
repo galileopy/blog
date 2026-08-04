@@ -1054,3 +1054,9 @@ put the use-case bar on that baseline. Top-right is the only corner empty on
 every layout in the deck (.layout-tag would collide there, but this deck never
 uses it). Verified on a canvas table slide, a loop slide with the use-case bar,
 and an ink divider.
+
+## 2026-08-04 — Contents heading: "Three parts" -> "What we'll cover"
+
+"Three parts" described the slide's own shape, which the three numbered rows
+already show. The heading now says what the slide is for. It also stops being
+wrong the moment the deck gains or loses a part.
