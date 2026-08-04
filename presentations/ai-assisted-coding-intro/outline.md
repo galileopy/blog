@@ -10,14 +10,20 @@ abstractions to build reusable workflows.
 - Part 3 - Cool Tips, Tricks and Links
 
 ## Temperature Check
-- Prompt tests or new functions
-- Vibe coding simple apps
-- Plan mode in tools
-- Spec driven framework
-    - Canned, spec-kit/conductor
-    - In house
-- Workflows and dynamic workflows
-    - Set of prompts that describe the whole SDLC
+
+Where are you at today? How much of the loop you hand over.
+
+- Manual
+    1. Code completion
+    2. Comments to code
+    3. Chat and copy code
+- Agentic
+    4. In file changes
+    5. Spec driven, plan mode or a pre-made harness
+    6. Vibe coding
+- Harness Engineering
+    7. Pre-built frameworks, spec-kit/conductor
+    8. In house workflows
 
 ## Part 1 - The Evolution of the Feedback Loop
 

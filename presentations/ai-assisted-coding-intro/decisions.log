@@ -1060,3 +1060,31 @@ and an ink divider.
 "Three parts" described the slide's own shape, which the three numbered rows
 already show. The heading now says what the slide is for. It also stops being
 wrong the moment the deck gains or loses a part.
+
+## Temperature Check reworked into a spectrum (cards)
+
+The old five items were unlike things — a task, a habit, a tool feature, a
+framework, a category — so "where are you at" had no axis to be at a point on.
+Replaced with a stated axis (how much of the loop you hand over) and three named
+bands: Manual, Agentic, Harness Engineering.
+
+Rungs number 1..8 continuously across the bands rather than restarting per band.
+It is a temperature check; people call out a number, and "I'm at 2" has to mean
+one thing.
+
+Three layouts were built as a throwaway vertical stack under the slide and
+screenshotted before choosing:
+- A grid-3 cards — chosen.
+- B table.cmp.dense with group rows, rung 7 below the accent rule — fit well and
+  had room for a gloss column, but lost.
+- C banded agenda list — overflowed 720px and put blue on the slide four times.
+  Discarded on the evidence, not on taste.
+The two losing variants were deleted; the stack was scratch and never committed.
+
+Dropped `.card-num` from the three cards. With rungs numbered 01..08 inside the
+cards, a second 01/02/03 on the card headers is two numbering systems on one
+slide. The band names carry the grouping without it.
+
+Vibe coding sits at 6, above spec driven. The axis is delegation, not rigor, so
+this is correct on its own terms — but Part 1 sells rigor going up, so the room
+can hear "6 > 5" as an endorsement. Flagged to the speaker; left as authored.
