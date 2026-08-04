@@ -1030,3 +1030,14 @@ keep learning."
 
 Deck is 25 slides. Hash indices past Part 3 all shift by one: quote #/13,
 Questions #/14, Thank you #/15.
+
+## 2026-08-04 — Slide footer removed from every slide
+
+All 22 .slide-foot blocks deleted. The brand line repeated on every slide is
+conference-template habit: the audience knows whose talk they are in, and it
+competed with the use-case bar on the six loop slides, where two things sat on
+the same baseline. Reveal's own slide number stays — that one is useful during
+Q&A ("go back to slide 17").
+
+Note this reverses the byline addition from earlier the same day. The byline now
+lives only where it belongs: the title slide and the Thank you slide.
