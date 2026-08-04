@@ -468,6 +468,17 @@
 .reveal section.s-ink .slide-foot { color: rgba(255,255,255,0.4); }
 .reveal section.s-ink .slide-foot .brand { color: rgba(255,255,255,0.55); }
 
+/* Brand mark, top-right. It sat in .slide-foot originally, but the bottom rail is
+   already busy: reveal's slide number is bottom-right, and the six loop slides put
+   the use-case bar on that same baseline. Top-right is the only corner with nothing
+   in it on every layout. */
+.reveal .slide-brand {
+  position: absolute; top: 32px; right: var(--gp-pad-x); margin: 0;
+  font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;
+  color: var(--gp-steel); z-index: 2;
+}
+.reveal section.s-ink .slide-brand { color: rgba(255,255,255,0.4); }
+
 .reveal .layout-tag {
   position: absolute; top: 30px; right: var(--gp-pad-x);
   font-family: var(--gp-mono); font-size: 11px; letter-spacing: 0.32px;

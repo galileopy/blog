@@ -1041,3 +1041,16 @@ Q&A ("go back to slide 17").
 
 Note this reverses the byline addition from earlier the same day. The byline now
 lives only where it belongs: the title slide and the Thank you slide.
+
+## 2026-08-04 — Brand line returns, top-right, without the byline
+
+Two separate things were removed together last commit. The brand line comes back
+as "On AI Assisted Coding"; the byline does not — the name belongs on the title
+and Thank you slides, not on all 22.
+
+Moved out of .slide-foot to a new .slide-brand at top-right. The bottom rail was
+the crowded one: reveal's slide number is bottom-right, and the six loop slides
+put the use-case bar on that baseline. Top-right is the only corner empty on
+every layout in the deck (.layout-tag would collide there, but this deck never
+uses it). Verified on a canvas table slide, a loop slide with the use-case bar,
+and an ink divider.
