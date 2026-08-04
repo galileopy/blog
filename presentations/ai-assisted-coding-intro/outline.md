@@ -46,10 +46,12 @@ Six loops, each one a step further from doing it all yourself.
 ### Feedback Loops: Traditional (Level 0)
 Start: Specify requirements :human:
 - Technical design of a solution * :human:
+- Write failing tests :human:
 - Code :human:
 - Run :laptop:
 - Test :human:
 - Iterate :human:
+- Refactor :human:
 
 Stop: Until requirements are satisfied :human:
 
@@ -58,10 +60,12 @@ Use case: Traditionally, all of it
 ### Feedback Loops: AI Assisted Coding (Level 1)
 Start: Specify requirements :human:
 - Technical design of a solution * :human:
+- Write failing tests :human:
 - Code :bot:
 - Run :laptop:
 - Test :human:
 - Iterate :human:
+- Refactor :human:
 
 Stop: Until requirements are satisfied :human:
 
@@ -70,10 +74,12 @@ Use case: center a div
 ### Feedback Loops: Autonomous (Level 2)
 Start: Specify requirements :human:
 - Technical design of a solution * :human:
+- Write failing tests :human:
 - Code :bot:
 - Run :laptop:
 - Test :bot:
 - Iterate :bot:
+- Refactor :human:
 
 Stop: Until requirements are satisfied :human:
 
@@ -83,12 +89,12 @@ You can use this with plan mode in most tools
 ### Feedback Loops: Test Driven - TDD (Level 3)
 Start: Specify requirements :human:
 - Technical design of a solution * :human:
-- Generate failing tests :bot:
+- Write failing tests :bot: (changed)
 - Code :bot:
 - Run :laptop:
 - Test :bot:
 - Iterate :bot:
-- Refactor :human: :bot:
+- Refactor :human: :bot: (changed)
 
 Stop: Until requirements are satisfied :human:
 
@@ -99,7 +105,7 @@ You'd need specific skills
 ### Feedback Loops: Spec Driven (Level 4)
 Start: Specify requirements :human: :bot:
 - Technical design of a solution :human: :bot:
-- Generate failing tests :bot:
+- Write failing tests :bot:
 - Code :bot:
 - Run :laptop:
 - Test :bot:
@@ -115,7 +121,7 @@ You can use plan mode or start using more complex frameworks.
 Once: Author project workflows :human: :bot:
 Start: Specify requirements :human: :bot:
 - Technical design of a solution :human: :bot:
-- Generate failing tests :bot:
+- Write failing tests :bot:
 - Code :bot:
 - Run :laptop:
 - Test :bot:

@@ -1148,3 +1148,23 @@ only ever appends below and never reflows the entries above it.
 
 Fragment states deep-link as #/7/0/1 and #/7/0/2 — the h/v/f hash. A ?fragment=
 query string silently lands on slide 1 and screenshots the title slide.
+
+## The TDD steps exist from Level 0, done by hand
+
+Previously "Failing tests" and "Refactor" appeared for the first time at Level 3,
+tagged "added". That framed TDD as something AI brings, which is backwards: TDD
+predates all of this. The two slots now exist at Level 0 with a human badge, and
+Level 3 tags them "changed" like every other handover in the stack.
+
+This makes the whole stack say one thing instead of two. Every level is now the
+same seven steps and the only variable is who performs each one — the diff tags
+never mean "a new practice appeared", only "this step changed hands".
+
+Slots 2 and 7 were added to levels 0-2 in assets/loops/generate.py and the SVGs
+regenerated; the HTML lists gained the same two rows. Levels 0-2 previously
+padded to seven rows with two hidden spacers, so the lists were already the right
+height and nothing in the pinned layout moved.
+
+Labelled "Write failing tests", not "Generate". At Level 0 a person writes them,
+and the row keeps that verb at every level rather than switching to machine
+vocabulary once the bot takes over.
