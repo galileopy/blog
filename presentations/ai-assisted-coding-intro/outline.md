@@ -14,16 +14,16 @@ abstractions to build reusable workflows.
 Where are you at today? How much of the loop you hand over.
 
 - Manual
-    1. Code completion
-    2. Comments to code
-    3. Chat and copy code
+    1. Code completion - press tab to accept the suggested lines
+    2. Comments to code - write a comment describing the intent and the model writes the body
+    3. Chat and copy code - you paste the answer into the file yourself
 - Agentic
-    4. In file changes
-    5. Spec driven, plan mode or a pre-made harness
-    6. Vibe coding
+    4. In file changes - the agent edits the files and you review the diff
+    5. Spec driven - the agent works from a plan you approved first
+    6. Vibe coding - you accept the output without reading the diff
 - Harness Engineering
-    7. Pre-built frameworks, spec-kit/conductor
-    8. In house workflows
+    7. Pre-built frameworks - adopt a published workflow such as spec-kit or conductor
+    8. In house workflows - you author the loop the agent runs
 
 ## Part 1 - The Evolution of the Feedback Loop
 

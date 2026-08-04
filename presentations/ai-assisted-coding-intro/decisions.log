@@ -1088,3 +1088,31 @@ slide. The band names carry the grouping without it.
 Vibe coding sits at 6, above spec driven. The axis is delegation, not rigor, so
 this is correct on its own terms — but Part 1 sells rigor going up, so the room
 can hear "6 > 5" as an endorsement. Flagged to the speaker; left as authored.
+
+## Temperature Check: the table won, not the cards
+
+Four layouts were built as a scratch vertical stack and screenshotted before
+picking: the old list, grid-3 cards, table.cmp.dense with group rows, and a
+steps-3 three-column split with no card chrome.
+
+The table won because it is the only one with room for a fourth column. The
+bands and the rungs answer "where are you"; the gloss column answers "what does
+that mean", which is what makes the check answerable by someone who does not
+already know the vocabulary. Cards and columns both had to drop it.
+
+Layout evidence, not taste:
+- The banded agenda list overflowed 720px at eight rungs and put blue on the
+  slide four times.
+- Cards bounded each band well but the third band's two rows read as a half
+  empty box next to two full ones.
+- The steps-3 columns distributed space better than cards and let "Harness
+  Engineering" sit on one line, but carried the grouping on a hairline alone.
+
+The gloss column then failed the coda check on 5 of 8 cells and was rewritten:
+contrast quips ("the far end of delegation, not of rigor"), parallel cuteness
+("write the intent, take the body") and bare fragments ("spec-kit, conductor")
+became plain declaratives that stand alone.
+
+Cost of that rewrite: row 6 no longer disclaims vibe coding's position above
+spec driven. The axis is delegation, not rigor, and the slide no longer says so.
+That caveat is now the speaker's to make out loud.
