@@ -151,6 +151,11 @@ Same goal, three runs. What changes is when the correction was authored.
       how to use them
 - Bonus: a skill that composes the workflow dynamically according to the problem
 
+Legend:
+- Filled dot - manual prompting or intervention
+- Diamond - agent self-heal with automated validation: test, compile, QA
+- Dotted outline - pre-built steering artifact, part of a bigger workflow
+
 ### Workflow
 A predefined set of steps to follow during implementation.
 

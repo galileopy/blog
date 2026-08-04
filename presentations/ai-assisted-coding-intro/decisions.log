@@ -1116,3 +1116,18 @@ became plain declaratives that stand alone.
 Cost of that rewrite: row 6 no longer disclaims vibe coding's position above
 spec driven. The axis is delegation, not rigor, and the slide no longer says so.
 That caveat is now the speaker's to make out loud.
+
+## Legend on the three-timelines slide
+
+The diagram already carried three distinct markers — a filled purple dot, a blue
+diamond, and a dotted outline — and nothing on the slide said what they meant.
+The audience could see the third timeline had fewer dots without knowing that is
+the point.
+
+The legend sits inside the SVG rather than in HTML beside it, so it scales with
+the diagram and cannot drift out of alignment with the markers it explains. The
+viewBox grew from 470 to 494 to make room; the caption bar is unaffected.
+
+It is deliberately outside the fragment groups, so it is on screen from the
+first timeline. Revealing a key one symbol at a time would make the audience
+re-read it three times.
