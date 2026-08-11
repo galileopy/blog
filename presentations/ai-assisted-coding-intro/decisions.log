@@ -1168,3 +1168,15 @@ height and nothing in the pinned layout moved.
 Labelled "Write failing tests", not "Generate". At Level 0 a person writes them,
 and the row keeps that verb at every level rather than switching to machine
 vocabulary once the bot takes over.
+
+## 2026-08-10 · Demos are frozen snapshots, paste-only on stage
+
+Live demos live in `demos/`, one directory per rung of the delegation spectrum
+(comments-to-code → autonomous fix → TDD → spec driven → harness), each with a
+pre-staged copy of the `wfm` subject project frozen at the previous demo's end
+state, plus a `prompts.md` paste sheet. Nothing is composed live: the presenter
+only pastes, so a failed take resets with `git checkout` of that directory.
+Spectrum stages 1 (tab completion) and 3 (chat-and-copy) are omitted — they are
+editor/browser experiences that don't record honestly in a CLI. Dogfooding
+choice: the subject project is itself a tiny workflow manager, mirroring Part 2.
+Recording via asciinema (`demos/record.sh`, 120×30, one cast per demo).
