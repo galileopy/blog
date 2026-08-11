@@ -11,8 +11,16 @@ npm test
 ```
 
 ```sh
-claude -p "npm test has one failing test. Find the bug, fix it, and re-run npm test until everything passes. Do not modify the tests." --allowedTools "Read,Edit,Bash(npm test)"
+claude --allowedTools "Read,Edit,Bash(npm test)"
 ```
+
+Then paste into the session:
+
+```
+npm test has one failing test. Find the bug, fix it, and re-run npm test until everything passes. Do not modify the tests.
+```
+
+Exit the session (`/exit`), then:
 
 ```sh
 git diff

@@ -13,8 +13,16 @@ npm test
 ```
 
 ```sh
-claude -p "In src/workflow.js, implement the advance() function exactly as its comment describes. Change nothing else in the repo." --allowedTools "Read,Edit"
+claude --allowedTools "Read,Edit,Bash(npm test)"
 ```
+
+Then paste into the session:
+
+```
+In src/workflow.js, implement the advance() function exactly as its comment describes. Change nothing else in the repo.
+```
+
+Exit the session (`/exit`), then:
 
 ```sh
 git diff
