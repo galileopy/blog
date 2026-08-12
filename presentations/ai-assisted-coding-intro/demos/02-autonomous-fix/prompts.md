@@ -23,7 +23,7 @@ npm test has one failing test. Find the bug, fix it, and re-run npm test until e
 Exit the session (`/exit`), then:
 
 ```sh
-git diff
+git --no-pager diff
 ```
 
 ```sh

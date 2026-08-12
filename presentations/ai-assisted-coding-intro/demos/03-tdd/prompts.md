@@ -22,7 +22,7 @@ We need a new function skip(workflow, title) in src/workflow.js: it marks the na
 Exit the session, then:
 
 ```sh
-git diff
+git --no-pager diff
 ```
 
 ```sh

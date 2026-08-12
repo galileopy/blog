@@ -35,6 +35,10 @@ don't demo well in a CLI, so the ladder starts at comments-to-code.
 
 - Terminal at 120×30, plain prompt, projector-sized font.
 - One cast per demo, overwritten on re-record; replay with
-  `asciinema play casts/<name>.cast` (space pauses, `.` steps).
+  `asciinema play casts/<name>.cast` — space pauses, `.` steps a frame while
+  paused, **`q` quits**. Quit with `q`, not Ctrl+C: interrupting the player
+  leaves the terminal in a raw state that spews escape codes, recoverable with
+  `reset`. Long model pauses review faster with `-s 2 -i 0.5` (double speed,
+  idle capped at half a second).
 - After any rehearsal, reset with the demo's own reset line (bottom of its
   `prompts.md`) — each snapshot is checked in, so reset is just git.

@@ -25,7 +25,7 @@ In src/workflow.js, implement the advance() function exactly as its comment desc
 Exit the session (`/exit`), then:
 
 ```sh
-git diff
+git --no-pager diff
 ```
 
 ```sh
