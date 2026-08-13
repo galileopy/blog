@@ -1215,3 +1215,24 @@ self-verification, and the iteration point gets made in narration, honestly.
 Incidental finding: in print mode `--allowedTools "Bash(npm test)"` did not stop
 other shell commands (the model ran `ls` and `cat package.json` freely). Do not
 oversell the allowlist as a hard guardrail on stage.
+
+## 2026-08-13 · Demo 2 is a bug report, not a spec
+
+Final shape: the model gets a user's complaint in plain words ("I finished every
+step but the run never reports completed"), infers the missing test, runs it red,
+fixes, runs it green. The seed ships green — no test covers completion, which is
+how the bug survived. The defect is an off-by-one: advance() computes `completed`
+from the pre-update step list.
+
+Chosen over "implement these failing tests" because that was demo 1 at a larger
+scale — a complete test suite is a complete specification, so nothing is
+delegated but typing. Inferring the test from a symptom is a different act.
+
+Rehearsed 2x, opus/low: both read the source, wrote completion.test.js, ran it
+(12 pass / 2 fail), fixed the one line, re-ran green, and left existing tests
+untouched. The red run is the beat the demo rests on.
+
+Tension to narrate: the Level 2 row says failing tests stay human-authored. A
+reproduction test is part of debugging, which is that slide's named use case;
+demo 3 stays distinct because there the tests come from requirements for code
+that does not exist yet.

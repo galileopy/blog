@@ -22,9 +22,9 @@ test("advance does not mutate its input", () => {
   assert.equal(wf.steps[0].status, "pending");
 });
 
-test("advancing past the last step completes the workflow", () => {
-  const wf = createWorkflow("release", ["build"]);
-  const done = advance(wf);
-  assert.equal(done.completed, true);
+test("advance walks a run to its last step", () => {
+  const wf = createWorkflow("release", ["build", "ship"]);
+  const done = advance(advance(wf));
+  assert.ok(done.steps.every((s) => s.status === "done"));
   assert.equal(currentStep(done), null);
 });
