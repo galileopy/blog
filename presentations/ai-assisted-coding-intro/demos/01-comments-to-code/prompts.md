@@ -13,7 +13,7 @@ npm test
 ```
 
 ```sh
-claude --allowedTools "Read,Edit,Bash(npm test)"
+claude --allowedTools "Read,Edit" --disallowedTools "Bash"
 ```
 
 Then paste into the session:
@@ -32,7 +32,9 @@ git --no-pager diff
 npm test
 ```
 
-Say: the comment is the spec; tests were written and run by us. Segue: "what if it could run the tests itself?"
+Say: the comment is the spec. The model cannot run anything — `Bash` is denied,
+so writing the code is all it does. We wrote the tests and we run them; the loop
+is ours. Segue: "what if it could close that loop itself?"
 
 Reset after rehearsal (from repo root):
 ```sh

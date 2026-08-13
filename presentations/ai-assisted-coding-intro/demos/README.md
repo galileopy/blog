@@ -15,14 +15,15 @@ paste sheet with the exact commands, prompts, talking points, and reset line.
 
 | Dir | Demo | Spectrum stage | Loop level | Pre-made | You paste |
 |---|------|---|---|---|---|
-| `01-comments-to-code/` | Comments to code | 2 | 1 | stubbed `advance()` with an intent comment; human-written failing tests | one `claude -p` prompt; run tests yourself |
-| `02-autonomous-fix/` | Autonomous fix | 4 | 2 | seeded bug (never sets `completed`); one failing human test | one `claude -p` prompt; it loops to green |
-| `03-tdd/` | TDD | 5 | 3 | clean library, no `skip()` | one requirement paragraph; it writes failing tests first |
+| `01-comments-to-code/` | Comments to code | 2 | 1 | stubbed `advance()` with an intent comment; human-written failing tests | one prompt; `Bash` is denied, so **you** run the tests |
+| `02-autonomous-fix/` | Autonomous debugging | 4 | 2 | an off-by-one in `advance()`; suite ships **green**, nothing covers completion | a user's bug report; it writes the missing test, runs it red, fixes, runs green |
+| `03-tdd/` | TDD | 5 | 3 | library with failure handling, no `skip()` | one requirement paragraph; it writes failing tests first |
 | `04-spec-driven/` | Spec driven | 5 | 4 | library with `skip()`, no CLI | one design prompt in plan mode; approve, it executes |
 | `05-harness/` | Orchestrated harness | 8 | 5 | full CLI **plus** `.claude/commands/feature.md` (the loop as an artifact) | one line: `/feature <goal>` |
 
-What's pre-made shrinks from "the test" to "nothing", then becomes "the loop
-itself"; what you type shrinks to a single goal statement. Spectrum stages 1
+The rungs differ by *who closes the loop*, not by task size: at demo 1 the model
+cannot run anything and you verify its work; from demo 2 on it runs the tests
+itself; by demo 5 the loop is a checked-in artifact and you supply only a goal. Spectrum stages 1
 (tab completion) and 3 (chat-and-copy) are editor/browser experiences that
 don't demo well in a CLI, so the ladder starts at comments-to-code.
 

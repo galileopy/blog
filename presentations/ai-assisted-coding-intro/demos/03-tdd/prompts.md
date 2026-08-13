@@ -16,7 +16,7 @@ claude
 Then paste into the session:
 
 ```
-We need a new function skip(workflow, title) in src/workflow.js: it marks the named step as "skipped" if that step is still pending, leaves any other step untouched, is pure like advance(), and completes the workflow when no pending steps remain. Skipping an unknown or already-done step returns the workflow unchanged. Work TDD: write failing tests for this in test/workflow.test.js first, run npm test to show they fail, then implement skip() until all tests pass. Do not change existing tests.
+We need a new function skip(workflow, title) in src/workflow.js: it marks the named step as "skipped" if that step is still pending, leaves every other step untouched, is pure like advance(), and counts as resolved so a run whose remaining steps are all skipped is completed. Skipping an unknown or already-resolved step returns the workflow unchanged. Work TDD: write failing tests for this in a new test/skip.test.js first, run npm test to show them fail, then implement skip() until everything passes. Do not change the existing tests.
 ```
 
 Exit the session, then:

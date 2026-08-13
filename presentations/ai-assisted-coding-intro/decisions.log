@@ -1236,3 +1236,16 @@ Tension to narrate: the Level 2 row says failing tests stay human-authored. A
 reproduction test is part of debugging, which is that slide's named use case;
 demo 3 stays distinct because there the tests come from requirements for code
 that does not exist yet.
+
+## 2026-08-13 · The rungs differ by who closes the loop
+
+Demo 1 launches with `--disallowedTools "Bash"`: the model writes the code and
+can run nothing, so the human runs the tests. Pre-approving `npm test` there had
+collapsed the Level 1 / Level 2 boundary into a difference of task size, which
+is not a rung on the ladder.
+
+Demo 2's end state (failure handling, the completion fix, completion.test.js)
+propagated into the 3-5 snapshots so the project stays continuous across the
+talk. Demo 3's prompt now writes its TDD tests into a new test/skip.test.js —
+it previously pointed at a file it was also told not to change. Demo 5's CLI
+learned the "failed" marker.

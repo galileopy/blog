@@ -2,7 +2,7 @@
 import { createWorkflow, advance, skip, currentStep } from "./workflow.js";
 import { load, save } from "./store.js";
 
-const MARKS = { pending: "·", done: "✔", skipped: "»" };
+const MARKS = { pending: "·", done: "✔", skipped: "»", failed: "✗" };
 const [cmd, ...args] = process.argv.slice(2);
 
 switch (cmd) {
