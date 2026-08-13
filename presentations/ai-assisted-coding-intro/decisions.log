@@ -1180,3 +1180,15 @@ Spectrum stages 1 (tab completion) and 3 (chat-and-copy) are omitted — they ar
 editor/browser experiences that don't record honestly in a CLI. Dogfooding
 choice: the subject project is itself a tiny workflow manager, mirroring Part 2.
 Recording via asciinema (`demos/record.sh`, 120×30, one cast per demo).
+
+## 2026-08-13 · Demo 2 is a regression trap, not a one-shot fix
+
+The original seeded bug (advance() never setting `completed`) was fixable in one
+edit, so the demo showed delegation but never the loop. Reseeded so the obvious
+fix — "no pending steps means completed" — turns a passing test red: a workflow
+holding a *failed* step has no pending steps but is not complete. The correct
+rule is "every step is resolved (done or skipped)". Verified mechanically:
+seed fails test 4 only; the naive fix flips it to failing test 5 only; the
+correct rule passes all five. The second iteration is the point of the demo.
+Consequence: the "failed" status and the resolved-not-pending rule propagate
+into the demo 3–5 snapshots, since each is the previous demo's end state.

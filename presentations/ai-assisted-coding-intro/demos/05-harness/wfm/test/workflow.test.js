@@ -24,7 +24,18 @@ test("advance does not mutate its input", () => {
 
 test("advancing past the last step completes the workflow", () => {
   const wf = createWorkflow("release", ["build"]);
-  const done = advance(advance(wf));
+  const done = advance(wf);
   assert.equal(done.completed, true);
   assert.equal(currentStep(done), null);
+});
+
+test("a workflow holding a failed step is never completed", () => {
+  const wf = {
+    name: "release",
+    steps: [
+      { title: "build", status: "done" },
+      { title: "test", status: "failed" },
+    ],
+  };
+  assert.ok(!advance(wf).completed);
 });

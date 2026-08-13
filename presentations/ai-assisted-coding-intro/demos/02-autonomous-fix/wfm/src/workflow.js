@@ -1,5 +1,8 @@
 // wfm core: a workflow is a named list of steps; a run tracks progress
 // through those steps. Everything is plain data so it can live in a JSON file.
+//
+// A step is "pending" until it resolves. It resolves as "done" when it runs
+// cleanly, or as "failed" when it does not.
 
 export function createWorkflow(name, steps) {
   if (!name) throw new Error("workflow needs a name");
@@ -9,8 +12,6 @@ export function createWorkflow(name, steps) {
   return { name, steps: steps.map((title) => ({ title, status: "pending" })) };
 }
 
-// Advance the workflow: mark the first pending step done; once no pending
-// steps remain the workflow is completed. Pure — never mutates the input.
 export function advance(workflow) {
   if (workflow.completed) return workflow;
   const idx = workflow.steps.findIndex((s) => s.status === "pending");

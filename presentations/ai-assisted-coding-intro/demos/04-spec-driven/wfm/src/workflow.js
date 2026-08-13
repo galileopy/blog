@@ -10,14 +10,16 @@ export function createWorkflow(name, steps) {
 }
 
 // Advance the workflow: mark the first pending step done; once no pending
-// steps remain the workflow is completed. Pure — never mutates the input.
+// steps remain unresolved the workflow is completed. Pure — never mutates.
 export function advance(workflow) {
   if (workflow.completed) return workflow;
   const idx = workflow.steps.findIndex((s) => s.status === "pending");
   const steps = workflow.steps.map((s, i) =>
     i === idx ? { ...s, status: "done" } : s
   );
-  const completed = !steps.some((s) => s.status === "pending");
+  const completed = steps.every(
+    (s) => s.status === "done" || s.status === "skipped"
+  );
   return { ...workflow, steps, completed };
 }
 
@@ -32,7 +34,9 @@ export function skip(workflow, title) {
   const steps = workflow.steps.map((s, i) =>
     i === idx ? { ...s, status: "skipped" } : s
   );
-  const completed = !steps.some((s) => s.status === "pending");
+  const completed = steps.every(
+    (s) => s.status === "done" || s.status === "skipped"
+  );
   return { ...workflow, steps, completed };
 }
 

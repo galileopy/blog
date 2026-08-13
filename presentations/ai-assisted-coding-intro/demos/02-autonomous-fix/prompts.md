@@ -1,8 +1,10 @@
 # Demo 2 — Autonomous fix
 
-Concept: delegation extends to run–test–iterate. A human-written test is failing
-(the seeded bug: `advance()` never marks the workflow completed). Claude fixes,
-runs the tests itself, and loops until green. We only review the diff.
+Concept: delegation extends to run–test–iterate. We start with one failing test.
+The bug is a regression trap: the obvious fix turns a different, passing test
+red, so Claude has to notice its first attempt was wrong and adjust. That second
+iteration is the demo — self-correction, not just delegation. We only review the
+diff.
 
 Paste in order, from `demos/02-autonomous-fix/wfm/`:
 
