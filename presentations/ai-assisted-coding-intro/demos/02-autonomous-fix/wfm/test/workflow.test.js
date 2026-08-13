@@ -28,14 +28,3 @@ test("advancing past the last step completes the workflow", () => {
   assert.equal(done.completed, true);
   assert.equal(currentStep(done), null);
 });
-
-test("a workflow holding a failed step is never completed", () => {
-  const wf = {
-    name: "release",
-    steps: [
-      { title: "build", status: "done" },
-      { title: "test", status: "failed" },
-    ],
-  };
-  assert.ok(!advance(wf).completed);
-});

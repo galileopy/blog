@@ -18,7 +18,18 @@ export function advance(workflow) {
   const steps = workflow.steps.map((s, i) =>
     i === idx ? { ...s, status: "done" } : s
   );
-  return { ...workflow, steps };
+  const completed = steps.every(
+    (s) => s.status === "done" || s.status === "skipped"
+  );
+  return { ...workflow, steps, completed };
+}
+
+export function fail(workflow, title) {
+  throw new Error("not implemented");
+}
+
+export function retry(workflow, title) {
+  throw new Error("not implemented");
 }
 
 export function currentStep(workflow) {

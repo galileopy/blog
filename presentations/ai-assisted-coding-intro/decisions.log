@@ -1192,3 +1192,26 @@ seed fails test 4 only; the naive fix flips it to failing test 5 only; the
 correct rule passes all five. The second iteration is the point of the demo.
 Consequence: the "failed" status and the resolved-not-pending rule propagate
 into the demo 3–5 snapshots, since each is the previous demo's end state.
+
+## 2026-08-13 · You cannot reliably stage self-correction
+
+Three attempts to force a second iteration in demo 2, each rehearsed 3x against
+opus at low effort, each one-shot by every trial:
+
+1. Regression trap (naive fix breaks a passing test) — the model reads the test
+   suite before editing, sees the edge case, and writes the correct rule first try.
+2. Bigger slice (failure handling: fail/retry/blocking, 7 failing tests across
+   two files) — 2 edits, 1 test run, all green.
+3. Tests hidden (`--disallowedTools "Read(test/**)"`, work from output alone) —
+   still one pass; descriptive test *names* in the failure output are themselves
+   the specification.
+
+Conclusion: on a small, fully-specified task a capable model has nothing to
+discover by running, so the loop never runs twice. Iteration is real in practice
+when the spec is ambiguous or the environment bites — neither is reproducible on
+a stage in two minutes. Demo 2 therefore shows delegated implementation plus
+self-verification, and the iteration point gets made in narration, honestly.
+
+Incidental finding: in print mode `--allowedTools "Bash(npm test)"` did not stop
+other shell commands (the model ran `ls` and `cat package.json` freely). Do not
+oversell the allowlist as a hard guardrail on stage.
