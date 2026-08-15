@@ -841,3 +841,26 @@
    which shows up as text that is blurry even while the slide is standing still.
    Verified: that is what "the blur is static now" looked like. Flattening the
    3D context is enough on its own. */
+
+/* ── Terminal recordings ────────────────────────────────────────────────────
+   asciinema-player, vendored. The cast is a card in the deck's vocabulary:
+   16px radius, same border as .card. The player sizes itself from the cast's
+   own rows/cols (100x28), so the frame only constrains width and lets the
+   player pick its height — forcing a height instead makes it letterbox. */
+/* Height is fixed and the player fits to it. Fitting to width instead lets a
+   100-column cast pick a row height that overflows the 720px stage and clips
+   the last line — which is exactly where a terminal's newest output is. */
+.reveal .cast-frame {
+  height: 470px;
+  /* The player centres a fixed-ratio terminal inside the frame; without this
+     the leftover gutters are slide-white and read as a rendering fault. */
+  background: #121314;
+  border-radius: var(--gp-r-xl);
+  box-shadow: var(--gp-lift);
+  overflow: hidden;
+}
+/* The player ships its own control bar and measures its terminal in monospace
+   columns; the deck's body letter-spacing would throw that grid off. */
+.reveal .cast-frame .ap-terminal {
+  letter-spacing: normal;
+}

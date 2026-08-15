@@ -216,6 +216,10 @@ QA is not allowed to read the code it is checking.
 
 The workflow is versioned, reviewable, and someone else can run it.
 
+### One command, five phases
+
+The recording of the run.
+
 ### When the Harness Stops
 
 A run that halts at a named check is the system working.

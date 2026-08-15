@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="theme/galileo.css">
 <!-- syntax highlighting for code slides; theme restyles the container -->
 <link rel="stylesheet" href="reveal/plugin/highlight/monokai.css">
+<!-- terminal recordings; player is vendored, no network at present time -->
+<link rel="stylesheet" href="vendor/asciinema-player/asciinema-player.css">
 </head>
 <body>
 
@@ -536,6 +538,35 @@
   <p class="slide-brand">On AI Assisted Coding</p>
 </section>
 
+<section class="s-canvas" data-cast="assets/casts/05-harness.cast">
+  <div class="slide-inner">
+    <p class="eyebrow">Demo</p>
+    <h3 class="d-lg" style="margin-bottom:18px;">One command, five phases</h3>
+    <div class="cast-frame"></div>
+  </div>
+  <aside class="notes">One command runs the whole loop. Collect is the only phase that asks
+    anything; the rest run without intervention. Idle gaps are capped at two seconds, so the
+    pauses are visible but not real time. If time is short, skip to the Linear ticket — the five
+    comments carry the argument on their own.
+
+    Two moments worth telling, both from this run, neither staged.
+
+    First: /craft:audit caught a real contradiction that nobody had noticed. The requirements
+    said the error banner shows the server's message. The audit cited the line — Http.expectJson
+    discards the response body on a non-2xx, so the server's message never reaches the view —
+    and corrected the requirement rather than growing unrequested HTTP plumbing to satisfy it.
+    It also noted the prototype had independently done the same thing. That is the hub working:
+    the phase validated against the requirements and against the code, and reported the
+    disagreement instead of picking a side quietly.
+
+    Second: /craft:forge declined to overclaim. It reported that three of its service tests were
+    green on their first run, because they pin behaviour the server already had, so the genuine
+    red-then-green happened only at the browser tier. Nothing forced it to say that. An agent
+    volunteering that part of its own red-green was theatre is the most credible line in the
+    whole artifact — and it is the reason to trust the rest of the report.</aside>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
 <section class="s-fog layout-statement">
   <div class="slide-inner">
     <hr class="rule-accent">
@@ -659,6 +690,7 @@
 <script src="reveal/plugin/highlight.js"></script>
 <script src="reveal/plugin/zoom.js"></script>
 <script src="reveal/plugin/search.js"></script>
+<script src="vendor/asciinema-player/asciinema-player.min.js"></script>
 <script>
   Reveal.initialize({
     // 1280x720 with zero margin makes the design system's absolute px map 1:1.
@@ -709,6 +741,49 @@
     }
     Reveal.on('ready', syncBand);
     Reveal.on('slidechanged', syncBand);
+  })();
+
+  // Terminal recordings. A player is built when its slide becomes current and
+  // disposed when it leaves, so a cast never plays behind your back and never
+  // holds a decoded buffer for a slide nobody is looking at. Casts are found by
+  // the data-cast attribute, so adding one is markup only.
+  (function () {
+    var live = null;
+    function teardown() {
+      if (!live) return;
+      live.player.dispose();
+      live.frame.innerHTML = '';
+      live = null;
+    }
+    function mount() {
+      var slide = Reveal.getCurrentSlide();
+      var src = slide && slide.getAttribute('data-cast');
+      if (live && live.slide === slide) return;
+      teardown();
+      if (!src) return;
+      var frame = slide.querySelector('.cast-frame');
+      if (!frame) return;
+      live = {
+        slide: slide,
+        frame: frame,
+        player: AsciinemaPlayer.create(src, frame, {
+          // Fit to the frame's fixed height, not its width — see .cast-frame.
+          fit: 'both',
+          // Idle capping is baked into the cast header; this is the floor for
+          // anything recorded without it.
+          idleTimeLimit: 2,
+          // Never autoplay. The slide is walked onto mid-sentence and a cast
+          // that starts talking on arrival steps on the speaker.
+          autoPlay: false,
+          preload: true,
+          poster: 'npt:0:30',
+          controls: true,
+          theme: 'asciinema'
+        })
+      };
+    }
+    Reveal.on('ready', mount);
+    Reveal.on('slidechanged', mount);
   })();
 </script>
 </body>

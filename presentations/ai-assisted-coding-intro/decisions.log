@@ -1350,3 +1350,36 @@ Band is s-fog rather than s-canvas because the preceding slide is already an
 s-canvas statement, and two identical layout+band slides in a row flatten the
 rhythm. Verified over HTTP at #/9, screenshotted at 1280x720 and read: no
 overflow.
+
+## Demo 5 cast embedded (slide 10)
+
+The asciinema player was vendored long ago but had never been wired into
+index.html — 01-comments-to-code.cast sat in assets/casts/ unreferenced. This is
+the first embed, so it sets the pattern: a slide declares data-cast="<path>" and
+contains an empty .cast-frame; a single script builds the player when that slide
+becomes current and disposes it when it leaves. Adding a second cast is markup
+only, with no new script.
+
+Players are built on demand rather than at load for two reasons: a cast that
+autoplays behind an unrelated slide is a real hazard mid-talk, and the harness
+cast is 840K, which is not worth decoding until it is looked at.
+
+fit: 'both' against a fixed 470px frame height, not fit: 'width'. At 100 columns
+across the slide's content width the player picks a row height that puts row 28
+below the 720px stage, and the clipped row is where a terminal's newest output
+is — the worst possible line to lose. The frame carries the player's own
+background (#121314) because the player centres a fixed-ratio terminal and
+leaves gutters, which are slide-white otherwise and read as a rendering fault.
+
+idle_time_limit: 2 is baked into the promoted copy in assets/casts/, not into
+the source in demos/casts/, which stays as recorded. Raw duration is 51 minutes;
+capping idle brings it to about 31. The rest is genuine streaming output and no
+setting will shorten it, so the cast is not something to play end to end in an
+hour-long talk. Two gaps dominate the 20 minutes removed: 713s and 418s, both
+the presenter answering the drill.
+
+The run itself is kept because of what it caught, not because it was smooth:
+/craft:audit checked 16 assumptions from the requirements against the code and
+found one contradicted (AC-6 claimed the banner shows the server's message,
+which Http.expectJson makes impossible), and /craft:forge volunteered that three
+of its service tests were green on first run and so were not a real red-green.
