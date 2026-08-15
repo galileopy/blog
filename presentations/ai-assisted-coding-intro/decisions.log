@@ -1485,3 +1485,12 @@ runs, space pauses it; that pause releases the keyboard, so a second space
 advances the slide rather than resuming. Resuming is a click on the play button.
 That asymmetry is deliberate — the failure that matters is pressing an arrow
 after pausing and having it seek a stopped cast instead of moving the talk on.
+
+Two band violations of my own making, corrected: the phase table was s-cloud and
+the halt statement s-fog. Every content slide in this deck is s-canvas and the
+ink dividers are the only band change — that is what makes a divider read as a
+structural boundary rather than as decoration. Reaching for a tint to make a
+slide feel different is exactly the habit the rule exists to stop.
+
+The halt statement slide was then cut entirely, with its outline node. The point
+it made is carried by the recording, where the run actually halts.

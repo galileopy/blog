@@ -220,13 +220,6 @@ The workflow is versioned, reviewable, and someone else can run it.
 
 The recording of the run.
 
-### When the Harness Stops
-
-A run that halts at a named check is the system working.
-It looks like the system failing.
-
-That is why each phase leaves something behind.
-
 #### Dynamic Workflows vs Static Workflows
 - Not everything needs to be fixed the same way.
 - Preferences on particular steps
