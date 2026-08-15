@@ -545,42 +545,17 @@
     <div class="cast-frame"></div>
   </div>
   <aside class="notes">
-    Links —
-    <a href="assets/prototype/create-run-inline-form.html" target="_blank">the prototype</a> (phase 2,
-    served from this deck; the bar across the top switches list state and arms the next create to
-    succeed or 400) ·
-    <a href="https://linear.app/buses365/issue/COFFE-14/create-a-workflow-from-the-page" target="_blank">COFFE-14</a>
-    (five phase comments, twelve AC screenshots) ·
+    <a href="assets/prototype/create-run-inline-form.html" target="_blank">Prototype</a> ·
+    <a href="https://linear.app/buses365/issue/COFFE-14/create-a-workflow-from-the-page" target="_blank">COFFE-14</a> ·
     <a href="https://github.com/galileopy/workflow-manager/pull/1" target="_blank">PR #1</a> ·
-    <a href="https://github.com/galileopy/workflow-manager" target="_blank">the repo</a>
-    (the loop itself is checked in at plugins/craft/).
+    <a href="https://github.com/galileopy/workflow-manager" target="_blank">Repo</a>
 
-    Press play and the terminal takes the keyboard — a blue ring appears and the deck's keys
-    go quiet. While it runs: space pauses, arrows seek, [ and ] jump a phase, f is fullscreen.
-    Pausing hands the keyboard straight back to the deck, so the space that paused it is the
-    only one the player gets and the next arrow advances the talk. Ring on, the terminal is
-    listening; ring off, the deck is. Esc and leaving the slide also hand it back.
+    /craft:audit caught a contradiction nobody had noticed: the requirements said the banner
+    shows the server's message, but Http.expectJson discards the body on a non-2xx. It cited the
+    line, corrected the requirement instead of growing unrequested plumbing, and noted the
+    prototype had found the same thing independently.
 
-    One command runs the whole loop. Collect is the only phase that asks
-    anything; the rest run without intervention. Idle gaps are capped at two seconds, so the
-    pauses are visible but not real time. If time is short, skip to the Linear ticket — the five
-    comments carry the argument on their own.
-
-    Two moments worth telling, both from this run, neither staged.
-
-    First: /craft:audit caught a real contradiction that nobody had noticed. The requirements
-    said the error banner shows the server's message. The audit cited the line — Http.expectJson
-    discards the response body on a non-2xx, so the server's message never reaches the view —
-    and corrected the requirement rather than growing unrequested HTTP plumbing to satisfy it.
-    It also noted the prototype had independently done the same thing. That is the hub working:
-    the phase validated against the requirements and against the code, and reported the
-    disagreement instead of picking a side quietly.
-
-    Second: /craft:forge declined to overclaim. It reported that three of its service tests were
-    green on their first run, because they pin behaviour the server already had, so the genuine
-    red-then-green happened only at the browser tier. Nothing forced it to say that. An agent
-    volunteering that part of its own red-green was theatre is the most credible line in the
-    whole artifact — and it is the reason to trust the rest of the report.</aside>
+    Ring on, the terminal has the keyboard. Pause gives it back.</aside>
   <p class="slide-brand">On AI Assisted Coding</p>
 </section>
 
