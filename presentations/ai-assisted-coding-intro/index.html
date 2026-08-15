@@ -748,6 +748,21 @@
   // holds a decoded buffer for a slide nobody is looking at. Casts are found by
   // the data-cast attribute, so adding one is markup only.
   (function () {
+    // Phase boundaries, in the cast's own (idle-compressed) seconds. The cast
+    // is compressed on disk rather than by idleTimeLimit at playback, so these
+    // and the timeline share one clock — an idle limit applied at play time
+    // would shift every marker.
+    var CASTS = {
+      'assets/casts/05-harness.cast': [
+        [1, 'Start · /craft:start'], [51, 'Phase 1 · Collect'], [110, 'The drill'],
+        [220, 'Requirements posted'], [271, 'Phase 2 · Prototype'], [410, 'Prototype attached'],
+        [500, 'Phase 3 · Audit'], [711, 'Refined requirements posted'], [771, 'The harness halts'],
+        [861, 'Phase 3 · Test plan'], [1035, 'Phase 4 · Forge'], [1125, 'Playwright'],
+        [1205, 'PR #1 opened'], [1305, 'Phase 5 · QA'], [1486, 'Screenshots attached'],
+        [1785, 'QA report · PASS'], [1835, 'Five phases, summarised']
+      ]
+    };
+
     var live = null;
     function teardown() {
       if (!live) return;
@@ -766,24 +781,64 @@
       live = {
         slide: slide,
         frame: frame,
+        markers: CASTS[src] || [],
         player: AsciinemaPlayer.create(src, frame, {
           // Fit to the frame's fixed height, not its width — see .cast-frame.
           fit: 'both',
-          // Idle capping is baked into the cast header; this is the floor for
-          // anything recorded without it.
-          idleTimeLimit: 2,
           // Never autoplay. The slide is walked onto mid-sentence and a cast
           // that starts talking on arrival steps on the speaker.
           autoPlay: false,
           preload: true,
           poster: 'npt:0:30',
           controls: true,
+          markers: CASTS[src] || [],
           theme: 'asciinema'
         })
       };
+      // The player grabs space and the arrows the moment it has focus, and then
+      // fights reveal for them. Keep it unfocusable and drive it from the keys
+      // below instead, so slide navigation never changes meaning mid-talk.
+      frame.querySelectorAll('[tabindex]').forEach(function (el) {
+        el.setAttribute('tabindex', '-1');
+      });
+      frame.addEventListener('click', function () {
+        if (document.activeElement) document.activeElement.blur();
+      });
     }
     Reveal.on('ready', mount);
     Reveal.on('slidechanged', mount);
+
+    // Playback keys, chosen because reveal binds none of them. Space and the
+    // arrows stay slide navigation everywhere in the deck, including here.
+    //   \  play / pause      ]  next phase      [  previous phase
+    document.addEventListener('keydown', function (ev) {
+      if (!live) return;
+      if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+      var p = live.player, ms = live.markers;
+      if (ev.key === '\\') {
+        // No public isPlaying(); toggle off our own flag.
+        live.playing = !live.playing;
+        (live.playing ? p.play() : p.pause());
+      } else if (ev.key === ']' || ev.key === '[') {
+        if (!ms.length) return;
+        var now = p.getCurrentTime() || 0, target = null;
+        if (ev.key === ']') {
+          for (var i = 0; i < ms.length; i++) {
+            if (ms[i][0] > now + 0.5) { target = ms[i][0]; break; }
+          }
+        } else {
+          for (var j = ms.length - 1; j >= 0; j--) {
+            if (ms[j][0] < now - 1.5) { target = ms[j][0]; break; }
+          }
+          if (target === null) target = 0;
+        }
+        if (target !== null) p.seek(target);
+      } else {
+        return;
+      }
+      ev.preventDefault();
+      ev.stopPropagation();
+    }, true);
   })();
 </script>
 </body>

@@ -1383,3 +1383,35 @@ The run itself is kept because of what it caught, not because it was smooth:
 found one contradicted (AC-6 claimed the banner shows the server's message,
 which Http.expectJson makes impossible), and /craft:forge volunteered that three
 of its service tests were green on first run and so were not a real red-green.
+
+## Cast markers, and who owns the keyboard (supersedes the idle_time_limit note above)
+
+idle_time_limit in the header was replaced by compressing the timestamps in the
+promoted copy itself: every inter-event gap is capped at 2s and the clock
+rewritten, taking 51.07 min to 30.66. The reason is markers. An idle limit
+applied at playback shifts every event's position on the timeline, so marker
+times computed against the raw recording would drift out of place. Compressing
+on disk means the file, the scrubber and the markers all share one clock.
+demos/casts/05-harness.cast.orig is the untouched recording, and demos/casts/ is
+gitignored — that .orig is the only copy of the raw take.
+
+Seventeen markers, one per phase boundary, placed by sampling what was on screen
+minute by minute rather than by clock arithmetic. The Linear comment timestamps
+looked like the obvious source and are not usable: two of the five comments came
+from an earlier rehearsal, and the cast header's wall clock disagrees with the
+file's mtime, so mapping them onto the cast put /craft:audit at +122 min in a
+51-minute recording.
+
+Keyboard: the player binds space and the arrows as soon as it has focus, which
+happens on the first click of its play button, and from then on it fights reveal
+for them. Rather than rebind reveal, the player is made unfocusable (tabindex -1
+on its focusable children, blur on click) and playback moved to keys reveal does
+not bind: \ play/pause, ] next phase, [ previous phase. Space and the arrows
+therefore mean the same thing on every slide in the deck, which is the property
+worth protecting mid-talk.
+
+What the run actually shows, discovered while placing markers: it hit the session
+limit repeatedly, and at ~21 min (770s compressed) it stopped with "Phases 4-5
+never started. Working tree untouched; no branch, no code. To resume, re-run
+phase 3 from scratch." That is the halt slide's claim happening unprompted, with
+the reason on screen and the tree left clean. Marker "The harness halts".
