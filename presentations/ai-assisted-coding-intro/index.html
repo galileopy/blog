@@ -544,7 +544,11 @@
     <h3 class="d-lg" style="margin-bottom:18px;">One command, five phases</h3>
     <div class="cast-frame"></div>
   </div>
-  <aside class="notes">One command runs the whole loop. Collect is the only phase that asks
+  <aside class="notes">Keys on this slide — P pause/play, A/D back/forward 5s, shift+A/D
+    jump a phase. Arrows and space still change slide. P is normally previous-slide; it is
+    shadowed here, so go back with the left arrow.
+
+    One command runs the whole loop. Collect is the only phase that asks
     anything; the rest run without intervention. Idle gaps are capped at two seconds, so the
     pauses are visible but not real time. If time is short, skip to the Linear ticket — the five
     comments carry the argument on their own.
@@ -811,31 +815,42 @@
     Reveal.on('ready', mount);
     Reveal.on('slidechanged', mount);
 
-    // Playback keys, chosen because reveal binds none of them. Space and the
-    // arrows stay slide navigation everywhere in the deck, including here.
-    //   \  play / pause      ]  next phase      [  previous phase
+    // Playback keys. Handled in the capture phase, so on the cast slide these
+    // reach the player before reveal sees them; everywhere else in the deck
+    // they keep their normal reveal meaning. Space and the arrows are never
+    // touched — slide navigation means the same thing on every slide.
+    //
+    //   P            play / pause
+    //   A / D        back / forward 5 seconds
+    //   shift+A/D    previous / next phase marker   (also [ and ])
+    //
+    // Note P is reveal's previous-slide key. It is deliberately shadowed here
+    // and only here; use the left arrow to leave this slide backwards.
+    var SEEK = 5;
     document.addEventListener('keydown', function (ev) {
       if (!live) return;
       if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
-      var p = live.player, ms = live.markers;
-      if (ev.key === '\\') {
-        // No public isPlaying(); toggle off our own flag.
+      var p = live.player, ms = live.markers, k = ev.key.toLowerCase();
+      var now = p.getCurrentTime() || 0, target = null;
+
+      if (k === 'p') {
+        // No public isPlaying(), so track it ourselves.
         live.playing = !live.playing;
         (live.playing ? p.play() : p.pause());
-      } else if (ev.key === ']' || ev.key === '[') {
-        if (!ms.length) return;
-        var now = p.getCurrentTime() || 0, target = null;
-        if (ev.key === ']') {
-          for (var i = 0; i < ms.length; i++) {
-            if (ms[i][0] > now + 0.5) { target = ms[i][0]; break; }
-          }
-        } else {
-          for (var j = ms.length - 1; j >= 0; j--) {
-            if (ms[j][0] < now - 1.5) { target = ms[j][0]; break; }
-          }
-          if (target === null) target = 0;
+      } else if ((k === 'd' || k === ']') && (ev.shiftKey || k === ']')) {
+        for (var i = 0; i < ms.length; i++) {
+          if (ms[i][0] > now + 0.5) { target = ms[i][0]; break; }
         }
         if (target !== null) p.seek(target);
+      } else if ((k === 'a' || k === '[') && (ev.shiftKey || k === '[')) {
+        for (var j = ms.length - 1; j >= 0; j--) {
+          if (ms[j][0] < now - 1.5) { target = ms[j][0]; break; }
+        }
+        p.seek(target === null ? 0 : target);
+      } else if (k === 'd') {
+        p.seek(now + SEEK);
+      } else if (k === 'a') {
+        p.seek(Math.max(0, now - SEEK));
       } else {
         return;
       }

@@ -1420,3 +1420,12 @@ Playback set to speed: 2. That is a rate, applied on top of the on-disk idle
 compression, so the cast's own clock is untouched and the markers still land
 where they were placed. Effective wall time is about 15 minutes for the full
 run, from 51 as recorded.
+
+Playback keys changed from \ [ ] to a gaming-style set: P pause/play, A/D seek
+5s, shift+A/D jump a phase marker ([ and ] still work). P is reveal's
+previous-slide key; the handler runs in the capture phase and only while a cast
+slide is current, so P is shadowed there and nowhere else. Space and the arrows
+are deliberately left alone in every case — the one property worth protecting is
+that slide navigation never changes meaning mid-talk. The keymap is repeated in
+the slide's speaker notes, because a keybinding you have to remember from a
+commit message is a keybinding you will not remember on stage.
