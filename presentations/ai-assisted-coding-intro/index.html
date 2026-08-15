@@ -544,7 +544,18 @@
     <h3 class="d-lg" style="margin-bottom:18px;">One command, five phases</h3>
     <div class="cast-frame"></div>
   </div>
-  <aside class="notes">Click the terminal to give it the keyboard — a blue ring appears and
+  <aside class="notes">
+    Links —
+    <a href="assets/prototype/create-run-inline-form.html" target="_blank">the prototype</a> (phase 2,
+    served from this deck; the bar across the top switches list state and arms the next create to
+    succeed or 400) ·
+    <a href="https://linear.app/buses365/issue/COFFE-14/create-a-workflow-from-the-page" target="_blank">COFFE-14</a>
+    (five phase comments, twelve AC screenshots) ·
+    <a href="https://github.com/galileopy/workflow-manager/pull/1" target="_blank">PR #1</a> ·
+    <a href="https://github.com/galileopy/workflow-manager" target="_blank">the repo</a>
+    (the loop itself is checked in at plugins/craft/).
+
+    Click the terminal to give it the keyboard — a blue ring appears and
     the deck's keys go quiet. Then space pauses, arrows seek, [ and ] jump a phase, f is
     fullscreen. Esc gives the keyboard back to the deck, and so does leaving the slide. If the
     arrows are changing slides, the ring is not there: click the terminal first.
@@ -840,6 +851,15 @@
 
     Reveal.on('ready', mount);
     Reveal.on('slidechanged', function () { release(); mount(); });
+
+    // Speaker view is a separate window whose base URL is not this document, so
+    // a relative href in a note resolves to nothing there. Absolutise them once
+    // against the deck's own location, while they still can be.
+    Reveal.on('ready', function () {
+      document.querySelectorAll('.notes a[href]').forEach(function (a) {
+        a.setAttribute('href', new URL(a.getAttribute('href'), location.href).href);
+      });
+    });
 
   })();
 </script>

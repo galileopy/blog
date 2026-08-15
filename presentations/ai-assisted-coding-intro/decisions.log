@@ -1458,3 +1458,20 @@ outline while the player holds the keyboard. Without that cue the failure is
 silent and happens on stage: arrows change slides when the speaker expects them
 to seek. The speaker notes name the symptom and the fix — no ring, click the
 terminal.
+
+## The prototype is served from the deck
+
+assets/prototype/ holds a copy of .artifacts/prototype/create-run-inline-form.html
+from the workflow-manager repo, plus that repo's generated app/app.css, with the
+stylesheet href rewritten from ../../app/app.css to app.css. Copied rather than
+linked because .artifacts/ is gitignored in a repo that is not this one, and the
+deck has to keep presenting with no network and no sibling checkout.
+
+Not linked from the slide. The audience sees the phase table and the recording;
+the prototype is the speaker's to open if the room asks what phase 2 produced.
+The link lives in the speaker notes alongside COFFE-14, PR #1 and the repo.
+
+Note links are absolutised at ready. Speaker view is a separate window whose
+base URL is not the deck document, so a relative href written into a note
+resolves to nothing once it is copied across — the failure only shows up in
+speaker view, which is exactly where these links are used.
