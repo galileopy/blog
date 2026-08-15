@@ -1292,3 +1292,33 @@ taller letterboxes in the slide player at 1280x720 and shrinks the type past
 reading distance. Node's default test reporter also prints a stack trace per
 failure, which buries the red-test beat -- worth a quieter reporter before the
 final takes.
+
+## Demo 5 moves to its own repo: galileopy/workflow-manager
+
+The demo subject is now an Elm + Express app mirroring galileopy/task-manager's
+design language (Solarized token palette, one Elm module per page plus shared
+Ui/Api, committed compiled main-elm.js, node --test service specs against a
+disposable store), not the toy Node library. Reason: the phase split needs a
+visible surface -- with a web UI the prototype phase produces a clickable screen
+instead of ASCII mockups, which is a far better slide and a far better argument.
+
+The five phase commands live in that repo's .claude/commands/, which is their
+single source of truth. The copy that briefly lived under demos/05-harness/wfm/
+is deleted; demos/05-harness/ now holds only the paste sheet.
+
+A second Claude session owns that repo; this session stays on the deck. Its
+review caught five defects in the phase commands, the important one being that
+/4-implement never rebuilt the frontend -- main-elm.js and app.css are committed
+artifacts, so a UI feature could go green on pnpm test, show nothing in the
+browser, and be correctly failed by /5-qa. That reads as "the AI failed" on stage
+when it is really an underspecified harness.
+
+Deliberately NOT fixed: transition() in server/workflow.mjs matches a step by
+title and takes the first hit, so two steps with the same title silently target
+the wrong one. It stays as a latent defect for /1-drill to surface by asking
+questions, on camera. Do not tidy it away.
+
+Open, unresolved: the two-demo cut was justified partly by continuous project
+state between demos 2 and 5. That no longer holds -- demo 2 is still the toy Node
+library. Demo 2 either moves into workflow-manager or becomes an openly separate,
+smaller example.

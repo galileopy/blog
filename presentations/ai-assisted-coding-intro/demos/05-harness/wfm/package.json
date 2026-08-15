@@ -1,9 +1,0 @@
-{
-  "name": "wfm",
-  "version": "0.1.0",
-  "description": "A tiny workflow manager CLI — demo subject for the AI-assisted coding talk",
-  "type": "module",
-  "scripts": {
-    "test": "node --test"
-  }
-}
