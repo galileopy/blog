@@ -859,6 +859,18 @@
   box-shadow: var(--gp-lift);
   overflow: hidden;
 }
+/* While the player holds the keyboard, reveal's keys are off — the one thing a
+   presenter must be able to see at a glance. Accent ring, not a colour change,
+   so it reads instantly without restyling the terminal. */
+.reveal .cast-frame.has-keys {
+  outline: 3px solid var(--gp-primary);
+  outline-offset: 3px;
+}
+.reveal .cast-frame .ap-player:focus,
+.reveal .cast-frame .ap-player:focus-visible {
+  outline: none;
+}
+
 /* The player ships its own control bar and measures its terminal in monospace
    columns; the deck's body letter-spacing would throw that grid off. */
 .reveal .cast-frame .ap-terminal {

@@ -1438,3 +1438,23 @@ rule that actually holds is the simple one — only use keys reveal has no bindi
 for. Reveal binds N/P, H/J/K/L, F, S, B, '.', '?', Esc/O, the arrows, space,
 PgUp/PgDn and Home/End. This was asserted as working before it was tried, which
 is the same mistake the deck spends a slide warning about.
+
+## The player takes the keyboard, instead of borrowing spare keys
+
+Replaces the W/A/D scheme entirely, and the custom keymap is deleted. Clicking
+the terminal calls Reveal.configure({keyboard: false}) and focuses the player;
+Esc, or leaving the slide, calls Reveal.configure({keyboard: true}) and blurs it.
+Exactly one thing listens at a time, so there is no race to reason about and no
+key that means two things.
+
+This is what should have been built first. Two rounds were spent choosing keys
+reveal happened not to bind, which is a workaround for a conflict that did not
+need to exist. The player's native keys are also better than anything that could
+have been mapped: space, arrows, [ and ] for markers, f, 0-9 for percentage
+seeks.
+
+A presenter cannot see which mode they are in, so the frame gets a 3px accent
+outline while the player holds the keyboard. Without that cue the failure is
+silent and happens on stage: arrows change slides when the speaker expects them
+to seek. The speaker notes name the symptom and the fix — no ring, click the
+terminal.

@@ -544,8 +544,10 @@
     <h3 class="d-lg" style="margin-bottom:18px;">One command, five phases</h3>
     <div class="cast-frame"></div>
   </div>
-  <aside class="notes">Keys on this slide — W pause/play, A/D back/forward 5s, shift+A/D or
-    [ and ] jump a phase. Arrows, space and P keep their usual meaning and still change slide.
+  <aside class="notes">Click the terminal to give it the keyboard — a blue ring appears and
+    the deck's keys go quiet. Then space pauses, arrows seek, [ and ] jump a phase, f is
+    fullscreen. Esc gives the keyboard back to the deck, and so does leaving the slide. If the
+    arrows are changing slides, the ring is not there: click the terminal first.
 
     One command runs the whole loop. Collect is the only phase that asks
     anything; the rest run without intervention. Idle gaps are capped at two seconds, so the
@@ -801,63 +803,44 @@
           theme: 'asciinema'
         })
       };
-      // The player grabs space and the arrows the moment it has focus, and then
-      // fights reveal for them. Keep it unfocusable and drive it from the keys
-      // below instead, so slide navigation never changes meaning mid-talk.
-      frame.querySelectorAll('[tabindex]').forEach(function (el) {
-        el.setAttribute('tabindex', '-1');
-      });
-      frame.addEventListener('click', function () {
-        if (document.activeElement) document.activeElement.blur();
-      });
+      // Click the terminal to hand it the keyboard; Esc hands it back. While
+      // the player holds it, reveal's own keys are off and the player's native
+      // set applies — space, arrows, [ and ] for markers, f, 0-9. This is
+      // simpler than mapping playback onto keys reveal happens not to use, and
+      // it means only one thing is listening at a time.
+      frame.addEventListener('mousedown', function () { grab(); });
     }
-    Reveal.on('ready', mount);
-    Reveal.on('slidechanged', mount);
 
-    // Playback keys. Handled in the capture phase, so on the cast slide these
-    // reach the player before reveal sees them; everywhere else in the deck
-    // they keep their normal reveal meaning. Space and the arrows are never
-    // touched — slide navigation means the same thing on every slide.
-    //
-    //   W            play / pause
-    //   A / D        back / forward 5 seconds
-    //   shift+A/D    previous / next phase marker   (also [ and ])
-    //
-    // W, not P: reveal binds P to previous-slide and wins the race regardless
-    // of capture order, so P stayed previous-slide when it was tried. Every key
-    // here is one reveal does not bind, which is the only reliable rule —
-    // reveal binds N/P, H/J/K/L, F, S, B, '.', the arrows and space.
-    var SEEK = 5;
+    function grab() {
+      if (!live || live.hasKeys) return;
+      live.hasKeys = true;
+      live.frame.classList.add('has-keys');
+      Reveal.configure({ keyboard: false });
+      var el = live.frame.querySelector('.ap-player');
+      if (el) el.focus();
+    }
+    function release() {
+      if (!live || !live.hasKeys) return;
+      live.hasKeys = false;
+      live.frame.classList.remove('has-keys');
+      Reveal.configure({ keyboard: true });
+      if (document.activeElement) document.activeElement.blur();
+    }
+
+    // Esc gives the deck its keyboard back. Bound in the capture phase so it
+    // works while the player has focus; reveal's own Esc (overview) is off at
+    // that moment, so nothing is being stolen.
     document.addEventListener('keydown', function (ev) {
-      if (!live) return;
-      if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
-      var p = live.player, ms = live.markers, k = ev.key.toLowerCase();
-      var now = p.getCurrentTime() || 0, target = null;
-
-      if (k === 'w') {
-        // No public isPlaying(), so track it ourselves.
-        live.playing = !live.playing;
-        (live.playing ? p.play() : p.pause());
-      } else if ((k === 'd' || k === ']') && (ev.shiftKey || k === ']')) {
-        for (var i = 0; i < ms.length; i++) {
-          if (ms[i][0] > now + 0.5) { target = ms[i][0]; break; }
-        }
-        if (target !== null) p.seek(target);
-      } else if ((k === 'a' || k === '[') && (ev.shiftKey || k === '[')) {
-        for (var j = ms.length - 1; j >= 0; j--) {
-          if (ms[j][0] < now - 1.5) { target = ms[j][0]; break; }
-        }
-        p.seek(target === null ? 0 : target);
-      } else if (k === 'd') {
-        p.seek(now + SEEK);
-      } else if (k === 'a') {
-        p.seek(Math.max(0, now - SEEK));
-      } else {
-        return;
+      if (ev.key === 'Escape' && live && live.hasKeys) {
+        release();
+        ev.preventDefault();
+        ev.stopPropagation();
       }
-      ev.preventDefault();
-      ev.stopPropagation();
     }, true);
+
+    Reveal.on('ready', mount);
+    Reveal.on('slidechanged', function () { release(); mount(); });
+
   })();
 </script>
 </body>
