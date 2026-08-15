@@ -1475,3 +1475,13 @@ Note links are absolutised at ready. Speaker view is a separate window whose
 base URL is not the deck document, so a relative href written into a note
 resolves to nothing once it is copied across — the failure only shows up in
 speaker view, which is exactly where these links are used.
+
+The keyboard now follows playback rather than focus: the player's play event
+grabs it, pause and ended give it back. Clicking still grabs, so the click that
+reaches the play button does not race the event.
+
+The consequence to be aware of on stage is that space is one-way. While the cast
+runs, space pauses it; that pause releases the keyboard, so a second space
+advances the slide rather than resuming. Resuming is a click on the play button.
+That asymmetry is deliberate — the failure that matters is pressing an arrow
+after pausing and having it seek a stopped cast instead of moving the talk on.

@@ -555,10 +555,11 @@
     <a href="https://github.com/galileopy/workflow-manager" target="_blank">the repo</a>
     (the loop itself is checked in at plugins/craft/).
 
-    Click the terminal to give it the keyboard — a blue ring appears and
-    the deck's keys go quiet. Then space pauses, arrows seek, [ and ] jump a phase, f is
-    fullscreen. Esc gives the keyboard back to the deck, and so does leaving the slide. If the
-    arrows are changing slides, the ring is not there: click the terminal first.
+    Press play and the terminal takes the keyboard — a blue ring appears and the deck's keys
+    go quiet. While it runs: space pauses, arrows seek, [ and ] jump a phase, f is fullscreen.
+    Pausing hands the keyboard straight back to the deck, so the space that paused it is the
+    only one the player gets and the next arrow advances the talk. Ring on, the terminal is
+    listening; ring off, the deck is. Esc and leaving the slide also hand it back.
 
     One command runs the whole loop. Collect is the only phase that asks
     anything; the rest run without intervention. Idle gaps are capped at two seconds, so the
@@ -820,6 +821,14 @@
       // simpler than mapping playback onto keys reveal happens not to use, and
       // it means only one thing is listening at a time.
       frame.addEventListener('mousedown', function () { grab(); });
+
+      // The keyboard follows playback: the player holds it only while something
+      // is actually playing. Pausing or reaching the end hands it straight back
+      // to reveal, so the very next arrow press advances the talk rather than
+      // seeking a stopped cast.
+      live.player.addEventListener('play', grab);
+      live.player.addEventListener('pause', release);
+      live.player.addEventListener('ended', release);
     }
 
     function grab() {
