@@ -788,6 +788,9 @@
           // Never autoplay. The slide is walked onto mid-sentence and a cast
           // that starts talking on arrival steps on the speaker.
           autoPlay: false,
+          // Playback rate only. Markers and seek() are in cast time, so this
+          // does not move them.
+          speed: 2,
           preload: true,
           poster: 'npt:0:30',
           controls: true,
