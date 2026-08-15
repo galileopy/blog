@@ -544,9 +544,8 @@
     <h3 class="d-lg" style="margin-bottom:18px;">One command, five phases</h3>
     <div class="cast-frame"></div>
   </div>
-  <aside class="notes">Keys on this slide — P pause/play, A/D back/forward 5s, shift+A/D
-    jump a phase. Arrows and space still change slide. P is normally previous-slide; it is
-    shadowed here, so go back with the left arrow.
+  <aside class="notes">Keys on this slide — W pause/play, A/D back/forward 5s, shift+A/D or
+    [ and ] jump a phase. Arrows, space and P keep their usual meaning and still change slide.
 
     One command runs the whole loop. Collect is the only phase that asks
     anything; the rest run without intervention. Idle gaps are capped at two seconds, so the
@@ -820,12 +819,14 @@
     // they keep their normal reveal meaning. Space and the arrows are never
     // touched — slide navigation means the same thing on every slide.
     //
-    //   P            play / pause
+    //   W            play / pause
     //   A / D        back / forward 5 seconds
     //   shift+A/D    previous / next phase marker   (also [ and ])
     //
-    // Note P is reveal's previous-slide key. It is deliberately shadowed here
-    // and only here; use the left arrow to leave this slide backwards.
+    // W, not P: reveal binds P to previous-slide and wins the race regardless
+    // of capture order, so P stayed previous-slide when it was tried. Every key
+    // here is one reveal does not bind, which is the only reliable rule —
+    // reveal binds N/P, H/J/K/L, F, S, B, '.', the arrows and space.
     var SEEK = 5;
     document.addEventListener('keydown', function (ev) {
       if (!live) return;
@@ -833,7 +834,7 @@
       var p = live.player, ms = live.markers, k = ev.key.toLowerCase();
       var now = p.getCurrentTime() || 0, target = null;
 
-      if (k === 'p') {
+      if (k === 'w') {
         // No public isPlaying(), so track it ourselves.
         live.playing = !live.playing;
         (live.playing ? p.play() : p.pause());

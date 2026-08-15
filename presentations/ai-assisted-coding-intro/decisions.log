@@ -1429,3 +1429,12 @@ are deliberately left alone in every case — the one property worth protecting 
 that slide navigation never changes meaning mid-talk. The keymap is repeated in
 the slide's speaker notes, because a keybinding you have to remember from a
 commit message is a keybinding you will not remember on stage.
+
+Correction to the entry above: P does NOT get shadowed. Handling the key in the
+capture phase and calling stopPropagation was assumed to beat reveal's own
+handler; on test it did not, and P stayed previous-slide. Pause moved to W,
+which sits above A/D in the same cluster and which reveal does not bind. The
+rule that actually holds is the simple one — only use keys reveal has no binding
+for. Reveal binds N/P, H/J/K/L, F, S, B, '.', '?', Esc/O, the arrows, space,
+PgUp/PgDn and Home/End. This was asserted as working before it was tried, which
+is the same mistake the deck spends a slide warning about.
