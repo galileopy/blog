@@ -1,44 +1,71 @@
 # Demo 5 — Orchestrated harness
 
-Concept: the loop itself is a pre-authored artifact. `.claude/commands/feature.md`
-encodes requirement → tests → code → verify. On camera we type one line: the goal.
+Concept: the loop is a pre-authored artifact, and it is *not* one black box. Five
+checked-in commands split the work into phases, and every phase ends in a file
+you can read — a spec, a mock, an audit, a diff, a QA report on a real PR.
 
-Picks up exactly where demo 2 left off — same project, same 13 green tests.
+Picks up where demo 2 left off: same project, 13 green tests.
+Repo: `github.com/galileopy/workflow-manager`.
 
-Paste in order, from `demos/05-harness/wfm/`:
-
-```sh
-cat .claude/commands/feature.md
-```
+Show the harness first:
 
 ```sh
-npm test
+ls .claude/commands/
 ```
 
 ```sh
 claude
 ```
 
-Then paste into the session:
+## Phase 1 — PM drilling → `docs/spec.md`
 
 ```
-/feature add a skip(workflow, title) function that marks a pending step as "skipped" instead of running it, leaves everything else untouched, and counts as resolved so a run whose remaining steps are all skipped is completed
+/1-drill people keep asking me what actually happened in a run — I want to be able to see it
 ```
 
-Let it run the whole loop — requirements, failing tests, implementation, green.
-Exit, then:
+It will ask you questions. Answer them however you like; the answers land in the
+spec's Decisions section. **This is the beat that sells the demo** — the audience
+watches ambiguity get resolved out loud instead of guessed at.
+
+## Phase 2 — Prototype → `docs/prototype.md`
+
+```
+/2-prototype
+```
+
+## Phase 3 — Refine → `docs/spec.md` rewritten, with a Verification table
+
+```
+/3-refine
+```
+
+## Phase 4 — Implement → branch, tests, code, PR
+
+```
+/4-implement
+```
+
+## Phase 5 — QA → `docs/qa-report.md`, posted to the PR
+
+```
+/5-qa
+```
+
+Exit the session, then show the trail:
 
 ```sh
-git --no-pager diff
+git --no-pager diff main --stat
 ```
 
 ```sh
-npm test
+gh pr view --web
 ```
 
-Say: in demo 2 we drove that loop by hand — reproduce, fix, verify. Here the
-same loop is a checked-in file, so it is versioned, reviewable, and reusable by
-the whole team. This is the "Once: author project workflows" line from the
+Say: demo 2 was one loop, driven by hand. This is five loops, each one checked
+in, each one leaving an artifact a human can review. The spec was written before
+the code, the mock before the spec was trusted, and the QA was done by something
+that was not allowed to read the implementation. Nothing here is a black box —
+that is the point. This is the "Once: author project workflows" line from the
 Level 5 slide.
 
 Reset after rehearsal (from repo root):
