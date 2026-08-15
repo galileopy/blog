@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "A tiny workflow manager CLI — demo subject for the AI-assisted coding talk",
   "type": "module",
-  "bin": { "wfm": "./src/cli.js" },
   "scripts": {
     "test": "node --test"
   }

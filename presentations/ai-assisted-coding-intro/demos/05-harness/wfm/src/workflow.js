@@ -49,17 +49,6 @@ export function retry(workflow, title) {
   return { ...workflow, steps, completed: false };
 }
 
-export function skip(workflow, title) {
-  const idx = workflow.steps.findIndex(
-    (s) => s.title === title && s.status === "pending"
-  );
-  if (idx === -1) return workflow;
-  const steps = workflow.steps.map((s, i) =>
-    i === idx ? { ...s, status: "skipped" } : s
-  );
-  return { ...workflow, steps, completed: steps.every(isResolved) };
-}
-
 export function currentStep(workflow) {
   if (isBlocked(workflow.steps)) return null;
   return workflow.steps.find((s) => s.status === "pending") ?? null;

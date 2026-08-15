@@ -3,10 +3,16 @@
 Concept: the loop itself is a pre-authored artifact. `.claude/commands/feature.md`
 encodes requirement → tests → code → verify. On camera we type one line: the goal.
 
+Picks up exactly where demo 2 left off — same project, same 13 green tests.
+
 Paste in order, from `demos/05-harness/wfm/`:
 
 ```sh
 cat .claude/commands/feature.md
+```
+
+```sh
+npm test
 ```
 
 ```sh
@@ -16,25 +22,24 @@ claude
 Then paste into the session:
 
 ```
-/feature add a "log" command to the CLI that prints each resolved step in order, one line per step, as "done: <title>" or "skipped: <title>", and "nothing resolved yet" when no step has been resolved
+/feature add a skip(workflow, title) function that marks a pending step as "skipped" instead of running it, leaves everything else untouched, and counts as resolved so a run whose remaining steps are all skipped is completed
 ```
 
-Let it run the whole loop. Exit, then:
+Let it run the whole loop — requirements, failing tests, implementation, green.
+Exit, then:
+
+```sh
+git --no-pager diff
+```
 
 ```sh
 npm test
 ```
 
-```sh
-node src/cli.js init release build test ship
-node src/cli.js advance
-node src/cli.js skip test
-node src/cli.js log
-```
-
-Say: everything we did by hand in demos 1–4 is now steps in a checked-in file —
-the workflow is versioned, reviewable, and reusable by the whole team. This is
-the "Once: author project workflows" line from the Level 5 slide.
+Say: in demo 2 we drove that loop by hand — reproduce, fix, verify. Here the
+same loop is a checked-in file, so it is versioned, reviewable, and reusable by
+the whole team. This is the "Once: author project workflows" line from the
+Level 5 slide.
 
 Reset after rehearsal (from repo root):
 ```sh

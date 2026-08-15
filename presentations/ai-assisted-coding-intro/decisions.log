@@ -1268,3 +1268,27 @@ Two sizing lessons for re-recording: a 101x43 terminal is too tall for the stage
 — it letterboxes and the type ends up small, so record nearer 100x28. And node's
 default test reporter prints a stack trace per failure, which fills the frame
 with noise; use a quieter reporter for the recorded runs.
+
+## Demo ladder cut to two rungs (2 and 5)
+
+Stage time is short, so the five-rung ladder is cut to its endpoints: demo 2
+(bug report -> reproduce -> fix -> verify, driven by hand) and demo 5 (the same
+loop as a checked-in /feature command). Rejected demo 1 as the opener: it shows
+the model doing less than demo 2, so the jump to a harness would read as a cut
+rather than a climb. Demos 3 and 4 are absorbed -- demo 2 already shows
+tests-before-fix, and demo 5's /feature goal is now the skip() requirement those
+two were built around. Their directories stay in the repo, unrecorded.
+
+Demo 5 was reseeded from "after demo 4" to "after demo 2": removed src/cli.js,
+src/store.js, test/skip.test.js, the skip() function, and the package.json bin
+field. The two casts now run on continuous project state (13 green tests at the
+start of demo 5, exactly where demo 2 finishes) so the second picks up the first
+with no visible jump. The "skipped" status is deliberately left referenced in
+isResolved() -- it is the seam /feature fills, and it makes the on-stage run more
+deterministic.
+
+Recording geometry: 100x28, not the 101x43 of the first demo 1 take. Anything
+taller letterboxes in the slide player at 1280x720 and shrinks the type past
+reading distance. Node's default test reporter also prints a stack trace per
+failure, which buries the red-test beat -- worth a quieter reporter before the
+final takes.
