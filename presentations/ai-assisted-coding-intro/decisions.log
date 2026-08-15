@@ -1249,3 +1249,22 @@ propagated into the 3-5 snapshots so the project stays continuous across the
 talk. Demo 3's prompt now writes its TDD tests into a new test/skip.test.js —
 it previously pointed at a file it was also told not to change. Demo 5's CLI
 learned the "failed" marker.
+
+## 2026-08-15 · Casts play from a vendored player, with no asciinema.org account
+
+asciinema-player 3.17.0 is a standalone bundle (one JS, one CSS), so a cast plays
+straight from disk. Vendored into `vendor/asciinema-player/` alongside reveal and
+the fonts; the deck keeps presenting offline and nothing is uploaded. The repo
+root ignores `vendor/`, so `.gitignore` carries an exception for this one — the
+player has to ship with the deck. Verified over HTTP at 1280x720 against the real
+demo 1 cast: terminal content, colours and controls all render. `poster:
+"npt:M:SS"` paints a still frame, so a slide shows real output before anyone
+presses play.
+
+The take that ships lives in `assets/casts/` (committed); `demos/casts/` stays
+gitignored for rehearsal takes.
+
+Two sizing lessons for re-recording: a 101x43 terminal is too tall for the stage
+— it letterboxes and the type ends up small, so record nearer 100x28. And node's
+default test reporter prints a stack trace per failure, which fills the frame
+with noise; use a quieter reporter for the recorded runs.

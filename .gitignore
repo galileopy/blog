@@ -19,3 +19,6 @@ MISSING-IMAGES.md
 # Translation TODO (local working doc, not site content)
 TRANSLATIONS.md
 __pycache__/
+
+# the deck vendors its player so it presents offline
+!presentations/ai-assisted-coding-intro/vendor/
