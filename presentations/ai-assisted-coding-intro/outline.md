@@ -86,6 +86,16 @@ Stop: Until requirements are satisfied :human:
 Use case: Debugging
 You can use this with plan mode in most tools
 
+### Demo: Autonomous Debugging
+
+One bug report, in a user's words. No file named, no function named.
+
+- The model finds it, writes the failing test, and runs it red
+- Then fixes it, and runs it green
+- We read the diff
+
+The loop closed without us. We only checked the result.
+
 ### Feedback Loops: Test Driven - TDD (Level 3)
 Start: Specify requirements :human:
 - Technical design of a solution * :human:
@@ -191,6 +201,27 @@ A predefined set of steps to follow during implementation.
 
 At any stage the agent can fall back to human control, if the requirements were too ambiguous
 or scope creep was introduced into the loop or implied in the original spec.
+
+### Demo: A Workflow You Can Read
+
+Five phases, five checked-in commands. Each one leaves an artifact.
+
+- Drill - a spec, with the questions asked and the answers given
+- Prototype - a clickable screen, before any code exists
+- Refine - the spec again, every assumption checked against the source
+- Implement - a branch, failing tests first, then a pull request
+- QA - a report, posted to that pull request
+
+QA is not allowed to read the code it is checking.
+
+The workflow is versioned, reviewable, and someone else can run it.
+
+### When the Harness Stops
+
+A run that halts at a named check is the system working.
+It looks like the system failing.
+
+That is why each phase leaves something behind.
 
 #### Dynamic Workflows vs Static Workflows
 - Not everything needs to be fixed the same way.

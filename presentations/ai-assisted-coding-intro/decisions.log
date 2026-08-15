@@ -1322,3 +1322,31 @@ Open, unresolved: the two-demo cut was justified partly by continuous project
 state between demos 2 and 5. That no longer holds -- demo 2 is still the toy Node
 library. Demo 2 either moves into workflow-manager or becomes an openly separate,
 smaller example.
+
+## Demo placement follows the outline's own structure
+
+The two demos are not a pair and were never meant to be continuous. Demo 2
+(autonomous debugging) belongs in Part 1 under Level 2, whose use case the
+outline already names as "Debugging". Demo 5 belongs in Part 2, because Part 2's
+Workflow section already describes the drill phase almost verbatim -- "let the
+agent act as a PM and drill you one question at a time, prodding for edge cases".
+So the earlier worry about demo 2 and demo 5 no longer sharing project state is
+moot: they serve different arguments in different parts.
+
+Three outline nodes added: "Demo: Autonomous Debugging" under Level 2, "Demo: A
+Workflow You Can Read" and "When the Harness Stops" in Part 2.
+
+## Slide built: When the Harness Stops (s-fog, L-04 statement)
+
+/4-implement now hard-stops when app/main-elm.js was not rebuilt, so the phase
+can end in a halt rather than a pull request. Technically the right outcome,
+awkward on stage, and it is the exact failure mode that reads to an audience as
+"the AI failed". Naming it turns the liability into the argument: a black box
+that ends in "I could not do it" is indistinguishable from incompetence, while a
+run that halts at a stated check is legibly a system working -- but only if the
+reason is on screen.
+
+Band is s-fog rather than s-canvas because the preceding slide is already an
+s-canvas statement, and two identical layout+band slides in a row flatten the
+rhythm. Verified over HTTP at #/9, screenshotted at 1280x720 and read: no
+overflow.
