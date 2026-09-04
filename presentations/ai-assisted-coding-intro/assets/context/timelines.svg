@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1104 470"
+     width="1104" height="470" role="img" aria-label="Three timelines toward one goal">
+  <line x1="78" y1="92" x2="1013" y2="92" stroke="#c2c2c2" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
+  <path d="M 78.0 92.0 L 162.0 54.0 L 210.0 118.0 L 324.0 78.0 L 378.0 40.0 L 516.0 110.0 L 690.0 62.0 L 754.0 100.0 L 888.0 48.0 L 978.0 86.0 L 1013.0 92.0"
+        fill="none" stroke="#1a1a1a" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="78.0" cy="92.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="162.0" cy="54.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="210.0" cy="118.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="324.0" cy="78.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="378.0" cy="40.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="516.0" cy="110.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="690.0" cy="62.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="754.0" cy="100.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="888.0" cy="48.0" r="7.5" fill="#3F00DB"/>
+  <circle cx="978.0" cy="86.0" r="7.5" fill="#3F00DB"/>
+  <g class="goal">
+    <circle cx="1030" cy="92" r="17" fill="none" stroke="#c2c2c2" stroke-width="2"/>
+    <circle cx="1030" cy="92" r="7" fill="#1a1a1a"/>
+  </g>
+  <text x="78" y="18" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="400" letter-spacing="0.02em">Correct as you go</text>
+
+  <line x1="78" y1="238" x2="1013" y2="238" stroke="#c2c2c2" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
+  <path d="M 78.0 238.0 L 112.0 225.0 L 130.0 217.0 L 174.0 245.0 L 216.0 235.0 L 230.0 227.0 L 276.0 251.0 L 340.0 198.0 L 366.0 211.0 L 408.0 207.0 L 452.0 229.0 L 470.0 223.0 L 522.0 249.0 L 550.0 241.0 L 626.0 272.0 L 656.0 259.0 L 678.0 265.0 L 722.0 236.0 L 780.0 247.0 L 796.0 240.0 L 840.0 225.0 L 916.0 206.0 L 946.0 217.0 L 980.0 211.0 L 1013.0 238.0"
+        fill="none" stroke="#1a1a1a" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="78.0" cy="238.0" r="7.5" fill="#3F00DB"/>
+  <polygon points="112.0,219.2 117.8,225.0 112.0,230.8 106.2,225.0" fill="#024ad8"/>
+  <polygon points="130.0,211.2 135.8,217.0 130.0,222.8 124.2,217.0" fill="#024ad8"/>
+  <polygon points="174.0,239.2 179.8,245.0 174.0,250.8 168.2,245.0" fill="#024ad8"/>
+  <polygon points="216.0,229.2 221.8,235.0 216.0,240.8 210.2,235.0" fill="#024ad8"/>
+  <polygon points="230.0,221.2 235.8,227.0 230.0,232.8 224.2,227.0" fill="#024ad8"/>
+  <polygon points="276.0,245.2 281.8,251.0 276.0,256.8 270.2,251.0" fill="#024ad8"/>
+  <circle cx="340.0" cy="198.0" r="7.5" fill="#3F00DB"/>
+  <polygon points="366.0,205.2 371.8,211.0 366.0,216.8 360.2,211.0" fill="#024ad8"/>
+  <polygon points="408.0,201.2 413.8,207.0 408.0,212.8 402.2,207.0" fill="#024ad8"/>
+  <polygon points="452.0,223.2 457.8,229.0 452.0,234.8 446.2,229.0" fill="#024ad8"/>
+  <polygon points="470.0,217.2 475.8,223.0 470.0,228.8 464.2,223.0" fill="#024ad8"/>
+  <polygon points="522.0,243.2 527.8,249.0 522.0,254.8 516.2,249.0" fill="#024ad8"/>
+  <polygon points="550.0,235.2 555.8,241.0 550.0,246.8 544.2,241.0" fill="#024ad8"/>
+  <circle cx="626.0" cy="272.0" r="7.5" fill="#3F00DB"/>
+  <polygon points="656.0,253.2 661.8,259.0 656.0,264.8 650.2,259.0" fill="#024ad8"/>
+  <polygon points="678.0,259.2 683.8,265.0 678.0,270.8 672.2,265.0" fill="#024ad8"/>
+  <polygon points="722.0,230.2 727.8,236.0 722.0,241.8 716.2,236.0" fill="#024ad8"/>
+  <polygon points="780.0,241.2 785.8,247.0 780.0,252.8 774.2,247.0" fill="#024ad8"/>
+  <polygon points="796.0,234.2 801.8,240.0 796.0,245.8 790.2,240.0" fill="#024ad8"/>
+  <polygon points="840.0,219.2 845.8,225.0 840.0,230.8 834.2,225.0" fill="#024ad8"/>
+  <circle cx="916.0" cy="206.0" r="7.5" fill="#3F00DB"/>
+  <polygon points="946.0,211.2 951.8,217.0 946.0,222.8 940.2,217.0" fill="#024ad8"/>
+  <polygon points="980.0,205.2 985.8,211.0 980.0,216.8 974.2,211.0" fill="#024ad8"/>
+  <g class="goal">
+    <circle cx="1030" cy="238" r="17" fill="none" stroke="#c2c2c2" stroke-width="2"/>
+    <circle cx="1030" cy="238" r="7" fill="#1a1a1a"/>
+  </g>
+  <text x="78" y="164" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="400" letter-spacing="0.02em">Plan first, then execute</text>
+
+  <line x1="78" y1="384" x2="1013" y2="384" stroke="#c2c2c2" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
+  <path d="M 78.0 384.0 L 116.0 373.0 L 150.0 368.0 L 188.0 389.0 L 226.0 382.0 L 264.0 393.0 L 310.0 398.0 L 326.0 390.0 L 346.0 375.0 L 374.0 386.0 L 428.0 372.0 L 474.0 367.0 L 508.0 378.0 L 522.0 383.0 L 582.0 392.0 L 624.0 399.0 L 644.0 388.0 L 670.0 384.0 L 738.0 374.0 L 778.0 369.0 L 802.0 379.0 L 818.0 387.0 L 896.0 395.0 L 936.0 400.0 L 966.0 383.0 L 1013.0 384.0"
+        fill="none" stroke="#1a1a1a" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="78.0" cy="384.0" r="7.5" fill="#3F00DB"/>
+  <polygon points="116.0,367.2 121.8,373.0 116.0,378.8 110.2,373.0" fill="#024ad8"/>
+  <polygon points="150.0,362.2 155.8,368.0 150.0,373.8 144.2,368.0" fill="#024ad8"/>
+  <polygon points="188.0,383.2 193.8,389.0 188.0,394.8 182.2,389.0" fill="#024ad8"/>
+  <circle cx="226.0" cy="382.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+  <polygon points="264.0,387.2 269.8,393.0 264.0,398.8 258.2,393.0" fill="#024ad8"/>
+  <polygon points="310.0,392.2 315.8,398.0 310.0,403.8 304.2,398.0" fill="#024ad8"/>
+  <polygon points="326.0,384.2 331.8,390.0 326.0,395.8 320.2,390.0" fill="#024ad8"/>
+  <polygon points="346.0,369.2 351.8,375.0 346.0,380.8 340.2,375.0" fill="#024ad8"/>
+  <circle cx="374.0" cy="386.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+  <polygon points="428.0,366.2 433.8,372.0 428.0,377.8 422.2,372.0" fill="#024ad8"/>
+  <polygon points="474.0,361.2 479.8,367.0 474.0,372.8 468.2,367.0" fill="#024ad8"/>
+  <polygon points="508.0,372.2 513.8,378.0 508.0,383.8 502.2,378.0" fill="#024ad8"/>
+  <circle cx="522.0" cy="383.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+  <polygon points="582.0,386.2 587.8,392.0 582.0,397.8 576.2,392.0" fill="#024ad8"/>
+  <polygon points="624.0,393.2 629.8,399.0 624.0,404.8 618.2,399.0" fill="#024ad8"/>
+  <polygon points="644.0,382.2 649.8,388.0 644.0,393.8 638.2,388.0" fill="#024ad8"/>
+  <circle cx="670.0" cy="384.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+  <polygon points="738.0,368.2 743.8,374.0 738.0,379.8 732.2,374.0" fill="#024ad8"/>
+  <polygon points="778.0,363.2 783.8,369.0 778.0,374.8 772.2,369.0" fill="#024ad8"/>
+  <polygon points="802.0,373.2 807.8,379.0 802.0,384.8 796.2,379.0" fill="#024ad8"/>
+  <circle cx="818.0" cy="387.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+  <polygon points="896.0,389.2 901.8,395.0 896.0,400.8 890.2,395.0" fill="#024ad8"/>
+  <polygon points="936.0,394.2 941.8,400.0 936.0,405.8 930.2,400.0" fill="#024ad8"/>
+  <circle cx="966.0" cy="383.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+  <g class="goal">
+    <circle cx="1030" cy="384" r="17" fill="none" stroke="#c2c2c2" stroke-width="2"/>
+    <circle cx="1030" cy="384" r="7" fill="#1a1a1a"/>
+  </g>
+  <text x="78" y="310" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="400" letter-spacing="0.02em">Reusable workflow</text>
+</svg>

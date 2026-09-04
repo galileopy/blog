@@ -1,0 +1,1496 @@
+# Decisions log — On AI Assisted Coding
+
+Rationale and reversible choices. `outline.md` stays a plain outline; `PLAN.md`
+holds the slide mapping; this file holds the why.
+
+---
+
+## 2026-08-01 · Outline stays an outline
+
+Explanatory prose and diff annotations (`<- changed`, `<- added`) do not belong
+in `outline.md`. Decisions live here or in chat.
+
+## 2026-08-01 · Requirements collection is a step, not a preamble
+
+"Once requirements are specified" / "As requirements are specified" were leads
+above the list. They are now the loop's first step, "Collect requirements", in
+every stage — it is part of the loop, not a precondition to it.
+
+Paired with this: "Until requirements are satisfied" is **not** optional. It is
+the loop's general stop condition and carries no `*`. Technical design is now
+the only optional step.
+
+Refined further: both are *edges*, not steps. They sit outside the ordered list
+(`p.loop-edge.in` / `p.loop-edge.out`, mono `start` / `stop` where the number
+would be), so the numbering counts execution steps only. Mirrored in the outline
+as `Start:` / `Stop:` lines bracketing each loop's bullets.
+
+Resolved: "Author project specific workflows" is a *third* edge, above `Start:`
+— a project-level prerequisite, not a loop step. Labelled `once` in the deck
+(`p.loop-edge.pre`), and it carries the `added` mark, since it is what that
+stage contributes. So a stage can have a moving part outside the loop.
+
+## 2026-08-01 · Technical design is optional, never dropped
+
+"Technical design of a solution *" is available in almost every loop stage — it
+was omitted from some stages in the original outline only to avoid repetition,
+not because it disappears.
+
+Consequence: the loops are now normalized. Every stage lists the full skeleton;
+`*` marks a step that is optional (always available, not always required).
+Nothing is ever removed between stages.
+
+## 2026-08-01 · Stack shows a stable spine, not a +/- diff
+
+Superseded the earlier add/remove treatment (blue `+` rows, coral struck-through
+`−` list). With nothing being removed, a diff was the wrong metaphor.
+
+Now: unmarked steps recede to graphite; the one or two steps that actually move
+carry a blue left-bar and a mono tag — `added` for a new step, `changed` for a
+step that was rewritten. The audience sees one skeleton evolving rather than six
+lists.
+
+The moving parts, stage by stage:
+
+| Stage | Moves |
+|---|---|
+| Traditional | — (establishes the skeleton) |
+| AI | *changed*: code, compile → prompt, generate code |
+| Autonomous | *changed*: iterate manually → iterate, feed results back into agent |
+| TDD | *added*: prompt — generate failing tests |
+| Spec driven | *added*: prompt — generate specs |
+| Spec driven + workflows | *added*: author project specific workflows |
+
+## 2026-08-01 · "The coding feedback loop" opens the stack
+
+The renamed skeleton section becomes stack slide 0, ahead of Traditional — the
+stable components presented once, then only the moving parts iterate. Its build
+step is tagged `varies` rather than `added`/`changed`, since it is the slot the
+other six stages fill. The three tag words are UI chrome, not outline content.
+
+## 2026-08-01 · No transitions anywhere — text must be crisp on every frame
+
+Superseded the loop-stack-only setting below. The blur was never a theme bug: it
+is what animating a transform costs. The browser renders a slide to a texture at
+its pre-transform size and resamples that texture while it moves, so display
+type softens mid-flight and snaps back at rest. No transition setting avoids it,
+because every reveal transition is a transform.
+
+So: `transition: 'none'` and `backgroundTransition: 'none'` deck-wide, the
+per-slide `data-transition` attributes removed (one source of truth), and
+`transition/animation: none !important` on `.slides` and the sections, since
+reveal ships transition declarations regardless of the configured mode.
+
+Slides cut. Nothing moves, nothing is ever resampled.
+
+## 2026-08-01 · (superseded) No transition inside the loop stack
+
+`data-transition="none"` on all seven nested sections. The stack is one diagram
+being amended; sliding it vertically implies seven separate things. With the
+transition off, the shared rows are pixel-identical between stages and only the
+marked row visibly changes — the animation *is* the diff.
+
+Side effect: entering and leaving the stack horizontally is also instant, since
+`data-transition` governs a slide's in and out together. Acceptable; the
+alternative (`slide-in none-out` on the first) makes reverse navigation slide
+sideways into the top of the stack, which is worse.
+
+## 2026-08-01 · Use case is a pinned full-width bar
+
+The use case was a `badge-soft` flowing at the end of the right column, so it
+sat at a different height on every stage. It is now `div.use-case`, absolutely
+positioned across the full stage above `.slide-foot` — outside `.slide-inner`,
+like `.slide-foot` itself, since it is positioned against the section. Mono
+`use case` label on the left, the case in 18px ink, and the stage's aside
+("You'd need specific skills") pushed to the right edge.
+
+Stage 6 has no use case; it carries the brownfield line under a `context` label
+in the same bar.
+
+## 2026-08-01 · Heading is pinned; the list only grows downward
+
+`.slide-inner` centers its content by default, so every stage re-centered the
+whole column and the shared rows appeared to drift between stages — which
+defeats the point of the no-transition cut. On `.layout-loop`: `justify-content:
+flex-start`, `grid-2 { align-items: start }`, and a `min-height: 68px` on the
+`d-md` heading so one-line and two-line titles hold the same rail. Steps now
+start at the same y on all seven and the list extends downward.
+
+Paid for by dropping the loop slides' top padding to 48px so the widest stage
+(10 rows incl. edges) still clears the use-case bar. That is a per-layout
+padding override, not a change to the type scale.
+
+## 2026-08-01 · Flattened reveal's 3D stage to stop headings blurring
+
+reveal puts `perspective` on `.slides` and `transform-style: preserve-3d` on the
+sections so its cube/page transitions work. Side effect: each slide is
+composited as a texture and resampled while it moves, so display type visibly
+softens mid-transition. This deck uses slide/fade/none only — none need 3D — so
+`.slides { perspective: none }` plus `transform-style: flat` on the sections
+puts text back on the normal glyph-rasterisation path.
+
+Cost: the 3D transitions (`cube`, `page`) would no longer work if ever selected.
+Acceptable; they are not in this deck's vocabulary.
+
+Correction: the first attempt also set `backface-visibility: hidden`, which made
+things worse — it promotes every section to its own composited layer, and the
+nested stack sections then sit on a fractional offset and get rasterised once
+and scaled. Result: text blurry *while standing still*, and only on the loop
+slides, since those are the nested ones. Removed; flattening the 3D context is
+enough on its own. There is a comment in the theme warning against re-adding it
+or `will-change: transform`.
+
+## 2026-08-01 · Skeleton collapsed into Traditional
+
+The separate "The coding feedback loop" slide was the same list as Traditional
+with a placeholder build step. With actor glyphs on every row, Traditional
+carries the baseline on its own — all human, nothing marked — so the skeleton
+slide was one slide of throat-clearing. Removed from the deck and the outline;
+the stack is six stages again, matching the "n of 6" eyebrows.
+
+`assets/loops/loop-00-skeleton.svg` is now unreferenced.
+
+## 2026-08-01 · Actor glyphs: who performs each step
+
+Two `<symbol>`s in a sprite (`#i-human`, `#i-bot`), stroke-only at
+`currentColor` so they inherit the row colour and diff treatment. They sit in a
+fourth grid column so they hold one rail down the right edge regardless of tag
+width, on step rows and loop edges alike.
+
+The arc: Traditional is entirely human; each stage converts its `Prompt —` steps
+to the bot, ending with the human authoring only the workflows and the
+requirements while every execution step is a bot.
+
+## 2026-08-01 · Loop diagrams replace the card, not fill it
+
+The seven SVGs in `assets/loops/` are wired into the stack. They stand in place
+of `.card-feature` rather than inside it — each SVG is already a composed figure
+on its own ground, so a card around it only spent 32px of padding a side and
+shrank the drawing. The diagram now takes the full left column and centers
+against the stage; the steps column stays top-aligned on its rail.
+
+Open: the SVGs predate the refactor step, so stages 4–6 show it in the list but
+not in the ring. They also carry their own small "n of 6" counter, which
+duplicates the eyebrow.
+
+## 2026-08-01 · Loop stack uses one uniform template
+
+Overrides the reveal skill's "never repeat a layout more than twice in a row"
+heuristic, by explicit request: the six stages are the same idea evolving, so
+they get the same L-06 two-column frame (diagram left, steps right) in a single
+vertical stack. Varying the layout would read as six unrelated topics.
+
+## 2026-08-01 · Loop step list runs one notch tighter
+
+The widest stage carries 9 steps; the theme's default agenda rhythm (20px /
+16px padding) overflows 720px there. `ol.agenda.diff` drops to 18px / 11px
+padding — applied to all six so row height is identical across the stack.
+This is a modifier on the theme's own list, not a new type size.
+
+## 2026-08-01 · Temperature check shows the outline's second level
+
+Sub-items render as a `<span class="sub">` inside the agenda `li`, not a nested
+`<ol>` — a nested list restarts the counter and breaks the 56px number rail.
+
+## 2026-08-01 · Deck lives outside the blog's link graph
+
+`presentations/` is not in `_config.yml`'s `exclude:`, so it builds and
+publishes at `/blog/presentations/…`, but `index.html` only renders the post
+list, so nothing links to it. Assets are relative throughout, which is what
+makes it survive `baseurl: "/blog"`.
+
+---
+
+## Open
+
+- Six SVG loop diagrams still to author; `.ph.ph-4x3` placeholders stand in.
+- Stage 6 (spec driven + predefined workflows) sits inside the stack with a
+  brownfield badge, though the outline files it under Brownfield. Undecided.
+- `outline.md` line ~125: "Local preferences not enforceable by [tooling? —
+  sentence looks cut off]" — needs the real wording before it goes on a slide.
+
+## 2026-08-01 · AI stage keeps Traditional's wording; the glyph carries the change
+
+First pass reworded the changed row to "Prompt — generate code". Reverted: the
+row now reads "Code, compile", word-for-word what Traditional shows, still
+carrying the blue highlight and `changed` tag. The bot glyph is what marks the
+row as different now, not the text — so the same activity is visibly the same
+line, just performed by a different actor.
+
+Note: `outline.md` still lists this step as "Prompt - generate code" — left
+alone, since this was a display-only call. Outline and deck now intentionally
+diverge on this one line; flagged to the user.
+
+## 2026-08-01 · Loop headings normalized to "Feedback Loops / <name>"
+
+Headings previously varied in shape ("AI Feedback Loop" one line, "Traditional
+Feedback Loop" two lines split before "Feedback Loop", "Spec Driven Loop with
+Predefined Workflows" split mid-clause). Now uniform: line one is always
+"Feedback Loops", line two is the loop's name only. Synced into outline.md's
+section headers (`### Feedback Loops: Traditional`, etc.) so the two documents
+group the same way.
+
+Consequence: the eyebrow ("Feedback Loops · N of 6") repeated the now-heading
+word, so it was trimmed to just the counter ("N of 6").
+
+## 2026-08-01 · LVL 0-5 added; bot glyph ratchets forward from LVL 1
+
+Each stage's eyebrow now reads "LVL n \u00b7 N of 6" \u2014 LVL 0 Traditional, LVL 1
+AI Assisted Coding, LVL 2 Autonomous, LVL 3 TDD, LVL 4 Spec Driven, LVL 5 Spec
+Driven + Predefined Workflows. Kept in the eyebrow rather than a standalone
+badge (asked directly), accepting that the level and the stack position are
+now one string \u2014 if the stack is ever reordered or split, they could drift
+apart and would need re-deriving together.
+
+Actor glyphs completed for stages 3\u20136 (Autonomous, TDD, Spec Driven, Spec
+Driven + Workflows), which only had them on Traditional and AI before. Rule
+applied: the bot glyph ratchets forward and stays \u2014 once a step is bot-
+performed at the level that introduces it, every later stage keeps the bot mark
+on that same step, whether or not it is that stage's `diff-move` row. Concretely,
+only "generate code" carries the bot (from LVL 1 on); every other step, including
+newly-added or newly-changed ones (failing tests, refactor, specs, author
+workflows), stays human unless a future instruction hands it over too. So a
+stage's `changed`/`added` tag and its actor glyph are independent signals now:
+one says what\u2019s new, the other says who does it.
+
+LVL 1's heading changed from "AI" to "AI Assisted Coding" for clarity, synced
+into outline.md's header too.
+
+## 2026-08-01 · Eyebrow spells out "Level" instead of "LVL"
+
+All six stack slides: "LVL n" -> "Level n" in the eyebrow. Same reasoning as
+always spelling out rather than abbreviating in this deck's voice.
+
+## 2026-08-01 · Second bot handoff: Iterate, feed test results back into agent
+
+Level 2 (Autonomous) is where this step's own `changed` tag lives \u2014 it is the
+step Autonomous introduces, replacing "Iterate, manually". It now also carries
+the bot glyph, and per the same ratchet rule as "Code", the mark carries forward
+unmarked through TDD, Spec Driven, and Spec Driven + Workflows (all three
+already had this exact row, previously human).
+
+So as of Level 5 there are two automated steps: generate code (from Level 1) and
+iterate on test results (from Level 2). Everything else \u2014 generate specs,
+generate failing tests, refactor, author workflows \u2014 stays human until a
+future instruction hands it over.
+
+## 2026-08-01 · "Code, compile" wording carried through all levels
+
+The "Prompt \u2014 generate code" text was an artifact of no longer having a way to
+mark who performs a step; now that the bot glyph does that job, the "Prompt \u2014"
+framing was redundant on this row specifically. Applied everywhere it still
+said "Prompt \u2014 generate code" (Autonomous, TDD, Spec Driven, Spec Driven +
+Workflows) \u2014 all four now read "Code, compile", matching Traditional and AI
+Assisted Coding. The SVGs already used a plain "Code" node label, so this also
+closes a wording gap between the list and the diagram.
+
+`outline.md` still says "Prompt - generate code" at every level (see the
+2026-08-01 divergence note above) \u2014 left alone again; this was scoped to deck
+wording, same as the earlier AI-stage fix.
+
+## 2026-08-01 · Outline normalized: canonical steps, explicit glyphs, Level tags
+
+The outline is now the single source for the loop progression, structured so the
+slides and SVGs can be annotated mechanically from it.
+
+Canonical step vocabulary, in fixed order. A level carries every step that has
+been introduced at or before it; nothing is ever dropped, only added:
+
+  once   Author project specific workflows   L5
+  start  Collect requirements                all
+   1     Generate specs                      L4+
+   2     Technical design of a solution *    all
+   3     Generate failing tests              L3+
+   4     Code                                all
+   5     Run                                 all
+   6     Test                                all
+   7     Iterate                             all
+   8     Refactor                            L3+
+  stop   Until requirements are satisfied    all
+
+Three actors, explicit on every step (no "unmarked means human" default) so the
+outline maps 1:1 to the slide rows, which already draw a glyph per row:
+:human:, :bot:, :laptop:. Run is :laptop: at every level including Traditional —
+it was always the computer executing; it is not a human step that gets taken
+over, which is why it never appears in the ratchet.
+
+Bot ratchet — a step flips at the level that introduces the change and stays
+flipped downstream: Code at L1, Test + Iterate at L2, Generate failing tests at
+L3, Generate specs + Refactor at L4, Technical design at L5.
+
+Dropped the "Prompt - " prefix everywhere (generate specs / generate failing
+tests / refactor). Same reasoning as the earlier "Code, compile" fix: the prefix
+was standing in for who performs the step, and the glyph now does that job.
+This also closes the outline-vs-deck divergence flagged on 2026-08-01 — the
+outline's "Prompt - generate code" is now plain "Code" at every level.
+
+Wording collapsed to one form per step: "Test" (was also "Test, get feedback"),
+"Iterate" (was also "Iterate, manually" and "Iterate, feed test results back
+into agent"), "Code" (was also "Prompt - generate code"), "Refactor" (was also
+"Prompt - refactor").
+
+Reverted "Start: Collect requirements :bot:" at L4 to :human: — it contradicted
+the stated endpoint, where the human authors only workflows and requirements.
+
+Judgment calls made while normalizing, flagged for review:
+  - L3 Refactor is :human: and flips to :bot: at L4. TDD's refactor step is the
+    one a developer drives; spec-driven hands it over.
+  - L5 Technical design flips to :bot: — the workflows encode the design
+    conventions, so the agent applies them. This is the last human execution
+    step to go, which is what makes L5 the end of the progression.
+  - L5 gained "Use case: brownfield projects"; it was the only level without one.
+
+Formatting: Once/Start/Stop hug the step list (they are loop edges, not numbered
+steps), blank line before "Use case:".
+
+Not yet propagated: index.html has only #i-human and #i-bot in its sprite and
+needs a third :laptop: symbol, plus a Run-row and Technical-design-row update at
+several levels. The SVGs are likewise unannotated.
+
+## 2026-08-01 · Outline changes propagated into the deck HTML
+
+Added `#i-laptop` to the actor sprite and `.actor.machine` for it. First pass
+coloured it `--gp-graphite` (#636363), which is *darker* than the human glyph's
+`--gp-steel` (#c2c2c2) on this canvas — so Run, the one step that never changes
+hands, read as the loudest mark on the row. Corrected to `--gp-fog`: Run is
+background machinery and belongs below human in prominence, not above. Also
+stopped `li.diff-move .actor` from recolouring a machine glyph blue — a machine
+glyph is never the thing that changed.
+
+Merged "Collect requirements" and "Generate specs" into one edge step at L4 and
+L5: from Level 4 on the spec *is* the requirements, so keeping them apart was
+double-counting one activity. The merged edge reads "Collect requirements,
+generate specs" and carries two glyphs, human + bot — the first genuinely
+collaborative step in the deck. This is now L4's own marked change (`changed`
+on the edge) rather than an `added` numbered step, and it drops L4 and L5 to
+8 and 9 rows, easing the density problem on the widest slide.
+
+Two actors on one row needed a `.actors` flex wrapper and the glyph column
+widened 24px -> 44px on both `.loop-edge` and `ol.agenda.diff li`, right-aligned
+so the single-actor rows keep the same rail.
+
+Verified by screenshot at 1280x720 on levels 0, 4, 5: glyphs render, three
+colours are distinguishable, L5 fits with room to spare.
+
+Still out of sync: the SVG diagrams. They carry a separate "Specs" node, and
+node labels ("Fail tests", "Feed back") predate the normalized vocabulary. No
+diagram shows actors at all.
+
+## 2026-08-01 · Flagged every actor handover; "Specify requirements"; brownfield folded in
+
+Three actor handovers were unflagged: Test at L2, Refactor at L4, Technical
+design at L5. Only the *first* of a level's changes had been marked. Rule now:
+a step is flagged `changed` at the level where its actor changes, regardless of
+how many other rows on that slide also changed. L2 therefore carries two flags
+(Test and Iterate), which is the honest reading of "Autonomous" — the agent
+takes over both testing and iterating in one step.
+
+Renamed the start edge to "Specify requirements" at all six levels. "Collect
+requirements, generate specs" was accurate after the merge but too long for the
+row; the shorter name covers both halves and keeps the edge to one line.
+
+Two layout bugs the flags exposed, both on L5's design row — the only row that
+carries two tags (`optional` + `changed`):
+  1. `ol.agenda.diff li` had a single tag column, so the second tag auto-placed
+     into the glyph column and pushed the actor onto a second line. Now two auto
+     tag columns. This is the same failure the existing comment already warned
+     about for one tag; it recurred at two.
+  2. That widening then wrapped the label. Fixed by taking the glyph column back
+     from 44px to 24px on numbered rows — only a *loop edge* ever carries two
+     glyphs — and right-aligning every glyph so edges and steps still share one
+     rail.
+
+Folded the "Brownfield Projects" section into Level 5 rather than keeping it as
+its own outline section: it existed to introduce a context that is now just this
+loop's use case. The `.use-case.brownfield::before { content: "context" }`
+variant is gone, so all six bars read "use case". "Brownfield projects have more
+context baked in" survives as the slide's uc-note, the same slot L2 and L3 use.
+
+## 2026-08-01 · Pinned the loop edges so the numbered list never moves
+
+Level 5's pre-loop "once" row pushed its start edge and whole numbered list down
+relative to the other five, so paging through the stack made the list jump. The
+other five now reserve that slot with an invisible copy of the row
+(`.loop-edge.pre.spacer`, `visibility: hidden`, `aria-hidden`) rather than a
+hand-computed offset — the edges are <p> elements carrying block margins on top
+of row padding and a border, so the arithmetic is not just row height and would
+rot the moment any of those change.
+
+The spacer carries the same children as the real row (tag span + actor glyph),
+not just the label: a bare text line boxes 2px shorter than one containing an
+11px mono tag and a 17px svg.
+
+Separately, the paired-glyph `.actors` wrapper needed `align-self: center` to
+match a bare `.actor`. Under the grid's `align-items: baseline` the wrapper's
+baseline differs from a lone svg's, which dropped L4 and L5 by 2px — visible
+only when measured, but it defeated the point of pinning.
+
+Verified by measuring text-row tops off the screenshots rather than by eye: all
+six levels now put the start edge at y=227 and step 01 at y=278, with L5's once
+row at y=176.
+
+Note for future screenshot runs: Chrome blocks port 5060 (ERR_UNSAFE_PORT) and
+silently captures an error page, which reads as a plausible-looking measurement.
+Use a port outside Chrome's blocked list.
+
+## 2026-08-01 · Pinned the stop edge too
+
+Same argument as the start edge: the two edges bracket the loop, so the steps
+should grow *into* the frame rather than push its bottom down. Implemented as a
+`min-height` on `.layout-loop ol.agenda.diff` sized to Level 5's eight-step list
+(244px); shorter stages leave the remainder empty. All six now put start at
+y=227, stop at y=522.
+
+First attempt used 284px — derived from row-height arithmetic rather than the
+measured list — and pushed stop to 562 on every slide, i.e. consistently wrong
+rather than obviously wrong. Measured the real list height instead. Worth
+remembering: with a pin like this, an error is uniform across all slides and so
+looks like the intended design.
+
+Cost: Level 0 has ~100px of empty space between "Iterate" and the stop line, and
+Levels 1-2 the same. Read as "room the later levels fill", which supports the
+progression; read uncharitably, as a layout bug. Reversible by deleting the one
+min-height rule.
+
+Correction, same day: replaced the `min-height` pin with hidden `li.spacer` rows
+padding each short list to the longest one (seven steps). Same rendered result —
+start y=227, stop y=522 on all six — but no pixel constant to go stale, and a
+level that gains a step later simply needs one fewer spacer instead of a
+recomputed height. This is the same technique as the pre-edge spacer, so both
+pins now work the same way.
+
+Two details that make it safe: a hidden row still increments the step counter,
+so spacers only ever go at the end of a list; and `visibility: hidden` hides the
+row's hairline separator too, so the reserved space reads as clean white rather
+than a run of empty ruled rows.
+
+The max step count is seven, not eight as the min-height attempt assumed —
+another reason the measured/structural approach beats the arithmetic one.
+
+## 2026-08-01 · One background colour for the whole deck
+
+Exactly one slide was off: Temperature Check carried `s-cloud` (#f7f7f7) while
+the other eight were `s-canvas` (#ffffff) — enough to read as a flicker when
+paging past it, not enough to look intentional. Now `s-canvas` throughout;
+sampled every slide and the only non-white pixels left are the title slide's
+blue chevrons, which are artwork rather than a band.
+
+This drops the design system's canvas -> cloud -> fog -> ink band rhythm, which
+the skill treats as the section-boundary signal. Deliberate: this deck carries
+its structure in the loop stack and the Level eyebrows, and a single surface
+keeps the six loop slides reading as one continuous topic. If dividers or a
+closing ink slab get added later, revisit — the rhythm is worth more once there
+are sections to separate.
+
+## 2026-08-01 · Both loop edges become collaborative
+
+The stop condition ("Until requirements are satisfied") takes the bot glyph
+alongside the human from Level 4 on, and authoring the workflows is human + bot
+at Level 5. Flagged `changed` at L4 where the stop actor first changes; carried
+unflagged at L5, per the ratchet.
+
+Effect on the argument: at Level 4 both edges — specify requirements and the
+stop condition — are human + bot, so the loop is now *bracketed* by
+collaboration rather than merely containing it. The human no longer hands work
+over and waits; they judge "done" together with the agent. That is a stronger
+end state than "every execution step is a bot", and it is the one the deck now
+builds to.
+
+Level 5's authoring row keeps its `added` flag and gains the pair, so the only
+purely human marks left anywhere in the stack are gone — every row is bot,
+laptop, or human+bot.
+
+The five pre-edge spacers were updated to carry the paired-glyph wrapper too:
+they exist to mirror the real row's height, so they have to track its structure,
+not just its text. Re-measured after the change — start y=227, stop y=522 on all
+six, unchanged.
+
+Also removed a stray blank line before L4's `Stop:` in outline.md; every level
+now brackets its list the same way.
+
+## 2026-08-01 · Refactor arrives collaborative at L3, goes bot-only at L4
+
+Refactor now enters as human + bot at Level 3 (still tagged `added`) and becomes
+bot-only at Level 4 (tagged `changed`). Previously it entered human-only, which
+overstated how much of TDD's refactor step a person actually drives.
+
+This gives the deck a second three-beat handover — appears collaborative, then
+goes fully to the agent — matching the shape the requirements/spec edge already
+has, rather than every step flipping human -> bot in a single move.
+
+First numbered row to carry two glyphs, so the paired-glyph wrapper needed a
+grid column inside `ol.agenda.diff li`, and that row alone needs the wide 44px
+glyph column. Scoped with `li:has(.actors)` rather than widening every row —
+each row is its own grid, so the wide column would otherwise squeeze the labels
+on rows that carry two tags (which is what wrapped L5's design row earlier).
+Both variants right-align, so the glyph rail still reads as one column.
+
+Re-measured: start y=227, stop y=522 on all six.
+
+## 2026-08-01 · SVGs: regenerate from a script, on fixed slots
+
+The six diagrams were authored against a much older step list and had drifted
+past the point where patching made sense: `Feed back` where the list says
+`Iterate`, `Fail tests` where it says `Failing tests`, a `Specs` node that no
+longer exists as a step, no `Refactor` node at all, and no actor badges in the
+deck's vocabulary. Levels 3-5 each needed a node added, a node removed, and the
+whole circle re-spaced.
+
+Decided to write `assets/loops/generate.py` holding the step/actor spec for all
+six levels and emit the SVGs from it, rather than hand-patch six files. One pass
+instead of six, geometry identical across diagrams by construction, and the next
+outline change is a one-line edit plus a re-run. (The README already claimed a
+generate.py existed; now it will be true.)
+
+Layout: seven fixed anchor positions around the circle — design, failing tests,
+code, run, test, iterate, refactor — used by every level, with absent steps
+leaving their slot empty. Nodes therefore never move between slides: paging
+through shows steps appearing in place rather than the loop rotating. Same
+principle as the hidden spacer rows in the step list, applied to the circle.
+
+Spec and the agent prompt live in `svg-prompts.md`.
+
+## 2026-08-01 · Part 2 built
+
+Six slides: ink divider, Conventions three-up, Workflows statement, four-up of
+what you encode, guidelines two-up, dynamic vs static two-up. Deck is now 15
+slides.
+
+Ink dividers are the deck's only band change, so a Part boundary is the one
+place the surface shifts — that is what makes it read as structure rather than
+decoration. Content slides stay `s-canvas` even where the layout reference says
+`s-cloud` (L-07, L-10), per the single-surface decision.
+
+Two wording calls, both tightening outline prose to slide length rather than
+adding claims:
+  - Statement slide reads "Encode what you do in prompts, then iterate
+    automatically" — the outline's sentence at 13 words was well over L-04's
+    ~8-word guidance.
+  - The completed clean-code line became the guidelines slide's framing line
+    ("The conventions traditional lint checks and deterministic tooling cannot
+    enforce") rather than staying a third sub-bullet. It is the sharpest
+    sentence in Part 2 and was in its least prominent possible position.
+
+Layout fix: `.grid-2` is `align-items: center`, correct for L-06's
+visual-left/copy-right pairing but wrong for two peer cards — they rendered at
+different heights on different top edges. Scoped `:has(> .card)` to stretch
+instead of changing the shared rule.
+
+## 2026-08-01 · Contents slide and Part 1 divider
+
+Added a "Three parts" contents slide after the title, and the missing Part 1
+divider before the intro statement. All three parts are now announced the same
+way; previously Parts 2 and 3 got ink slabs and Part 1 simply began.
+
+Placed the contents slide *before* Temperature Check rather than after. The
+temperature check is a poll that reads as a warm-up, so it wants to sit close to
+the opening; and putting contents directly before the Part 1 divider would stack
+two structural slides back to back.
+
+The contents slide is `s-canvas`, not the `s-cloud` the L-02 reference
+specifies — same single-surface rule the rest of the deck follows.
+
+Sub-lines on the three entries are compressions of existing material (the
+ladder line from the Feedback Loops intro; the three section names of Part 2),
+except "where to go next" for Part 3, which is new connective text.
+
+Deck is now 17 slides. `outline.md` gained a matching `## Contents` section.
+
+## 2026-08-01 · Part 3 built
+
+Four slides: ink divider, "Beyond writing the code" three-up (refinement /
+incidents / post mortems), "Running wider" two-up (load testing / isolated
+worktrees), and the References three-up. Deck is now 21 slides.
+
+"Handle with care, agents love red herrings" went to `<aside class="notes">` on
+the tricks slide rather than onto the card — it is delivery commentary about how
+to use the incident trick, not a claim the slide is making.
+
+Load testing and worktrees were separate top-level bullets in the outline and
+are paired here on one slide. They share a shape — both are things you do around
+the loop rather than inside it, and both need infrastructure to be worth trying —
+so a two-up reads better than two thin slides.
+
+References carries the groundcrew URL the user supplied. spec-kit and conductor
+have descriptions only; their URLs are NOT known and must not be guessed. The
+descriptions reuse the outline's own framing from Temperature Check ("canned,
+spec-kit/conductor"), so nothing is invented, but the slide is incomplete until
+those two links land.
+
+## 2026-08-02 · Part 2 intro diagram — the three timelines
+
+Experimental slide, sits after the Part 2 ink divider and before "how to add X".
+Brainstorming only — deliberately NOT synced to `outline.md` yet.
+
+Generated by `assets/context/generate.py` → `assets/context/timelines.svg`, same
+generator convention as `assets/loops`.
+
+Three lanes, left to right, each ending at the same goal on the right edge. A
+dotted steel line marks the ideal straight run start-to-goal, so deviation is
+measurable by eye rather than asserted. Straight polyline segments, not curves:
+each joint is a hard corner, so the line reads as a path taken rather than a
+smooth trajectory.
+
+**The axis is WHEN THE CORRECTION WAS AUTHORED, not who applies it.** This was
+the correction that made the slide work. The first labels ("manual corrections /
+self-applied corrections / workflow") named the wrong axis and made the three
+lanes look like a restatement of each other. What actually varies:
+
+- Lane 1 "Correct as you go" — authored during the run, reactively. Nothing
+  exists before the run starts.
+- Lane 2 "Plan first, then execute" — authored at the start of the run. Fires as
+  the run passes each checkpoint, but single-use and dies with the feature.
+- Lane 3 "Reusable workflow" — authored before the run and reused across runs:
+  stencils, checkers, spec generators.
+
+This maps onto Part 1's levels, which is the hand-off Part 2 needs.
+
+Consequences of naming that axis correctly:
+
+- Lane 2's four remaining purple dots are the *argument for* lane 3, not a
+  blemish — a plan authored up front does not survive contact with the run.
+- Lane 3's single purple dot at the start is the strongest mark on the slide:
+  the human sets the goal, and it is the only thing they do.
+
+**Glyphs carry one meaning each and it does not shift between lanes** — that is
+what makes the lanes comparable:
+
+- purple dot — unplanned human intervention. Gets rarer down the lanes.
+- blue diamond — a checkpoint from a plan. NOT a self-applied correction; that
+  was the original misreading.
+- dotted ring — a pre-authored step. The dotted, empty treatment says "template,
+  not instance", which is what a reusable step is.
+
+Purple (`#6E3FD1`) is NOT in the design system and is confined to human
+intervention — dots and the step rings. Everything else is a theme token: blue
+diamonds `--gp-primary`, line `--gp-ink`, ideal line and goal ring `--gp-steel`.
+Adding purple to the palette is still an open design-system decision.
+
+Open: lane 3 carries both diamonds and rings, i.e. "pre-authored steps plus the
+plan's checkpoints". Believed correct — the workflow generates the plan, so both
+layers exist — but it is the one place the slide asks the audience to hold two
+ideas at once.
+
+Craft notes worth not re-litigating:
+- Self/plan checkpoint spacing is deliberately irregular (gaps 12–62px, runs of
+  two or three drifting the same way before turning, amplitudes 2–30px). Strict
+  alternation reads as a sawtooth waveform — a mechanical rhythm — instead of
+  corrections landing where the run needs them.
+- No lane may place a correction on top of the goal; lane 3's step cadence is
+  148px specifically so six steps fit and still end clear of the ring.
+- Lane pitch is 146px (lanes at y 92/238/384) because tighter pitch collided the
+  lane labels with the previous lane's lowest dot.
+
+## 2026-08-02 · Part 2 renamed: Managing Context → Workflows
+
+The section is about workflows, not context management. Conventions and the
+context material are things workflows encode, not the other way round.
+
+Updated in `outline.md` (Contents list + section heading) and in `index.html`
+(contents slide entry, Part 2 divider). PLAN.md still to follow.
+
+## 2026-08-03 — Part 2: collapse the workflow tables into one stack
+
+Removed the 11-row "Pre-built prompts and skills" overview table. Every one of
+its rows was repeated verbatim on the per-stage table below it — the stack said
+the same thing twice, once cramped and once legible.
+
+The three-up (Requirements / Implementation / QA) now carries that title and
+becomes the head of the stack, with the three per-stage tables nested under it.
+The cards *are* the overview: they name the stages and say what each is for; the
+tables give the prompts. Down-arrow drills in, right-arrow moves on — so the
+detail is optional at presentation time, which the flat overview table was not.
+
+Also deleted three slides now fully covered by those tables:
+- "How to add X" (Conventions) — infra → Implementation/Infra, tests and tiers →
+  QA/Test tiers, external interface → Implementation/Stencils.
+- "What you encode" — its four cards are Requirements/Gather, Refine tickets,
+  QA/Review cycle, and Drift check.
+- "Guidelines and practices" — implementation process → Implementation/Plan,
+  clean code practices → Implementation/Refactor.
+
+Drift check was the one item with no table row yet; added to the QA table rather
+than let it vanish. `outline.md` re-synced: `### Conventions` and `### Workflows`
+are replaced by a single `### Pre-built prompts and skills` carrying all of it,
+so every slide still traces to an outline node.
+
+Part 2 is now: divider → three-runs fullbleed → the stack → Dynamic vs static.
+Deck is 22 slides.
+
+## 2026-08-03 — "Prompt / skill" → "Step"
+
+Column header on the three stage tables. The rows are stages of the process —
+Gather, Plan, Refactor, Review cycle. Whether each is a prompt, a skill, or a
+whole sub-workflow is an implementation detail that varies by setup, and naming
+the artifact promised a specificity the rows do not have. "Step" is what they
+actually are.
+
+## 2026-08-03 — Requirements table: approach per step, goal per stage
+
+Each stage table row gains a short description of the approach, starting with
+Requirements. The user proposed a third "Goal" column, then observed the goal
+is the same for every row — it belongs to the stage, not the step. So it is a
+framing line under the title ("Goal: clear requirements, functional and non
+functional"), not a column that would repeat one value four times.
+
+Steps renamed/expanded: Gather (LLM as PM, drilling one question at a time),
+Refine tickets (structure via User Stories / EARS / Gherkin — frameworks moved
+here from the old Split row), Scope trimming (was "Split"; INVEST, one vertical
+slice, then rebuild), and a new optional Narrative step (Spolsky's four-part
+specs series condensed into a skill, for less technical reviewers — no industry
+standard exists for this one).
+
+Reused the loop slides' `.opt` tag for "optional"; extended its CSS selector to
+cover `table.cmp td` since it was scoped to the agenda list.
+
+## 2026-08-03 — Spolsky reference moved to speaker notes
+
+The Narrative row cited "Spolsky's series as a skill" on the slide. That is
+delivery, not the claim: the slide's job is to say the step exists and what it
+produces; where the technique came from is something to say out loud. Row now
+reads "Specs a less technical audience can review", with the four-part series
+and the no-standard caveat in <aside class="notes">.
+
+## 2026-08-03 — Implementation and Validation stages, drilled one step at a time
+
+Same structure as Requirements: a stage-goal framing line plus an approach note
+per row. Content came from asking one question per step.
+
+Implementation — goal: working code that satisfies the requirements.
+- "Technical notes" is really **Technical design**: requirements plus repo
+  access produce an outline of the code changes, i.e. a design document. Now
+  matches the loop slides' "technical design of a solution".
+- **Plan** sequences the work and is where you opt into TDD — red/green, or
+  red/green/blue with the refactor beat.
+- **Code** added; nothing named the build itself once Infra and Stencils left.
+  Named "Code" rather than "Execute" so the vocabulary matches Part 1.
+- **Refactor** is both: the blue beat inside each cycle, and one pass across
+  the finished slice.
+- **Infra** removed. It is an optional step interchangeable with a service code
+  change — same loop, different target — so it moved to Part 3 "Running wider"
+  (now a three-up) rather than sitting in the main sequence.
+- **Stencils** moved to speaker notes. It is not a step in the loop; it is what
+  you build *because* the loop repeats — stencils for unit tests, integration
+  tests, endpoints, controllers, resolvers.
+
+QA renamed **Validation** and nested as Implementation's last step, because the
+agent needs it to iterate: it feeds the coding loop rather than following it. It
+keeps its own slide so the four checks are not crowded into the Implementation
+table — the slide reads as zooming into that one step. Row: "Validation — the
+last step, and what the agent iterates against"; slide framing: "The last step of
+implementation, up close."
+
+Validation rows: End to end (curl/Playwright — a way to exercise the *running*
+system), Test tiers (review requirements, pick the right tier per requirement —
+not everything needs a unit test, not everything needs e2e — and feed the plan
+back as notes), Review cycle (different model, against the requirements, in CI),
+Drift check (gate before a PR is merge-ready; requirements are tracked in code
+now, so it runs in CI and inside the loop).
+
+## 2026-08-03 — References slide: "Helpful links", as a table
+
+Retitled from "Where to go next" and converted from a three-up to table.cmp.
+The cards were doing nothing a card does — no numbering worth reading, no prose,
+just a name and a URL each, which is a two-column table wearing a costume. The
+table also puts the three URLs on one left rail so they scan as a set, and it
+matches the stage tables in Part 2 rather than repeating the card treatment used
+by the two Cool Tricks slides right before it.
+
+## 2026-08-03 — Cool Tricks: two card slides merged into one table
+
+"Beyond writing the code" and "Running wider" became a single five-row table.cmp
+under the first title. They were one list split across two slides for no reason
+other than the three-up cap, and Part 3 was running three card slides back to
+back.
+
+Dropped the "During refinement" card entirely: Linear, User Stories, EARS,
+Gherkin and INVEST all appear on the Requirements stage table in Part 2, which
+says it better and gets there first. A trick the audience already saw is not a
+trick.
+
+Delivery caveats to notes: "agents love red herrings" (incidents) and worktrees
+needing real workflow familiarity. Both are things to say, not slide claims.
+
+Part 3 is now: divider, Beyond writing the code, Helpful links. Deck is 21 slides.
+
+## 2026-08-03 — Sweep: no coda, no metaphor, facts only
+
+Removed "up close" from both the Validation slide and its card. The slide is a
+zoom on one step; saying so twice in the copy adds nothing the position on the
+stack does not already say.
+
+Other lines the sweep caught:
+- Title subtitle "A tour of feedback loops, workflows, and conventions" — "a
+  tour of" is coda, and "conventions" was stale (that section dissolved into the
+  stage tables). Now "Feedback loops, workflows, and where to go next", which
+  names the three parts.
+- Contents, Part 2 sub-line: "conventions, workflows, infrastructure" was flatly
+  wrong after the restructure — infrastructure moved to Part 3 and conventions is
+  gone. Now "pre-built prompts and skills for each stage".
+- Refactor row: "The blue beat in cycle" — the metaphor leans on the red/green/
+  blue naming one row above and reads as cute rather than clear. Now "In each
+  cycle, then once more across the finished slice".
+
+Kept: "It is still coding. You have a different feedback loop." (the thesis, and
+a statement of fact), "Not everything needs to be fixed the same way", and
+"Brownfield projects have more context baked in" — all outline lines making
+claims, not decoration.
+
+## 2026-08-03 — Table cells become sentences
+
+Every "what it covers" cell was a fragment hinged on an em dash: "Requirements
+plus repo access — an outline of the code changes". The dash was doing the work
+a verb should do, and it made the column read as notes-to-self rather than
+instructions. Each cell is now a sentence with a subject and a verb, telling the
+reader what to actually do: "Feed the agent the requirements and repo access to
+produce an outline of the code changes."
+
+Applied across all three stage tables and the Cool Tricks table, plus the one
+card that carried the same construction. Outline updated in step.
+
+## 2026-08-03 — Sentence-by-sentence pass: every row stands alone
+
+Reviewed all 18 table sentences against one test: does this survive being read
+by someone who missed the row above it. Nine passed. Nine were leaning on a
+neighbour, almost always via a bare "the" pointing at something only the
+previous row defined.
+
+Fixed:
+- Scope trimming: "the stories" -> "the user stories", and "rebuild the
+  requirements" gained its object ("around it").
+- Code: "the task list" -> "the plan's task list".
+- Refactor: named the blue step outright instead of "each cycle".
+- Validation (row): "close the loop with the checks..." was the vaguest line in
+  the deck. Now states the mechanism including the iteration trigger, which is
+  the actual reason validation lives inside the loop.
+- Test tiers: leads with "not everything needs a unit test and not everything
+  needs e2e", which was the point of the step and had been buried.
+- Review cycle: "a different model" never said different from what. Now "a model
+  other than the one that wrote the code" — the adversarial point is the row.
+- Post mortems: "the monitoring dashboards" had no antecedent and no link to the
+  post mortem. Now "for what the incident exposed".
+- Infra as code: "the same loop" is unreadable this far from Part 1. Now "the
+  implementation workflow", which also matches Part 2's vocabulary.
+- Load testing: "Improve and revalidate against the results" was the weakest
+  line in the deck — the row name carried all the meaning. Now names the actor
+  and the target.
+
+One em dash was declined in favour of a full stop (Test tiers), keeping the
+earlier no-dash rule intact.
+
+## 2026-08-04 — Restructured into Requirements, Planning, Implementation
+
+The old Requirements / Implementation / Validation split was wrong in two ways.
+Validation contained planning work (deciding test tiers is a planning decision,
+not a verification one), and implementation was sitting in the middle when the
+loop it describes is what everything else feeds into. Now:
+
+**Requirements** — unchanged. Goal: clear requirements, functional and non
+functional.
+
+**Planning** (new) — goal: steps the agent can run unattended, with checkpoints
+to validate progress. Technical design, testing plan (verifies against the
+requirements), implementation plan (verified against the tests), testing tiers
+review. Note the verification chain: requirements verify the tests, tests verify
+the code plan. That ordering is the reason planning is its own stage.
+
+**Implementation loop** — goal: working code that satisfies the requirements.
+Seven steps, three of them Code: implement the tests, make them pass, refactor
+while they stay passing. Then review (another model, iterate the loop),
+validation (end to end, then iterate or submit proof of work), drift check
+(code/requirements/checks triplet), and All green → merge. Uses table.cmp.dense
+since seven rows are past plain .cmp's comfortable cap.
+
+The old standalone Validation slide is gone; its four rows redistributed —
+test tiers to Planning, review cycle and drift check into the loop, end to end
+into the validation step.
+
+Closing the stack: an L-04 statement that the agent can fall back to human
+control at any stage, when requirements were too ambiguous or scope creep got
+into the loop or was implied in the original spec. It applies to all three
+stages, so a row on any single table would have understated it.
+
+## 2026-08-04 — Implementation loop: three Code rows collapse to one
+
+"Implement the tests / Make the tests pass / Refactor" are one red-green-blue
+turn, not three steps of the loop — splitting them made the TDD cycle look like
+a third of the loop's weight when the other four rows are each a distinct beat.
+Now one row: "Implement the tests, implement the code for those tests, then
+refactor keeping the tests green."
+
+Five rows fits plain table.cmp again, so .dense came back off and the row rhythm
+matches the Requirements and Planning tables.
+
+## 2026-08-04 — Helpful links: descriptions, URL under the name
+
+The table was a name and a URL, which told the audience nothing about why any of
+the three is worth opening. Second column is now "What it is"; the URL moved
+under the project name in small mono (new .link rule in the theme, scoped to
+table.cmp td).
+
+Reordered so the two spec driven frameworks sit together and groundcrew, which
+is a different kind of tool, comes last. Its description is also the longest,
+so it reads better at the bottom than wedged between two short ones.
+
+spec-kit and conductor are both "a reusable spec driven framework". Two identical
+cells read as a copy-paste error, so conductor's says "The same, packaged as a
+Gemini CLI extension" — a distinction taken from its own URL rather than invented.
+
+## 2026-08-04 — "Pre-built prompts and skills" becomes "Workflow"
+
+The old title named the artifacts; the new one names the thing: a predefined set
+of steps to follow during implementation. That is also what the three cards under
+it are — stages of one workflow, not a catalogue of prompts.
+
+Split across title and framing line rather than run as one sentence with a colon,
+matching every other slide in the stack (title, then a muted line under it).
+
+## 2026-08-04 — "Managing context" out of the Temperature Check
+
+It was the only item on the list that is not a way of working the audience could
+raise a hand to. The other five name a practice — prompting functions, vibe
+coding, plan mode, spec driven frameworks, workflows — and "managing context" is
+a concern that runs through all of them. Five items also sits better in L-02.
+
+## 2026-08-04 — PDF export: decktape, wrapped in export-pdf.sh
+
+Chrome's own print-to-pdf is not usable for this deck, confirmed twice now. The
+CLI ignores the @page size reveal injects (that needs DevTools'
+preferCSSPageSize, which has no CLI equivalent), so it exports letter-portrait,
+the 1280px stage overflows, and the grid layouts collapse. Do not try to fix it
+by adding @page to the theme — a competing @page declaration puts every slide on
+one page.
+
+decktape drives a real browser and honours the slide size. Two gotchas found
+while wiring it up:
+- Puppeteer's bundled Chrome crashes on launch here; it needs --no-sandbox
+  (plus --disable-gpu, --disable-dev-shm-usage).
+- Same port trap as the screenshot workflow: 5081, never 5060.
+
+./export-pdf.sh writes on-ai-assisted-coding.pdf, 22 pages at 960x540pt, with
+the vertical stacks flattened in reading order. Verified by rendering page 17
+back to PNG. PDFs are gitignored — the script is the artifact, not its output.
+
+## 2026-08-04 — Title slide: byline replaces the "Talk" eyebrow
+
+"Talk" was a label for the deck's type, which the audience can see for itself.
+The eyebrow slot now carries the speaker's name, which is what a title slide
+conventionally puts there and what the room actually needs.
+
+Subtitle replaced with the real thesis: "The development loop as a feedback loop
+for AI, and how to find the right abstractions to build reusable workflows." The
+old line ("Feedback loops, workflows, and where to go next") was a table of
+contents in sentence form — it named the parts without saying what the talk
+argues. This one states the argument, and the two halves map onto Part 1 and
+Part 2. Wraps to two lines at body-lg, which is fine on the title.
+
+## 2026-08-04 — Byline in the slide footer on every slide
+
+Footer brand goes from "On AI Assisted Coding" to "On AI Assisted Coding ·
+Galileo Sánchez" on all 20 slides that carry a footer. Applied with the deck's
+existing middot separator rather than a hyphen, matching the separator used in
+card copy and sub-lines throughout.
+
+Also corrected the title slide's byline to "Sánchez" with the accent, to match.
+
+## 2026-08-04 — Close: Questions (ink) then Thank you (canvas, two chevrons)
+
+Two slides added, and the deck's last structural gap is now filled.
+
+Questions is the L-13 closing the design system requires: ink slab, rule-accent,
+one right chevron. The deck's only other ink surfaces are the three Part
+dividers, so arriving here reads as the end of the argument rather than another
+section break.
+
+Thank you mirrors the title slide exactly — same white canvas, same two chevrons
+(solid left, soft right), name under the display line. The deck therefore opens
+and closes on the same surface with the same motif, which brackets it.
+
+Note this inverts the catalog's usual order (it ends on ink). Ending on the
+white bookend instead is deliberate: the ink slab does the work of stopping the
+talk, and Thank you is what stays on screen through the Q&A.
+
+Deck is 24 slides across 15 top-level sections. Questions is #/13, Thank you
+#/14 — and reveal clamps out-of-range hashes to the last slide, so a screenshot
+of #/15 silently returns Thank you rather than erroring.
+
+## 2026-08-04 — Quote slide after Helpful links
+
+L-11, ink, no attribution block. The line is the speaker's own, and attributing
+yourself on your own slide reads oddly; the layout works fine as quote-mark plus
+blockquote.
+
+Placed after Helpful links so the close runs quote → Questions → Thank you. Two
+ink slides in a row is deliberate here: they read as one closing movement, and
+returning to white for Thank you is what ends it.
+
+Wording keeps the "no right way" framing but drops the em dash, per the earlier
+sweep: "There is no right way to do it, but there are many ways to have fun and
+keep learning."
+
+Deck is 25 slides. Hash indices past Part 3 all shift by one: quote #/13,
+Questions #/14, Thank you #/15.
+
+## 2026-08-04 — Slide footer removed from every slide
+
+All 22 .slide-foot blocks deleted. The brand line repeated on every slide is
+conference-template habit: the audience knows whose talk they are in, and it
+competed with the use-case bar on the six loop slides, where two things sat on
+the same baseline. Reveal's own slide number stays — that one is useful during
+Q&A ("go back to slide 17").
+
+Note this reverses the byline addition from earlier the same day. The byline now
+lives only where it belongs: the title slide and the Thank you slide.
+
+## 2026-08-04 — Brand line returns, top-right, without the byline
+
+Two separate things were removed together last commit. The brand line comes back
+as "On AI Assisted Coding"; the byline does not — the name belongs on the title
+and Thank you slides, not on all 22.
+
+Moved out of .slide-foot to a new .slide-brand at top-right. The bottom rail was
+the crowded one: reveal's slide number is bottom-right, and the six loop slides
+put the use-case bar on that baseline. Top-right is the only corner empty on
+every layout in the deck (.layout-tag would collide there, but this deck never
+uses it). Verified on a canvas table slide, a loop slide with the use-case bar,
+and an ink divider.
+
+## 2026-08-04 — Contents heading: "Three parts" -> "What we'll cover"
+
+"Three parts" described the slide's own shape, which the three numbered rows
+already show. The heading now says what the slide is for. It also stops being
+wrong the moment the deck gains or loses a part.
+
+## Temperature Check reworked into a spectrum (cards)
+
+The old five items were unlike things — a task, a habit, a tool feature, a
+framework, a category — so "where are you at" had no axis to be at a point on.
+Replaced with a stated axis (how much of the loop you hand over) and three named
+bands: Manual, Agentic, Harness Engineering.
+
+Rungs number 1..8 continuously across the bands rather than restarting per band.
+It is a temperature check; people call out a number, and "I'm at 2" has to mean
+one thing.
+
+Three layouts were built as a throwaway vertical stack under the slide and
+screenshotted before choosing:
+- A grid-3 cards — chosen.
+- B table.cmp.dense with group rows, rung 7 below the accent rule — fit well and
+  had room for a gloss column, but lost.
+- C banded agenda list — overflowed 720px and put blue on the slide four times.
+  Discarded on the evidence, not on taste.
+The two losing variants were deleted; the stack was scratch and never committed.
+
+Dropped `.card-num` from the three cards. With rungs numbered 01..08 inside the
+cards, a second 01/02/03 on the card headers is two numbering systems on one
+slide. The band names carry the grouping without it.
+
+Vibe coding sits at 6, above spec driven. The axis is delegation, not rigor, so
+this is correct on its own terms — but Part 1 sells rigor going up, so the room
+can hear "6 > 5" as an endorsement. Flagged to the speaker; left as authored.
+
+## Temperature Check: the table won, not the cards
+
+Four layouts were built as a scratch vertical stack and screenshotted before
+picking: the old list, grid-3 cards, table.cmp.dense with group rows, and a
+steps-3 three-column split with no card chrome.
+
+The table won because it is the only one with room for a fourth column. The
+bands and the rungs answer "where are you"; the gloss column answers "what does
+that mean", which is what makes the check answerable by someone who does not
+already know the vocabulary. Cards and columns both had to drop it.
+
+Layout evidence, not taste:
+- The banded agenda list overflowed 720px at eight rungs and put blue on the
+  slide four times.
+- Cards bounded each band well but the third band's two rows read as a half
+  empty box next to two full ones.
+- The steps-3 columns distributed space better than cards and let "Harness
+  Engineering" sit on one line, but carried the grouping on a hairline alone.
+
+The gloss column then failed the coda check on 5 of 8 cells and was rewritten:
+contrast quips ("the far end of delegation, not of rigor"), parallel cuteness
+("write the intent, take the body") and bare fragments ("spec-kit, conductor")
+became plain declaratives that stand alone.
+
+Cost of that rewrite: row 6 no longer disclaims vibe coding's position above
+spec driven. The axis is delegation, not rigor, and the slide no longer says so.
+That caveat is now the speaker's to make out loud.
+
+## Legend on the three-timelines slide
+
+The diagram already carried three distinct markers — a filled purple dot, a blue
+diamond, and a dotted outline — and nothing on the slide said what they meant.
+The audience could see the third timeline had fewer dots without knowing that is
+the point.
+
+The legend sits inside the SVG rather than in HTML beside it, so it scales with
+the diagram and cannot drift out of alignment with the markers it explains. The
+viewBox grew from 470 to 494 to make room; the caption bar is unaffected.
+
+It is deliberately outside the fragment groups, so it is on screen from the
+first timeline. Revealing a key one symbol at a time would make the audience
+re-read it three times.
+
+## Legend entries arrive with the marker they explain
+
+Reversed the previous decision. Each timeline introduces exactly one new marker,
+so each legend entry now lives inside that timeline's fragment group: the filled
+dot with "Correct as you go", the diamond with "Plan first, then execute", the
+dotted outline with "Reusable workflow".
+
+The earlier all-at-once legend explained two markers that were not on screen yet.
+Progressive reveal costs nothing here because there is no re-reading to do — a
+line is added, never rearranged.
+
+Relaid the legend as three stacked rows rather than two, so an entry appearing
+only ever appends below and never reflows the entries above it.
+
+Fragment states deep-link as #/7/0/1 and #/7/0/2 — the h/v/f hash. A ?fragment=
+query string silently lands on slide 1 and screenshots the title slide.
+
+## The TDD steps exist from Level 0, done by hand
+
+Previously "Failing tests" and "Refactor" appeared for the first time at Level 3,
+tagged "added". That framed TDD as something AI brings, which is backwards: TDD
+predates all of this. The two slots now exist at Level 0 with a human badge, and
+Level 3 tags them "changed" like every other handover in the stack.
+
+This makes the whole stack say one thing instead of two. Every level is now the
+same seven steps and the only variable is who performs each one — the diff tags
+never mean "a new practice appeared", only "this step changed hands".
+
+Slots 2 and 7 were added to levels 0-2 in assets/loops/generate.py and the SVGs
+regenerated; the HTML lists gained the same two rows. Levels 0-2 previously
+padded to seven rows with two hidden spacers, so the lists were already the right
+height and nothing in the pinned layout moved.
+
+Labelled "Write failing tests", not "Generate". At Level 0 a person writes them,
+and the row keeps that verb at every level rather than switching to machine
+vocabulary once the bot takes over.
+
+## 2026-08-10 · Demos are frozen snapshots, paste-only on stage
+
+Live demos live in `demos/`, one directory per rung of the delegation spectrum
+(comments-to-code → autonomous fix → TDD → spec driven → harness), each with a
+pre-staged copy of the `wfm` subject project frozen at the previous demo's end
+state, plus a `prompts.md` paste sheet. Nothing is composed live: the presenter
+only pastes, so a failed take resets with `git checkout` of that directory.
+Spectrum stages 1 (tab completion) and 3 (chat-and-copy) are omitted — they are
+editor/browser experiences that don't record honestly in a CLI. Dogfooding
+choice: the subject project is itself a tiny workflow manager, mirroring Part 2.
+Recording via asciinema (`demos/record.sh`, 120×30, one cast per demo).
+
+## 2026-08-13 · Demo 2 is a regression trap, not a one-shot fix
+
+The original seeded bug (advance() never setting `completed`) was fixable in one
+edit, so the demo showed delegation but never the loop. Reseeded so the obvious
+fix — "no pending steps means completed" — turns a passing test red: a workflow
+holding a *failed* step has no pending steps but is not complete. The correct
+rule is "every step is resolved (done or skipped)". Verified mechanically:
+seed fails test 4 only; the naive fix flips it to failing test 5 only; the
+correct rule passes all five. The second iteration is the point of the demo.
+Consequence: the "failed" status and the resolved-not-pending rule propagate
+into the demo 3–5 snapshots, since each is the previous demo's end state.
+
+## 2026-08-13 · You cannot reliably stage self-correction
+
+Three attempts to force a second iteration in demo 2, each rehearsed 3x against
+opus at low effort, each one-shot by every trial:
+
+1. Regression trap (naive fix breaks a passing test) — the model reads the test
+   suite before editing, sees the edge case, and writes the correct rule first try.
+2. Bigger slice (failure handling: fail/retry/blocking, 7 failing tests across
+   two files) — 2 edits, 1 test run, all green.
+3. Tests hidden (`--disallowedTools "Read(test/**)"`, work from output alone) —
+   still one pass; descriptive test *names* in the failure output are themselves
+   the specification.
+
+Conclusion: on a small, fully-specified task a capable model has nothing to
+discover by running, so the loop never runs twice. Iteration is real in practice
+when the spec is ambiguous or the environment bites — neither is reproducible on
+a stage in two minutes. Demo 2 therefore shows delegated implementation plus
+self-verification, and the iteration point gets made in narration, honestly.
+
+Incidental finding: in print mode `--allowedTools "Bash(npm test)"` did not stop
+other shell commands (the model ran `ls` and `cat package.json` freely). Do not
+oversell the allowlist as a hard guardrail on stage.
+
+## 2026-08-13 · Demo 2 is a bug report, not a spec
+
+Final shape: the model gets a user's complaint in plain words ("I finished every
+step but the run never reports completed"), infers the missing test, runs it red,
+fixes, runs it green. The seed ships green — no test covers completion, which is
+how the bug survived. The defect is an off-by-one: advance() computes `completed`
+from the pre-update step list.
+
+Chosen over "implement these failing tests" because that was demo 1 at a larger
+scale — a complete test suite is a complete specification, so nothing is
+delegated but typing. Inferring the test from a symptom is a different act.
+
+Rehearsed 2x, opus/low: both read the source, wrote completion.test.js, ran it
+(12 pass / 2 fail), fixed the one line, re-ran green, and left existing tests
+untouched. The red run is the beat the demo rests on.
+
+Tension to narrate: the Level 2 row says failing tests stay human-authored. A
+reproduction test is part of debugging, which is that slide's named use case;
+demo 3 stays distinct because there the tests come from requirements for code
+that does not exist yet.
+
+## 2026-08-13 · The rungs differ by who closes the loop
+
+Demo 1 launches with `--disallowedTools "Bash"`: the model writes the code and
+can run nothing, so the human runs the tests. Pre-approving `npm test` there had
+collapsed the Level 1 / Level 2 boundary into a difference of task size, which
+is not a rung on the ladder.
+
+Demo 2's end state (failure handling, the completion fix, completion.test.js)
+propagated into the 3-5 snapshots so the project stays continuous across the
+talk. Demo 3's prompt now writes its TDD tests into a new test/skip.test.js —
+it previously pointed at a file it was also told not to change. Demo 5's CLI
+learned the "failed" marker.
+
+## 2026-08-15 · Casts play from a vendored player, with no asciinema.org account
+
+asciinema-player 3.17.0 is a standalone bundle (one JS, one CSS), so a cast plays
+straight from disk. Vendored into `vendor/asciinema-player/` alongside reveal and
+the fonts; the deck keeps presenting offline and nothing is uploaded. The repo
+root ignores `vendor/`, so `.gitignore` carries an exception for this one — the
+player has to ship with the deck. Verified over HTTP at 1280x720 against the real
+demo 1 cast: terminal content, colours and controls all render. `poster:
+"npt:M:SS"` paints a still frame, so a slide shows real output before anyone
+presses play.
+
+The take that ships lives in `assets/casts/` (committed); `demos/casts/` stays
+gitignored for rehearsal takes.
+
+Two sizing lessons for re-recording: a 101x43 terminal is too tall for the stage
+— it letterboxes and the type ends up small, so record nearer 100x28. And node's
+default test reporter prints a stack trace per failure, which fills the frame
+with noise; use a quieter reporter for the recorded runs.
+
+## Demo ladder cut to two rungs (2 and 5)
+
+Stage time is short, so the five-rung ladder is cut to its endpoints: demo 2
+(bug report -> reproduce -> fix -> verify, driven by hand) and demo 5 (the same
+loop as a checked-in /feature command). Rejected demo 1 as the opener: it shows
+the model doing less than demo 2, so the jump to a harness would read as a cut
+rather than a climb. Demos 3 and 4 are absorbed -- demo 2 already shows
+tests-before-fix, and demo 5's /feature goal is now the skip() requirement those
+two were built around. Their directories stay in the repo, unrecorded.
+
+Demo 5 was reseeded from "after demo 4" to "after demo 2": removed src/cli.js,
+src/store.js, test/skip.test.js, the skip() function, and the package.json bin
+field. The two casts now run on continuous project state (13 green tests at the
+start of demo 5, exactly where demo 2 finishes) so the second picks up the first
+with no visible jump. The "skipped" status is deliberately left referenced in
+isResolved() -- it is the seam /feature fills, and it makes the on-stage run more
+deterministic.
+
+Recording geometry: 100x28, not the 101x43 of the first demo 1 take. Anything
+taller letterboxes in the slide player at 1280x720 and shrinks the type past
+reading distance. Node's default test reporter also prints a stack trace per
+failure, which buries the red-test beat -- worth a quieter reporter before the
+final takes.
+
+## Demo 5 moves to its own repo: galileopy/workflow-manager
+
+The demo subject is now an Elm + Express app mirroring galileopy/task-manager's
+design language (Solarized token palette, one Elm module per page plus shared
+Ui/Api, committed compiled main-elm.js, node --test service specs against a
+disposable store), not the toy Node library. Reason: the phase split needs a
+visible surface -- with a web UI the prototype phase produces a clickable screen
+instead of ASCII mockups, which is a far better slide and a far better argument.
+
+The five phase commands live in that repo's .claude/commands/, which is their
+single source of truth. The copy that briefly lived under demos/05-harness/wfm/
+is deleted; demos/05-harness/ now holds only the paste sheet.
+
+A second Claude session owns that repo; this session stays on the deck. Its
+review caught five defects in the phase commands, the important one being that
+/4-implement never rebuilt the frontend -- main-elm.js and app.css are committed
+artifacts, so a UI feature could go green on pnpm test, show nothing in the
+browser, and be correctly failed by /5-qa. That reads as "the AI failed" on stage
+when it is really an underspecified harness.
+
+Deliberately NOT fixed: transition() in server/workflow.mjs matches a step by
+title and takes the first hit, so two steps with the same title silently target
+the wrong one. It stays as a latent defect for /1-drill to surface by asking
+questions, on camera. Do not tidy it away.
+
+Open, unresolved: the two-demo cut was justified partly by continuous project
+state between demos 2 and 5. That no longer holds -- demo 2 is still the toy Node
+library. Demo 2 either moves into workflow-manager or becomes an openly separate,
+smaller example.
+
+## Demo placement follows the outline's own structure
+
+The two demos are not a pair and were never meant to be continuous. Demo 2
+(autonomous debugging) belongs in Part 1 under Level 2, whose use case the
+outline already names as "Debugging". Demo 5 belongs in Part 2, because Part 2's
+Workflow section already describes the drill phase almost verbatim -- "let the
+agent act as a PM and drill you one question at a time, prodding for edge cases".
+So the earlier worry about demo 2 and demo 5 no longer sharing project state is
+moot: they serve different arguments in different parts.
+
+Three outline nodes added: "Demo: Autonomous Debugging" under Level 2, "Demo: A
+Workflow You Can Read" and "When the Harness Stops" in Part 2.
+
+## Slide built: When the Harness Stops (s-fog, L-04 statement)
+
+/4-implement now hard-stops when app/main-elm.js was not rebuilt, so the phase
+can end in a halt rather than a pull request. Technically the right outcome,
+awkward on stage, and it is the exact failure mode that reads to an audience as
+"the AI failed". Naming it turns the liability into the argument: a black box
+that ends in "I could not do it" is indistinguishable from incompetence, while a
+run that halts at a stated check is legibly a system working -- but only if the
+reason is on screen.
+
+Band is s-fog rather than s-canvas because the preceding slide is already an
+s-canvas statement, and two identical layout+band slides in a row flatten the
+rhythm. Verified over HTTP at #/9, screenshotted at 1280x720 and read: no
+overflow.
+
+## Demo 5 cast embedded (slide 10)
+
+The asciinema player was vendored long ago but had never been wired into
+index.html — 01-comments-to-code.cast sat in assets/casts/ unreferenced. This is
+the first embed, so it sets the pattern: a slide declares data-cast="<path>" and
+contains an empty .cast-frame; a single script builds the player when that slide
+becomes current and disposes it when it leaves. Adding a second cast is markup
+only, with no new script.
+
+Players are built on demand rather than at load for two reasons: a cast that
+autoplays behind an unrelated slide is a real hazard mid-talk, and the harness
+cast is 840K, which is not worth decoding until it is looked at.
+
+fit: 'both' against a fixed 470px frame height, not fit: 'width'. At 100 columns
+across the slide's content width the player picks a row height that puts row 28
+below the 720px stage, and the clipped row is where a terminal's newest output
+is — the worst possible line to lose. The frame carries the player's own
+background (#121314) because the player centres a fixed-ratio terminal and
+leaves gutters, which are slide-white otherwise and read as a rendering fault.
+
+idle_time_limit: 2 is baked into the promoted copy in assets/casts/, not into
+the source in demos/casts/, which stays as recorded. Raw duration is 51 minutes;
+capping idle brings it to about 31. The rest is genuine streaming output and no
+setting will shorten it, so the cast is not something to play end to end in an
+hour-long talk. Two gaps dominate the 20 minutes removed: 713s and 418s, both
+the presenter answering the drill.
+
+The run itself is kept because of what it caught, not because it was smooth:
+/craft:audit checked 16 assumptions from the requirements against the code and
+found one contradicted (AC-6 claimed the banner shows the server's message,
+which Http.expectJson makes impossible), and /craft:forge volunteered that three
+of its service tests were green on first run and so were not a real red-green.
+
+## Cast markers, and who owns the keyboard (supersedes the idle_time_limit note above)
+
+idle_time_limit in the header was replaced by compressing the timestamps in the
+promoted copy itself: every inter-event gap is capped at 2s and the clock
+rewritten, taking 51.07 min to 30.66. The reason is markers. An idle limit
+applied at playback shifts every event's position on the timeline, so marker
+times computed against the raw recording would drift out of place. Compressing
+on disk means the file, the scrubber and the markers all share one clock.
+demos/casts/05-harness.cast.orig is the untouched recording, and demos/casts/ is
+gitignored — that .orig is the only copy of the raw take.
+
+Seventeen markers, one per phase boundary, placed by sampling what was on screen
+minute by minute rather than by clock arithmetic. The Linear comment timestamps
+looked like the obvious source and are not usable: two of the five comments came
+from an earlier rehearsal, and the cast header's wall clock disagrees with the
+file's mtime, so mapping them onto the cast put /craft:audit at +122 min in a
+51-minute recording.
+
+Keyboard: the player binds space and the arrows as soon as it has focus, which
+happens on the first click of its play button, and from then on it fights reveal
+for them. Rather than rebind reveal, the player is made unfocusable (tabindex -1
+on its focusable children, blur on click) and playback moved to keys reveal does
+not bind: \ play/pause, ] next phase, [ previous phase. Space and the arrows
+therefore mean the same thing on every slide in the deck, which is the property
+worth protecting mid-talk.
+
+What the run actually shows, discovered while placing markers: it hit the session
+limit repeatedly, and at ~21 min (770s compressed) it stopped with "Phases 4-5
+never started. Working tree untouched; no branch, no code. To resume, re-run
+phase 3 from scratch." That is the halt slide's claim happening unprompted, with
+the reason on screen and the tree left clean. Marker "The harness halts".
+
+Playback set to speed: 2. That is a rate, applied on top of the on-disk idle
+compression, so the cast's own clock is untouched and the markers still land
+where they were placed. Effective wall time is about 15 minutes for the full
+run, from 51 as recorded.
+
+Playback keys changed from \ [ ] to a gaming-style set: P pause/play, A/D seek
+5s, shift+A/D jump a phase marker ([ and ] still work). P is reveal's
+previous-slide key; the handler runs in the capture phase and only while a cast
+slide is current, so P is shadowed there and nowhere else. Space and the arrows
+are deliberately left alone in every case — the one property worth protecting is
+that slide navigation never changes meaning mid-talk. The keymap is repeated in
+the slide's speaker notes, because a keybinding you have to remember from a
+commit message is a keybinding you will not remember on stage.
+
+Correction to the entry above: P does NOT get shadowed. Handling the key in the
+capture phase and calling stopPropagation was assumed to beat reveal's own
+handler; on test it did not, and P stayed previous-slide. Pause moved to W,
+which sits above A/D in the same cluster and which reveal does not bind. The
+rule that actually holds is the simple one — only use keys reveal has no binding
+for. Reveal binds N/P, H/J/K/L, F, S, B, '.', '?', Esc/O, the arrows, space,
+PgUp/PgDn and Home/End. This was asserted as working before it was tried, which
+is the same mistake the deck spends a slide warning about.
+
+## The player takes the keyboard, instead of borrowing spare keys
+
+Replaces the W/A/D scheme entirely, and the custom keymap is deleted. Clicking
+the terminal calls Reveal.configure({keyboard: false}) and focuses the player;
+Esc, or leaving the slide, calls Reveal.configure({keyboard: true}) and blurs it.
+Exactly one thing listens at a time, so there is no race to reason about and no
+key that means two things.
+
+This is what should have been built first. Two rounds were spent choosing keys
+reveal happened not to bind, which is a workaround for a conflict that did not
+need to exist. The player's native keys are also better than anything that could
+have been mapped: space, arrows, [ and ] for markers, f, 0-9 for percentage
+seeks.
+
+A presenter cannot see which mode they are in, so the frame gets a 3px accent
+outline while the player holds the keyboard. Without that cue the failure is
+silent and happens on stage: arrows change slides when the speaker expects them
+to seek. The speaker notes name the symptom and the fix — no ring, click the
+terminal.
+
+## The prototype is served from the deck
+
+assets/prototype/ holds a copy of .artifacts/prototype/create-run-inline-form.html
+from the workflow-manager repo, plus that repo's generated app/app.css, with the
+stylesheet href rewritten from ../../app/app.css to app.css. Copied rather than
+linked because .artifacts/ is gitignored in a repo that is not this one, and the
+deck has to keep presenting with no network and no sibling checkout.
+
+Not linked from the slide. The audience sees the phase table and the recording;
+the prototype is the speaker's to open if the room asks what phase 2 produced.
+The link lives in the speaker notes alongside COFFE-14, PR #1 and the repo.
+
+Note links are absolutised at ready. Speaker view is a separate window whose
+base URL is not the deck document, so a relative href written into a note
+resolves to nothing once it is copied across — the failure only shows up in
+speaker view, which is exactly where these links are used.
+
+The keyboard now follows playback rather than focus: the player's play event
+grabs it, pause and ended give it back. Clicking still grabs, so the click that
+reaches the play button does not race the event.
+
+The consequence to be aware of on stage is that space is one-way. While the cast
+runs, space pauses it; that pause releases the keyboard, so a second space
+advances the slide rather than resuming. Resuming is a click on the play button.
+That asymmetry is deliberate — the failure that matters is pressing an arrow
+after pausing and having it seek a stopped cast instead of moving the talk on.
+
+Two band violations of my own making, corrected: the phase table was s-cloud and
+the halt statement s-fog. Every content slide in this deck is s-canvas and the
+ink dividers are the only band change — that is what makes a divider read as a
+structural boundary rather than as decoration. Reaching for a tint to make a
+slide feel different is exactly the habit the rule exists to stop.
+
+The halt statement slide was then cut entirely, with its outline node. The point
+it made is carried by the recording, where the run actually halts.
