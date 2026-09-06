@@ -90,13 +90,13 @@ You can also make the workflow react to the kind of feature: back-end gets one w
 
 ### Audience question: how clear must the initial requirements be?
 
-> Jose: How clear a requirement set or product vision do you need before setting the first plan?
+> **From the audience:** How clear a requirement set or product vision do you need before setting the first plan?
 
 It varies a lot by team. I work in a project with very loose definitions of done, so I do a lot of gathering work with the agents. You need enough clarity to know how things flow through a feature, and to recognize when the agent asks a question that doesn't apply, for instance about a state the user can never reach because of your validations. Beyond a rough idea of what won't pass validation downstream, you don't need much more.
 
-> Follow-up: I'm trying to set up self-healing loops. I develop from an initial idea, take it to my product team, and often start with about 3,000 lines of code, that's me wireframing. Wireframing is cheap in the vibe-coded state; if it's accepted, I refactor and create tickets. How do I apply your approach?
+> **From the audience:** I'm trying to set up self-healing loops. I develop from an initial idea, take it to my product team, and often start with about 3,000 lines of code, that's me wireframing. Wireframing is cheap in the vibe-coded state; if it's accepted, I refactor and create tickets. How do I apply your approach?
 
-That's advanced. Ron warned me these folks aren't so advanced, but this already is. If you're building a prototype to validate requirements, that's the best way: something clickable and a bit dumb, with no backend, just screens. I like to make them a little appealing with HTML and styling. Let it walk the screens and capture edge cases, and document everything.
+If you're building a prototype to validate requirements, that's the best way: something clickable and a bit dumb, with no backend, just screens. I like to make them a little appealing with HTML and styling. Let it walk the screens and capture edge cases, and document everything.
 
 But don't stop there: use the prototype to produce a **narrative specification**. "Walk me through the user stories, and make sure each one mentions this." User stories, "as an actor, I want an action so that I achieve an outcome"; **EARS** for encoding requirements in disciplined English; and **Gherkin**, from BDD, a way to specify scenarios for tests. Put the validated prototype into text rather than making the AI reverse-engineer it. Usually you only need to validate the user stories, not the verbose EARS and Gherkin, which mostly cover edge and failure cases. Then make sure your implementation loops have the steps your organization wants.
 

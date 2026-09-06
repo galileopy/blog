@@ -48,7 +48,7 @@ The best way to learn these systems is trying, failing and learning. There is no
 
 ![Dark slide reading "Questions?"](../assets/images/on-ai-assisted-coding/26-questions.png)
 
-> Do the workflows and agents account for potentially dangerous or destructive actions, and how do you reconcile that with a hands-off approach?
+> **From the audience:** Do the workflows and agents account for potentially dangerous or destructive actions, and how do you reconcile that with a hands-off approach?
 
 Two or three things matter. First, I wouldn't let it install dependencies: treat dependencies with the same scrutiny as always, and rely heavily on pinning. With Claude, the auto mode is very safe; I'd never recommend "dangerously skip permissions", the current gatekeeper is very good and still allows a lot of hands-off work. Second, when gathering requirements, don't let it browse the web freely, work locally on a Markdown document.
 
@@ -56,7 +56,7 @@ Those eliminate most of the attack vectors, because prompt injection comes in ei
 
 My own bigger concern isn't the outside-in vectors (dependencies, prompt injection) but inside-out dangerous actions, like spawning processes. For that you can run the CLI inside a Docker sandbox; the most security-savvy people on our team go all the way with that.
 
-> For back-end work that isn't verifiable through the UI, where the agent might produce sloppy or inefficient architecture, do you use any performance-type testing or other tools? (John)
+> **From the audience:** For back-end work that isn't verifiable through the UI, where the agent might produce sloppy or inefficient architecture, do you use any performance-type testing or other tools?
 
 We tackle it at two levels. First, an internal tool describes a change with its requirements and plan, and embeds **SVG/Mermaid diagrams** of the intended architecture (most Markdown readers render embedded Mermaid), so you can make the technical-design step more thorough and refine the design.
 
@@ -65,5 +65,3 @@ Second, split requirements into **functional** (what the user clicks) and **non-
 A step I didn't have time to show: quickly spinning up a full end-to-end local stack, a `start` that brings up the database and every Dockerized dependency, mocking what isn't Dockerizable, so you can test end-to-end with a curl request and then run a load test (for example, **k6**) for a massive request volume. Once that self-bootstraps, load-test requirements become part of your non-functional requirements, validated during the validation step. Those tests are expensive and slow, so we only run them on endpoints that have proven slow before.
 
 So: non-functional requirements, load tests, and a vibe-check of the architecture diagrams for high-requirement problems.
-
-Thank you very much for your time. I hope you enjoyed the cadence, and if you learned anything, that's great.

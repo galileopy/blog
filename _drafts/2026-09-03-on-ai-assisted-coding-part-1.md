@@ -40,11 +40,9 @@ I've divided how you use AI in these loops into three broad stages: very manual,
 
 **In-house workflows, or harness engineering.** Eventually the pre-built frameworks don't quite fit. Maybe you're on GitLab but SpecKit assumes GitHub Actions; maybe you deploy with CDK and Terraform, not what it expects. So you hack SpecKit or Conductor to work your way. Or you're opinionated about clean architecture and want the review step to enforce component separation. This is when you start building your own in-house workflows.
 
-I polled the room here. Most were already at spec-driven with in-file changes and some vibe-coding, not yet at harness engineering.
-
 ### Where the team sits
 
-One team member: most of us are around level five or six. We get a product brief, make a high-level plan, break it into tickets with AI, have the tickets implemented, and approve the implementation plans. The one thing we don't skip is reading the diff. Even when I don't check it locally, I open a draft MR and read every line, because the trust isn't quite there yet.
+> **One attendee described their team's practice:** most of us are around level five or six. We get a product brief, make a high-level plan, break it into tickets with AI, have the tickets implemented, and approve the implementation plans. The one thing we don't skip is reading the diff. Even when I don't check it locally, I open a draft MR and read every line, because the trust isn't quite there yet.
 
 That's very sensible. And by pushing skills to your repo, you're already testing the waters of harness engineering: a pre-made workflow is just a skill that delegates to sub-skills you've tried and tested with your own style and infrastructure. So you're between six and seven. You'll still read the diffs, especially if you're diligent, but it can go faster.
 
@@ -82,7 +80,7 @@ Now the test and iterate steps move too. If you let the AI write the code and th
 
 The natural next idea: **let the AI write failing tests first**. TDD works better with AI because you want a closed feedback loop as early as possible. It's also easier to review: reading a test plan ("POST to this endpoint gives 200 with this response shape; bad request gives 400") is much easier than reading how it intends to edit each controller, service, and file.
 
-But how do you validate the test? At this stage you still read the tests. As you go further, you notice that tests come out of **requirements**, so the question becomes: can I consistently get good tests out of a well-expressed set of requirements? That's roughly where I am now. Someone asked how you validate the tests: at first you validate the tests, and once requirements map cleanly to tests, you validate the requirements first.
+But how do you validate the test? At this stage you still read the tests. As you go further, you notice that tests come out of **requirements**, so the question becomes: can I consistently get good tests out of a well-expressed set of requirements? That's roughly where I am now. At first you validate the tests. Once requirements map cleanly to tests, you validate the requirements first.
 
 The use case here is adding a complex feature, and you'd need specific skills for it.
 
@@ -114,11 +112,11 @@ The use case is brownfield projects. Brownfield projects have more context baked
 
 ### Documentation and context windows
 
-> John: I've tried putting good coding-standard docs in specific subdirectories so the AI reads the local conventions, but we don't have much of that. We also haven't experimented with loops beyond what Claude or Cursor do automatically. As your loops get more sophisticated, does it balloon your context windows?
+> **From the audience:** I've tried putting good coding-standard docs in specific subdirectories so the AI reads the local conventions, but we don't have much of that. We also haven't experimented with loops beyond what Claude or Cursor do automatically. As your loops get more sophisticated, does it balloon your context windows?
 
 It does, but timing helped. Claude launched the one-million-token context window while we were experimenting, so a full autonomous run still fits. You blow past the window more easily when driving manually; an authored workflow stays within bounds. It's an art to scope a single ticket: push it to 100% of the window and it gets dumb. Harness workflows are more token- and context-intensive per task, so run one task per session and learn to scope each task to fit one context window.
 
-> John: So smaller-scope tasks, and the loop gives better output. It uses more context, but staying small keeps it inside the window.
+> **From the audience:** So smaller-scope tasks, and the loop gives better output. It uses more context, but staying small keeps it inside the window.
 
 Right. And once your workflows can run with about 80% less oversight, where you only do MR reviews and QA, click around a staging deploy and then submit, you can use your subscription tokens overnight. Set up an orchestrator bot that pulls tickets; during the day you prepare specs for three to five tickets, and let it run overnight on tokens you aren't using. Claude has five-hour limits (Codex may differ); by morning you have a fresh session for spec work, and the overnight sessions have reset. It definitely uses far more tokens.
 
