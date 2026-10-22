@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On AI Assisted Coding</title>
+
+<link rel="stylesheet" href="reveal/reset.css">
+<link rel="stylesheet" href="reveal/reveal.css">
+<!-- galileo-presentation theme — must load AFTER reveal.css -->
+<link rel="stylesheet" href="theme/galileo.css">
+<!-- syntax highlighting for code slides; theme restyles the container -->
+<link rel="stylesheet" href="reveal/plugin/highlight/monokai.css">
+<!-- terminal recordings; player is vendored, no network at present time -->
+<link rel="stylesheet" href="vendor/asciinema-player/asciinema-player.css">
+</head>
+<body>
+
+<!-- Actor glyphs, defined once and referenced with <use>. Three symbols:
+     who/what performs the step. Stroke-only at currentColor, so a row's colour
+     and its diff treatment carry into the icon for free. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-human" viewBox="0 0 24 24">
+    <circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M4.8 20.2c0-3.6 3.2-6 7.2-6s7.2 2.4 7.2 6" fill="none" stroke="currentColor"
+          stroke-width="1.6" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24">
+    <circle cx="12" cy="2.8" r="1.3" fill="currentColor"/>
+    <path d="M12 4.1v2.1M2.6 11v3M21.4 11v3" fill="none" stroke="currentColor"
+          stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="4.4" y="6.2" width="15.2" height="12" rx="3.2" fill="none"
+          stroke="currentColor" stroke-width="1.6"/>
+    <circle cx="9.2" cy="12.2" r="1.35" fill="currentColor"/>
+    <circle cx="14.8" cy="12.2" r="1.35" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24">
+    <rect x="5" y="4.5" width="14" height="9.5" rx="1.5" fill="none"
+          stroke="currentColor" stroke-width="1.6"/>
+    <path d="M2.5 17.5h19l-1.8 2.7a2 2 0 0 1-1.7.9H6a2 2 0 0 1-1.7-.9L2.5 17.5z"
+          fill="none" stroke="currentColor" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<div class="reveal">
+  <div class="slides">
+
+<section class="s-canvas layout-title">
+  <div class="chevron left"></div>
+  <div class="chevron right soft"></div>
+  <div class="slide-inner">
+    <p class="eyebrow">Galileo S&aacute;nchez</p>
+    <h1 class="d-xxl">On AI Assisted<br>Coding</h1>
+    <p class="body-lg muted" style="margin-top:28px;max-width:760px;">The development loop as a feedback loop for AI, and how to find the right abstractions to build reusable workflows.</p>
+  </div>
+  <aside class="notes">Opener.</aside>
+</section>
+
+<section class="s-canvas">
+  <div class="slide-inner">
+    <p class="eyebrow">Contents</p>
+    <h3 class="d-lg" style="margin-bottom:32px;">What we'll cover</h3>
+    <ol class="agenda">
+      <li>The Evolution of the Feedback Loop<span class="sub">six loops, each one a step further from doing it all yourself</span></li>
+      <li>Workflows<span class="sub">pre-built prompts and skills for each stage</span></li>
+      <li>Cool Tips, Tricks and Links<span class="sub">where to go next</span></li>
+    </ol>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-canvas">
+  <div class="slide-inner">
+    <p class="eyebrow">Temperature Check</p>
+    <h3 class="d-lg" style="margin-bottom:10px;">Where are you at today?</h3>
+    <p class="body muted" style="margin-bottom:22px;">How much of the loop you hand over.</p>
+    <table class="cmp dense">
+      <tbody>
+        <tr><td class="stage" rowspan="3">Manual</td><td>1</td><td>Code completion</td><td class="detail">Press tab to accept the suggested lines.</td></tr>
+        <tr><td>2</td><td>Comments to code</td><td class="detail">Write a comment describing the intent and the model writes the body.</td></tr>
+        <tr><td>3</td><td>Chat and copy code</td><td class="detail">You paste the answer into the file yourself.</td></tr>
+        <tr class="group-start"><td class="stage" rowspan="3">Agentic</td><td>4</td><td>In file changes</td><td class="detail">The agent edits the files and you review the diff.</td></tr>
+        <tr><td>5</td><td>Spec driven</td><td class="detail">The agent works from a plan you approved first.</td></tr>
+        <tr><td>6</td><td>Vibe coding</td><td class="detail">You accept the output without reading the diff.</td></tr>
+        <tr class="group-start"><td class="stage" rowspan="2">Harness Engineering</td><td>7</td><td>Pre-built frameworks</td><td class="detail">Adopt a published workflow such as spec-kit or conductor.</td></tr>
+        <tr><td>8</td><td>In house workflows</td><td class="detail">You author the loop the agent runs.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-ink layout-divider">
+  <div class="chevron left" style="opacity:0.9;"></div>
+  <div class="slide-inner">
+    <p class="eyebrow">Part 1</p>
+    <h2 class="d-xl">The Evolution of<br>the Feedback Loop</h2>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-canvas layout-statement">
+  <div class="slide-inner">
+    <hr class="rule-accent">
+    <h2 class="d-xl">It is still coding.<br>You have a different<br>feedback loop.</h2>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-canvas">
+  <section class="s-canvas layout-loop">
+    <div class="slide-inner">
+      <div class="grid-2">
+        <img class="loop-diagram" src="assets/loops/loop-01-traditional.svg" alt="Traditional feedback loop">
+        <div class="stack-md">
+          <p class="eyebrow" style="margin-bottom:0;">Level 0</p>
+          <h4 class="d-md">Feedback Loops<br>Traditional</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+          <ol class="agenda diff">
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Write failing tests<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Code<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Iterate<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Refactor<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+          </ol>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+        </div>
+      </div>
+    </div>
+    <div class="use-case"><span class="uc-text">traditionally, all of it</span></div>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas layout-loop">
+    <div class="slide-inner">
+      <div class="grid-2">
+        <img class="loop-diagram" src="assets/loops/loop-02-ai.svg" alt="AI feedback loop">
+        <div class="stack-md">
+          <p class="eyebrow" style="margin-bottom:0;">Level 1</p>
+          <h4 class="d-md">Feedback Loops<br>AI Assisted Coding</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+          <ol class="agenda diff">
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Write failing tests<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="diff-move">Code<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Iterate<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Refactor<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+          </ol>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+        </div>
+      </div>
+    </div>
+    <div class="use-case"><span class="uc-text">center a div</span></div>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas layout-loop">
+    <div class="slide-inner">
+      <div class="grid-2">
+        <img class="loop-diagram" src="assets/loops/loop-03-autonomous.svg" alt="Autonomous feedback loop">
+        <div class="stack-md">
+          <p class="eyebrow" style="margin-bottom:0;">Level 2</p>
+          <h4 class="d-md">Feedback Loops<br>Autonomous</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+          <ol class="agenda diff">
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Write failing tests<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li class="diff-move">Test<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li class="diff-move">Iterate<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Refactor<svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+          </ol>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+        </div>
+      </div>
+    </div>
+    <div class="use-case"><span class="uc-text">debugging</span><span class="uc-note">You can use this with plan mode in most tools.</span></div>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas layout-loop">
+    <div class="slide-inner">
+      <div class="grid-2">
+        <img class="loop-diagram" src="assets/loops/loop-04-tdd.svg" alt="Test driven feedback loop">
+        <div class="stack-md">
+          <p class="eyebrow" style="margin-bottom:0;">Level 3</p>
+          <h4 class="d-md">Feedback Loops<br>Test Driven &mdash; TDD</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+          <ol class="agenda diff">
+            <li>Technical design of a solution<span class="opt">optional</span><svg class="actor" aria-label="human"><use href="#i-human"/></svg></li>
+            <li class="diff-move">Write failing tests<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Iterate<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li class="diff-move">Refactor<span class="diff-tag">changed</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></li>
+          </ol>
+          <p class="loop-edge out">Until requirements are satisfied<svg class="actor" aria-label="human"><use href="#i-human"/></svg></p>
+        </div>
+      </div>
+    </div>
+    <div class="use-case"><span class="uc-text">add complex feature</span><span class="uc-note">You'd need specific skills.</span></div>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas layout-loop">
+    <div class="slide-inner">
+      <div class="grid-2">
+        <img class="loop-diagram" src="assets/loops/loop-05-spec.svg" alt="Spec driven feedback loop">
+        <div class="stack-md">
+          <p class="eyebrow" style="margin-bottom:0;">Level 4</p>
+          <h4 class="d-md">Feedback Loops<br>Spec Driven</h4>
+          <p class="loop-edge pre spacer" aria-hidden="true">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in diff-move">Specify requirements<span class="diff-tag">changed</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <ol class="agenda diff">
+            <li class="diff-move">Technical design of a solution<span class="diff-tag">changed</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></li>
+            <li>Write failing tests<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Iterate<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li class="diff-move">Refactor<span class="diff-tag">changed</span><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+          </ol>
+          <p class="loop-edge out diff-move">Until requirements are satisfied<span class="diff-tag">changed</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <aside class="notes">You can use plan mode or start using more complex frameworks.</aside>
+        </div>
+      </div>
+    </div>
+    <div class="use-case"><span class="uc-text">generate new greenfield apps</span></div>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas layout-loop">
+    <div class="slide-inner">
+      <div class="grid-2">
+        <img class="loop-diagram" src="assets/loops/loop-06-workflows.svg" alt="Spec driven feedback loop with predefined workflows">
+        <div class="stack-md">
+          <p class="eyebrow" style="margin-bottom:0;">Level 5</p>
+          <h4 class="d-md">Feedback Loops<br>Spec Driven, Predefined Workflows</h4>
+          <p class="loop-edge pre diff-move">Author project workflows<span class="diff-tag">added</span><span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <p class="loop-edge in">Specify requirements<span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+          <ol class="agenda diff">
+            <li>Technical design of a solution<span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></li>
+            <li>Write failing tests<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Code<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Run<svg class="actor machine" aria-label="machine"><use href="#i-laptop"/></svg></li>
+            <li>Test<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Iterate<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+            <li>Refactor<svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></li>
+          </ol>
+          <p class="loop-edge out">Until requirements are satisfied<span class="actors"><svg class="actor" aria-label="human"><use href="#i-human"/></svg><svg class="actor bot" aria-label="bot"><use href="#i-bot"/></svg></span></p>
+        </div>
+      </div>
+    </div>
+    <div class="use-case"><span class="uc-text">brownfield projects</span><span class="uc-note">Brownfield projects have more context baked in.</span></div>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+</section>
+
+<section class="s-ink layout-divider">
+  <div class="chevron left" style="opacity:0.9;"></div>
+  <div class="slide-inner">
+    <p class="eyebrow">Part 2</p>
+    <h2 class="d-xl">Workflows</h2>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="layout-fullbleed">
+  <!-- .bleed defaults to --gp-fog in the catalog; this deck is white throughout. -->
+  <div class="bleed" style="background:var(--gp-canvas); padding:0 48px;">
+      <svg class="timelines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1104 494"
+           role="img" aria-label="Three timelines toward one goal">
+        <line x1="78" y1="92" x2="1013" y2="92" stroke="#c2c2c2" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
+        <path d="M 78.0 92.0 L 162.0 54.0 L 210.0 118.0 L 324.0 78.0 L 378.0 40.0 L 516.0 110.0 L 690.0 62.0 L 754.0 100.0 L 888.0 48.0 L 978.0 86.0 L 1013.0 92.0"
+              fill="none" stroke="#1a1a1a" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="78.0" cy="92.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="162.0" cy="54.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="210.0" cy="118.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="324.0" cy="78.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="378.0" cy="40.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="516.0" cy="110.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="690.0" cy="62.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="754.0" cy="100.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="888.0" cy="48.0" r="7.5" fill="#3F00DB"/>
+        <circle cx="978.0" cy="86.0" r="7.5" fill="#3F00DB"/>
+        <g class="goal">
+          <circle cx="1030" cy="92" r="17" fill="none" stroke="#c2c2c2" stroke-width="2"/>
+          <circle cx="1030" cy="92" r="7" fill="#1a1a1a"/>
+        </g>
+        <text x="78" y="18" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="400" letter-spacing="0.02em">Correct as you go</text>
+        <circle cx="85" cy="428" r="7.5" fill="#3F00DB"/>
+        <text x="102" y="433" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="400" letter-spacing="0.02em">Manual prompting or intervention</text>
+
+      <g class="fragment fade-in">
+        <line x1="78" y1="238" x2="1013" y2="238" stroke="#c2c2c2" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
+        <path d="M 78.0 238.0 L 112.0 225.0 L 130.0 217.0 L 174.0 245.0 L 216.0 235.0 L 230.0 227.0 L 276.0 251.0 L 340.0 198.0 L 366.0 211.0 L 408.0 207.0 L 452.0 229.0 L 470.0 223.0 L 522.0 249.0 L 550.0 241.0 L 626.0 272.0 L 656.0 259.0 L 678.0 265.0 L 722.0 236.0 L 780.0 247.0 L 796.0 240.0 L 840.0 225.0 L 916.0 206.0 L 946.0 217.0 L 980.0 211.0 L 1013.0 238.0"
+              fill="none" stroke="#1a1a1a" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="78.0" cy="238.0" r="7.5" fill="#3F00DB"/>
+        <polygon points="112.0,219.2 117.8,225.0 112.0,230.8 106.2,225.0" fill="#024ad8"/>
+        <polygon points="130.0,211.2 135.8,217.0 130.0,222.8 124.2,217.0" fill="#024ad8"/>
+        <polygon points="174.0,239.2 179.8,245.0 174.0,250.8 168.2,245.0" fill="#024ad8"/>
+        <polygon points="216.0,229.2 221.8,235.0 216.0,240.8 210.2,235.0" fill="#024ad8"/>
+        <polygon points="230.0,221.2 235.8,227.0 230.0,232.8 224.2,227.0" fill="#024ad8"/>
+        <polygon points="276.0,245.2 281.8,251.0 276.0,256.8 270.2,251.0" fill="#024ad8"/>
+        <circle cx="340.0" cy="198.0" r="7.5" fill="#3F00DB"/>
+        <polygon points="366.0,205.2 371.8,211.0 366.0,216.8 360.2,211.0" fill="#024ad8"/>
+        <polygon points="408.0,201.2 413.8,207.0 408.0,212.8 402.2,207.0" fill="#024ad8"/>
+        <polygon points="452.0,223.2 457.8,229.0 452.0,234.8 446.2,229.0" fill="#024ad8"/>
+        <polygon points="470.0,217.2 475.8,223.0 470.0,228.8 464.2,223.0" fill="#024ad8"/>
+        <polygon points="522.0,243.2 527.8,249.0 522.0,254.8 516.2,249.0" fill="#024ad8"/>
+        <polygon points="550.0,235.2 555.8,241.0 550.0,246.8 544.2,241.0" fill="#024ad8"/>
+        <circle cx="626.0" cy="272.0" r="7.5" fill="#3F00DB"/>
+        <polygon points="656.0,253.2 661.8,259.0 656.0,264.8 650.2,259.0" fill="#024ad8"/>
+        <polygon points="678.0,259.2 683.8,265.0 678.0,270.8 672.2,265.0" fill="#024ad8"/>
+        <polygon points="722.0,230.2 727.8,236.0 722.0,241.8 716.2,236.0" fill="#024ad8"/>
+        <polygon points="780.0,241.2 785.8,247.0 780.0,252.8 774.2,247.0" fill="#024ad8"/>
+        <polygon points="796.0,234.2 801.8,240.0 796.0,245.8 790.2,240.0" fill="#024ad8"/>
+        <polygon points="840.0,219.2 845.8,225.0 840.0,230.8 834.2,225.0" fill="#024ad8"/>
+        <circle cx="916.0" cy="206.0" r="7.5" fill="#3F00DB"/>
+        <polygon points="946.0,211.2 951.8,217.0 946.0,222.8 940.2,217.0" fill="#024ad8"/>
+        <polygon points="980.0,205.2 985.8,211.0 980.0,216.8 974.2,211.0" fill="#024ad8"/>
+        <g class="goal">
+          <circle cx="1030" cy="238" r="17" fill="none" stroke="#c2c2c2" stroke-width="2"/>
+          <circle cx="1030" cy="238" r="7" fill="#1a1a1a"/>
+        </g>
+        <text x="78" y="164" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="400" letter-spacing="0.02em">Plan first, then execute</text>
+        <polygon points="85,446.2 90.8,452 85,457.8 79.2,452" fill="#024ad8"/>
+        <text x="102" y="457" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="400" letter-spacing="0.02em">Agent self-heal with automated validation: test, compile, QA</text>
+      </g>
+
+      <g class="fragment fade-in">
+        <line x1="78" y1="384" x2="1013" y2="384" stroke="#c2c2c2" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
+        <path d="M 78.0 384.0 L 116.0 373.0 L 150.0 368.0 L 188.0 389.0 L 226.0 382.0 L 264.0 393.0 L 310.0 398.0 L 326.0 390.0 L 346.0 375.0 L 374.0 386.0 L 428.0 372.0 L 474.0 367.0 L 508.0 378.0 L 522.0 383.0 L 582.0 392.0 L 624.0 399.0 L 644.0 388.0 L 670.0 384.0 L 738.0 374.0 L 778.0 369.0 L 802.0 379.0 L 818.0 387.0 L 896.0 395.0 L 936.0 400.0 L 966.0 383.0 L 1013.0 384.0"
+              fill="none" stroke="#1a1a1a" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="78.0" cy="384.0" r="7.5" fill="#3F00DB"/>
+        <polygon points="116.0,367.2 121.8,373.0 116.0,378.8 110.2,373.0" fill="#024ad8"/>
+        <polygon points="150.0,362.2 155.8,368.0 150.0,373.8 144.2,368.0" fill="#024ad8"/>
+        <polygon points="188.0,383.2 193.8,389.0 188.0,394.8 182.2,389.0" fill="#024ad8"/>
+        <circle cx="226.0" cy="382.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+        <polygon points="264.0,387.2 269.8,393.0 264.0,398.8 258.2,393.0" fill="#024ad8"/>
+        <polygon points="310.0,392.2 315.8,398.0 310.0,403.8 304.2,398.0" fill="#024ad8"/>
+        <polygon points="326.0,384.2 331.8,390.0 326.0,395.8 320.2,390.0" fill="#024ad8"/>
+        <polygon points="346.0,369.2 351.8,375.0 346.0,380.8 340.2,375.0" fill="#024ad8"/>
+        <circle cx="374.0" cy="386.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+        <polygon points="428.0,366.2 433.8,372.0 428.0,377.8 422.2,372.0" fill="#024ad8"/>
+        <polygon points="474.0,361.2 479.8,367.0 474.0,372.8 468.2,367.0" fill="#024ad8"/>
+        <polygon points="508.0,372.2 513.8,378.0 508.0,383.8 502.2,378.0" fill="#024ad8"/>
+        <circle cx="522.0" cy="383.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+        <polygon points="582.0,386.2 587.8,392.0 582.0,397.8 576.2,392.0" fill="#024ad8"/>
+        <polygon points="624.0,393.2 629.8,399.0 624.0,404.8 618.2,399.0" fill="#024ad8"/>
+        <polygon points="644.0,382.2 649.8,388.0 644.0,393.8 638.2,388.0" fill="#024ad8"/>
+        <circle cx="670.0" cy="384.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+        <polygon points="738.0,368.2 743.8,374.0 738.0,379.8 732.2,374.0" fill="#024ad8"/>
+        <polygon points="778.0,363.2 783.8,369.0 778.0,374.8 772.2,369.0" fill="#024ad8"/>
+        <polygon points="802.0,373.2 807.8,379.0 802.0,384.8 796.2,379.0" fill="#024ad8"/>
+        <circle cx="818.0" cy="387.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+        <polygon points="896.0,389.2 901.8,395.0 896.0,400.8 890.2,395.0" fill="#024ad8"/>
+        <polygon points="936.0,394.2 941.8,400.0 936.0,405.8 930.2,400.0" fill="#024ad8"/>
+        <circle cx="966.0" cy="383.0" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+        <g class="goal">
+          <circle cx="1030" cy="384" r="17" fill="none" stroke="#c2c2c2" stroke-width="2"/>
+          <circle cx="1030" cy="384" r="7" fill="#1a1a1a"/>
+        </g>
+        <text x="78" y="310" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="400" letter-spacing="0.02em">Reusable workflow</text>
+        <circle cx="85" cy="476" r="7" fill="#ffffff" stroke="#356373" stroke-width="1.5" stroke-dasharray="2 3.2"/>
+        <text x="102" y="481" fill="#636363" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="400" letter-spacing="0.02em">Pre-built steering artifact, part of a bigger workflow</text>
+      </g>
+      </svg>
+  </div>
+  <div class="slide-inner">
+    <div class="caption-bar">
+      <p class="d-sm">Encode what you do in prompts, then iterate automatically</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p><strong>Correct as you go</strong> &mdash; manual prompting in chat. You are
+    the loop: prompt, look, prompt again.</p>
+
+    <p><strong>Plan first, then execute</strong> &mdash; manually prompt a plan into
+    existence, then execute and let it rip, correcting when needed. This is where
+    a plan.md or a tool&rsquo;s plan mode comes in: the plan is worked out with the
+    LLM first, or you use an LLM to generate a self-contained prompt that encodes
+    the goal, the checkpoints, and how to verify each checkpoint.</p>
+
+    <p><strong>Reusable workflow</strong> &mdash; as you mature into plan-making, the
+    items that turn up in every plan go through the same process: you extract the
+    skills that produce acceptable results out of your own loop. A pre-set skill
+    per step, collected in an orchestrator prompt that knows how to use them.</p>
+
+    <p>Bonus: abstract one step further out and make a skill that composes the
+    workflow dynamically, according to the problem.</p>
+  </aside>
+  <!-- No .slide-foot: the caption bar already occupies the footer band and the
+       brand line lands on top of the caption text. -->
+</section>
+
+<!-- Vertical stack: an L-07 three-up names the three stages, then one per-stage
+     table on down-arrow. The catalog specifies s-cloud for the three-up; this deck
+     is s-canvas for every content slide (ink is reserved for Part dividers), so the
+     band is overridden. There is deliberately no whole-process overview table — the
+     cards are the overview, and a combined table repeated every row verbatim. -->
+<section>
+<section class="s-canvas">
+  <div class="slide-inner">
+    <p class="eyebrow">Workflows</p>
+    <h3 class="d-lg" style="margin-bottom:10px;">Workflow</h3>
+    <p class="body muted" style="margin-bottom:32px;">A predefined set of steps to follow during implementation.</p>
+    <div class="grid-3">
+      <article class="card">
+        <span class="card-num">01</span>
+        <h4 class="d-sm" style="margin-bottom:10px;">Requirements</h4>
+        <p class="cap muted">Gather what is needed, refine it into structured requirements, trim it to one slice.</p>
+      </article>
+      <article class="card">
+        <span class="card-num">02</span>
+        <h4 class="d-sm" style="margin-bottom:10px;">Planning</h4>
+        <p class="cap muted">Design the change, plan the tests, then sequence the code against them.</p>
+      </article>
+      <article class="card">
+        <span class="card-num">03</span>
+        <h4 class="d-sm" style="margin-bottom:10px;">Implementation</h4>
+        <p class="cap muted">The loop the agent runs: tests, code, refactor, review, validate, merge.</p>
+      </article>
+    </div>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+  <section class="s-canvas">
+    <div class="slide-inner">
+      <p class="eyebrow">Workflows</p>
+      <h3 class="d-lg" style="margin-bottom:10px;">Requirements</h3>
+      <p class="body muted" style="margin-bottom:26px;">Goal: clear requirements, functional and non functional.</p>
+      <table class="cmp">
+        <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>Gather</td><td class="detail">Let the agent act as a PM and drill you one question at a time, prodding for edge cases.</td></tr>
+          <tr><td>Refine tickets</td><td class="detail">Turn the raw requirements into structured ones using User Stories, EARS and Gherkin.</td></tr>
+          <tr><td>Scope trimming</td><td class="detail">Run INVEST over the user stories to isolate one vertical slice, then rebuild the requirements around it.</td></tr>
+          <tr><td>Narrative <span class="opt">optional</span></td><td class="detail">Write the spec so a less technical audience can review it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="notes">Narrative: there is no industry standard for this one the
+      way there is for the rows above it. What has worked for me is Joel Spolsky's
+      four-part series on writing functional specs, logically condensed into a skill.</aside>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas">
+    <div class="slide-inner">
+      <p class="eyebrow">Workflows</p>
+      <h3 class="d-lg" style="margin-bottom:10px;">Planning</h3>
+      <p class="body muted" style="margin-bottom:26px;">Goal: steps the agent can run unattended, with checkpoints to validate progress.</p>
+      <table class="cmp">
+        <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>Technical design</td><td class="detail">Feed the agent the requirements and repo access to produce an outline of the code changes.</td></tr>
+          <tr><td>Testing plan</td><td class="detail">Plan the tests that verify the work against the requirements.</td></tr>
+          <tr><td>Implementation plan</td><td class="detail">Sequence the code changes, verified against the tests.</td></tr>
+          <tr><td>Testing tiers review</td><td class="detail">Check both plans for a better distribution of tests, following company policy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="notes">Testing tiers: integration first, the testing pyramid, the testing
+      trophy, or e2e only. Whichever the company has settled on.</aside>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas">
+    <div class="slide-inner">
+      <p class="eyebrow">Workflows</p>
+      <h3 class="d-lg" style="margin-bottom:10px;">Implementation loop</h3>
+      <p class="body muted" style="margin-bottom:26px;">Goal: working code that satisfies the requirements.</p>
+      <table class="cmp">
+        <thead><tr><th>Step</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>Code</td><td class="detail">Implement the tests, implement the code for those tests, then refactor keeping the tests green.</td></tr>
+          <tr><td>Review</td><td class="detail">Get another model's input, and iterate the implementation loop.</td></tr>
+          <tr><td>Validation</td><td class="detail">Run the end to end validation steps, then iterate or submit proof of the work done.</td></tr>
+          <tr><td>Drift check</td><td class="detail">Review code, requirements and checks, and ensure the triplet aligns.</td></tr>
+          <tr><td>All green</td><td class="detail">Merge.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="notes">Stencils: the loop repeats, so learn from the plans and build stencils
+      for recurring patterns — unit tests, integration tests, endpoints, controllers, resolvers.
+      Refactor covers general authoring practices, object oriented preferences, and the local
+      preferences traditional lint checks and deterministic tooling cannot enforce.</aside>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+
+  <section class="s-canvas layout-statement">
+    <div class="slide-inner">
+      <hr class="rule-accent">
+      <h2 class="d-lg">At any stage the agent can fall back<br>to human control.</h2>
+      <p class="body-lg muted" style="margin-top:24px;">If the requirements were too ambiguous, or scope creep was introduced into the loop or implied in the original spec.</p>
+    </div>
+    <p class="slide-brand">On AI Assisted Coding</p>
+  </section>
+</section>
+
+<section class="s-canvas">
+  <div class="slide-inner">
+    <p class="eyebrow">Demo</p>
+    <h3 class="d-lg" style="margin-bottom:26px;">A workflow you can read</h3>
+    <table class="cmp">
+      <thead><tr><th>Phase</th><th>Command</th><th>Leaves behind</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td>Drill</td><td>A spec — the questions asked, the answers given</td></tr>
+        <tr><td>02</td><td>Prototype</td><td>A clickable screen, before any code exists</td></tr>
+        <tr><td>03</td><td>Refine</td><td>The spec again, every assumption checked against the source</td></tr>
+        <tr><td>04</td><td>Implement</td><td>A branch, failing tests first, then a pull request</td></tr>
+        <tr><td>05</td><td>QA</td><td>A report, posted to that pull request</td></tr>
+      </tbody>
+    </table>
+    <p class="body muted" style="margin-top:22px;">QA is not allowed to read the code it is checking.</p>
+  </div>
+  <aside class="notes">Five checked-in commands, one per phase. The point is the third column:
+    every phase ends in something a human can read and disagree with, rather than one opaque run.
+    The QA line is the one to land — a suite written by whatever wrote the code is not independent
+    evidence, so that phase judges the feature by running it. The workflow is versioned and
+    reviewable, which means someone else can run it.</aside>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-canvas" data-cast="assets/casts/05-harness.cast">
+  <div class="slide-inner">
+    <p class="eyebrow">Demo</p>
+    <h3 class="d-lg" style="margin-bottom:18px;">One command, five phases</h3>
+    <div class="cast-frame"></div>
+  </div>
+  <aside class="notes">
+    <a href="assets/prototype/create-run-inline-form.html" target="_blank">Prototype</a> ·
+    <a href="https://linear.app/buses365/issue/COFFE-14/create-a-workflow-from-the-page" target="_blank">COFFE-14</a> ·
+    <a href="https://github.com/galileopy/workflow-manager/pull/1" target="_blank">PR #1</a> ·
+    <a href="https://github.com/galileopy/workflow-manager" target="_blank">Repo</a>
+
+    /craft:audit caught a contradiction nobody had noticed: the requirements said the banner
+    shows the server's message, but Http.expectJson discards the body on a non-2xx. It cited the
+    line, corrected the requirement instead of growing unrequested plumbing, and noted the
+    prototype had found the same thing independently.
+
+    Ring on, the terminal has the keyboard. Pause gives it back.</aside>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-canvas">
+  <div class="slide-inner">
+    <p class="eyebrow">Workflows</p>
+    <h3 class="d-lg" style="margin-bottom:10px;">Dynamic vs static</h3>
+    <p class="body muted" style="margin-bottom:32px;">Not everything needs to be fixed the same way.</p>
+    <div class="grid-2">
+      <article class="card">
+        <span class="card-num">01</span>
+        <h4 class="d-sm" style="margin-bottom:10px;">Dev preferences</h4>
+        <p class="cap muted">Preferences on particular steps differ between people.</p>
+      </article>
+      <article class="card">
+        <span class="card-num">02</span>
+        <h4 class="d-sm" style="margin-bottom:10px;">Project differences</h4>
+        <p class="cap muted">And between the projects they are applied to.</p>
+      </article>
+    </div>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-ink layout-divider">
+  <div class="chevron left" style="opacity:0.9;"></div>
+  <div class="slide-inner">
+    <p class="eyebrow">Part 3</p>
+    <h2 class="d-xl">Cool Tips, Tricks<br>and Links</h2>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-canvas">
+  <div class="slide-inner">
+    <p class="eyebrow">Cool Tricks</p>
+    <h3 class="d-lg" style="margin-bottom:26px;">Beyond writing the code</h3>
+    <table class="cmp">
+      <thead><tr><th>Trick</th><th>What it covers</th></tr></thead>
+      <tbody>
+        <tr><td>During incidents</td><td class="detail">Connect the agent to live logs alongside the repo to triage likely root causes.</td></tr>
+        <tr><td>Post mortems</td><td class="detail">Have the agent generate monitoring dashboards for what the incident exposed.</td></tr>
+        <tr><td>Infrastructure as code</td><td class="detail">Point the implementation workflow at Terraform or CDK instead of service code.</td></tr>
+        <tr><td>Load testing</td><td class="detail">Have the agent load test the service, then improve and revalidate against the results.</td></tr>
+        <tr><td>Isolated worktrees</td><td class="detail">Develop features in parallel, with an isolated stack per worktree.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <aside class="notes">Incidents: handle with care, agents love red herrings.
+    Worktrees also require real familiarity with the workflows before they pay off.</aside>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<section class="s-canvas">
+  <div class="slide-inner">
+    <p class="eyebrow">References</p>
+    <h3 class="d-lg" style="margin-bottom:26px;">Helpful links</h3>
+    <table class="cmp">
+      <thead><tr><th>Project</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td>spec-kit<span class="link">github.com/github/spec-kit</span></td><td class="detail">A reusable spec driven framework.</td></tr>
+        <tr><td>conductor<span class="link">github.com/gemini-cli-extensions/conductor</span></td><td class="detail">The same, packaged as a Gemini CLI extension.</td></tr>
+        <tr><td>groundcrew<span class="link">github.com/ClipboardHealth/groundcrew</span></td><td class="detail">A task list monitor that dispatches CLI agents with refined tickets for autonomous execution.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+
+<!-- L-11 quote. No attribution block: the line is the speaker's own, and
+     attributing yourself on your own slide reads oddly. Ink here also starts the
+     closing movement — quote, Questions, then back to white for Thank you. -->
+<section class="s-ink">
+  <div class="slide-inner" style="max-width:820px;">
+    <span class="quote-mark">&ldquo;</span>
+    <blockquote>The best way to learn these systems is trying, failing and learning. There is no right way to do it, but there are many ways to have fun and keep learning.</blockquote>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<!-- L-13 closing, on the ink slab the design system requires. The deck's only
+     other ink surfaces are the three Part dividers, so landing here reads as the
+     end of the argument rather than another section break. -->
+<section class="s-ink">
+  <div class="chevron right" style="opacity:0.9;"></div>
+  <div class="slide-inner" style="max-width:760px;">
+    <hr class="rule-accent">
+    <h2 class="d-xl">Questions?</h2>
+  </div>
+  <p class="slide-brand">On AI Assisted Coding</p>
+</section>
+
+<!-- Mirrors the title slide: same two chevrons, same white canvas, so the deck
+     opens and closes on the same surface. -->
+<section class="s-canvas layout-title">
+  <div class="chevron left"></div>
+  <div class="chevron right soft"></div>
+  <div class="slide-inner">
+    <h1 class="d-xxl">Thank you</h1>
+    <p class="body-lg muted" style="margin-top:28px;">Galileo S&aacute;nchez</p>
+  </div>
+</section>
+
+  </div>
+</div>
+
+<script src="reveal/reveal.js"></script>
+<script src="reveal/plugin/notes.js"></script>
+<script src="reveal/plugin/markdown.js"></script>
+<script src="reveal/plugin/highlight.js"></script>
+<script src="reveal/plugin/zoom.js"></script>
+<script src="reveal/plugin/search.js"></script>
+<script src="vendor/asciinema-player/asciinema-player.min.js"></script>
+<script>
+  Reveal.initialize({
+    // 1280x720 with zero margin makes the design system's absolute px map 1:1.
+    // Do not change these without rescaling every token in theme/galileo.css.
+    width: 1280,
+    height: 720,
+    margin: 0,
+    minScale: 0.2,
+    maxScale: 2.0,
+
+    // Slides are centered by .slide-inner in the theme, not by reveal. reveal
+    // cannot do it here: it writes `display:block` inline on each section, which
+    // beats any display:flex from the stylesheet.
+    center: false,
+
+    // Arrow controls collide with .slide-foot, and a designed deck is driven by
+    // keyboard or clicker. The slide number is reveal's, restyled by the theme
+    // into the footer's right slot so slides never hard-code a page number.
+    controls: false,
+    slideNumber: 'c/t',
+    progress: true,
+
+    hash: true,
+
+    // No transitions anywhere, deliberately. Every reveal transition animates a
+    // transform, and a transform animates a *rasterised layer* — the browser
+    // renders the slide to a texture at its pre-transform size and resamples it
+    // while it moves, so display type goes soft mid-flight and snaps back at
+    // rest. There is no transition setting that avoids this; the only way text
+    // is crisp at every frame is for no frame to be transformed. Slides cut.
+    transition: 'none',
+    backgroundTransition: 'none',
+
+    // Notes = speaker view (S). Zoom = alt/ctrl-click to magnify a region.
+    // Search = ctrl-shift-F. Markdown + Highlight for content slides.
+    plugins: [ RevealNotes, RevealMarkdown, RevealHighlight, RevealZoom, RevealSearch ]
+  });
+
+  // The slide number lives outside .slides, so it can't see the current slide's
+  // surface band in CSS. Mirror it onto .reveal so it can invert on ink slabs.
+  (function () {
+    var reveal = document.querySelector('.reveal');
+    function syncBand() {
+      var slide = Reveal.getCurrentSlide();
+      reveal.classList.toggle('on-ink',
+        !!slide && (slide.classList.contains('s-ink') ||
+                    slide.classList.contains('layout-fullbleed')));
+    }
+    Reveal.on('ready', syncBand);
+    Reveal.on('slidechanged', syncBand);
+  })();
+
+  // Terminal recordings. A player is built when its slide becomes current and
+  // disposed when it leaves, so a cast never plays behind your back and never
+  // holds a decoded buffer for a slide nobody is looking at. Casts are found by
+  // the data-cast attribute, so adding one is markup only.
+  (function () {
+    // Phase boundaries, in the cast's own (idle-compressed) seconds. The cast
+    // is compressed on disk rather than by idleTimeLimit at playback, so these
+    // and the timeline share one clock — an idle limit applied at play time
+    // would shift every marker.
+    var CASTS = {
+      'assets/casts/05-harness.cast': [
+        [1, 'Start · /craft:start'], [51, 'Phase 1 · Collect'], [110, 'The drill'],
+        [220, 'Requirements posted'], [271, 'Phase 2 · Prototype'], [410, 'Prototype attached'],
+        [500, 'Phase 3 · Audit'], [711, 'Refined requirements posted'], [771, 'The harness halts'],
+        [861, 'Phase 3 · Test plan'], [1035, 'Phase 4 · Forge'], [1125, 'Playwright'],
+        [1205, 'PR #1 opened'], [1305, 'Phase 5 · QA'], [1486, 'Screenshots attached'],
+        [1785, 'QA report · PASS'], [1835, 'Five phases, summarised']
+      ]
+    };
+
+    var live = null;
+    function teardown() {
+      if (!live) return;
+      live.player.dispose();
+      live.frame.innerHTML = '';
+      live = null;
+    }
+    function mount() {
+      var slide = Reveal.getCurrentSlide();
+      var src = slide && slide.getAttribute('data-cast');
+      if (live && live.slide === slide) return;
+      teardown();
+      if (!src) return;
+      var frame = slide.querySelector('.cast-frame');
+      if (!frame) return;
+      live = {
+        slide: slide,
+        frame: frame,
+        markers: CASTS[src] || [],
+        player: AsciinemaPlayer.create(src, frame, {
+          // Fit to the frame's fixed height, not its width — see .cast-frame.
+          fit: 'both',
+          // Never autoplay. The slide is walked onto mid-sentence and a cast
+          // that starts talking on arrival steps on the speaker.
+          autoPlay: false,
+          // Playback rate only. Markers and seek() are in cast time, so this
+          // does not move them.
+          speed: 2,
+          preload: true,
+          poster: 'npt:0:30',
+          controls: true,
+          markers: CASTS[src] || [],
+          theme: 'asciinema'
+        })
+      };
+      // Click the terminal to hand it the keyboard; Esc hands it back. While
+      // the player holds it, reveal's own keys are off and the player's native
+      // set applies — space, arrows, [ and ] for markers, f, 0-9. This is
+      // simpler than mapping playback onto keys reveal happens not to use, and
+      // it means only one thing is listening at a time.
+      frame.addEventListener('mousedown', function () { grab(); });
+
+      // The keyboard follows playback: the player holds it only while something
+      // is actually playing. Pausing or reaching the end hands it straight back
+      // to reveal, so the very next arrow press advances the talk rather than
+      // seeking a stopped cast.
+      live.player.addEventListener('play', grab);
+      live.player.addEventListener('pause', release);
+      live.player.addEventListener('ended', release);
+    }
+
+    function grab() {
+      if (!live || live.hasKeys) return;
+      live.hasKeys = true;
+      live.frame.classList.add('has-keys');
+      Reveal.configure({ keyboard: false });
+      var el = live.frame.querySelector('.ap-player');
+      if (el) el.focus();
+    }
+    function release() {
+      if (!live || !live.hasKeys) return;
+      live.hasKeys = false;
+      live.frame.classList.remove('has-keys');
+      Reveal.configure({ keyboard: true });
+      if (document.activeElement) document.activeElement.blur();
+    }
+
+    // Esc gives the deck its keyboard back. Bound in the capture phase so it
+    // works while the player has focus; reveal's own Esc (overview) is off at
+    // that moment, so nothing is being stolen.
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && live && live.hasKeys) {
+        release();
+        ev.preventDefault();
+        ev.stopPropagation();
+      }
+    }, true);
+
+    Reveal.on('ready', mount);
+    Reveal.on('slidechanged', function () { release(); mount(); });
+
+    // Speaker view is a separate window whose base URL is not this document, so
+    // a relative href in a note resolves to nothing there. Absolutise them once
+    // against the deck's own location, while they still can be.
+    Reveal.on('ready', function () {
+      document.querySelectorAll('.notes a[href]').forEach(function (a) {
+        a.setAttribute('href', new URL(a.getAttribute('href'), location.href).href);
+      });
+    });
+
+  })();
+</script>
+</body>
+</html>
